@@ -1,0 +1,27 @@
+{
+    "files": {
+        "boss.js":  {
+            "overwrite": false,
+            "hash": "2ed0898380e1dac7a55a33406f4cccdb846d64c451cecdcbb0f4e9bce7e373cc"
+        },
+        "index.js": "5a09756dfade9f0aa49266773bb19b5d23fd791b2398d9dab7b2b88666b3246b",
+        "module.json": "11466ae37afb7863c5d8433fdb06c98b95c9aa9a34c84f8ae78db62cc5a83c6f"
+    },
+    "defs": {
+        "C_CHAT": 1,
+        "C_PLAYER_LOCATION": 5,
+        "S_ACTION_STAGE": 9,
+        "S_BOSS_GAGE_INFO": 3,
+        "S_CHAT": 3,
+        "S_CREATURE_ROTATE": 2,
+        "S_DESPAWN_BUILD_OBJECT": 2,
+        "S_DESPAWN_COLLECTION": 2,
+        "S_DESPAWN_DROPITEM": 4,
+        "S_DUNGEON_EVENT_MESSAGE": 2,
+        "S_QUEST_BALLOON": 1,
+        "S_SPAWN_BUILD_OBJECT": 2,
+        "S_SPAWN_COLLECTION": 4,
+        "S_SPAWN_DROPITEM": 8,
+        "S_SPAWN_NPC": 11
+    }
+}
