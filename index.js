@@ -198,15 +198,15 @@ module.exports = function Tera_Guide(mod) {
 			curAngle = event.w;
 			if (whichmode==935) {
 				if (ballCount===1) {
-					timer = 9000;
+					timer = 10000;
 					ballCount++;
 				}
 				if (ballCount===2) {
-					timer = 6000
+					timer = 7000
 					ballCount++;
 				}
 				if (ballCount===3) {
-					timer = 3000;
+					timer = 4000;
 					ballCount = 1;
 				}
 			}
@@ -611,7 +611,7 @@ module.exports = function Tera_Guide(mod) {
 				SpawnString(itemID3, 12000, 225, 800);
 			}
 			// 披萨_8 前左
-			if (skillid===314||skillid===326)) {
+			if (skillid===314||skillid===326) {
 				SpawnString(itemID3, 12000, 225, 800);
 				SpawnString(itemID3, 12000, 180, 800);
 			}
