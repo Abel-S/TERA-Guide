@@ -543,13 +543,14 @@ module.exports = function Tera_Guide(mod) {
 			// 前盾砸(晕坦) / 甜甜圈 
 			if (skillid===116) {
 				if (whichmode===781) {
-					SpawnThing(   false,  100, 180,  80);
+					SpawnThing(   false,  100, 180,  60);
 					SpawnString(itemID3, 5000, 120, 500);
 					SpawnString(itemID3, 5000, 240, 500);
 				} else {
-					SpawnCircle(itemID3, 8000, 18, 200);
-					SpawnCircle(itemID3, 8000, 15, 380);
-					SpawnCircle(itemID3, 8000, 12, 560);
+					SpawnThing(   false,  100, 180,  30);
+					SpawnCircle(itemID3, 8000,  18, 200);
+					SpawnCircle(itemID3, 8000,  15, 380);
+					SpawnCircle(itemID3, 8000,  12, 560);
 					bossSkillID.msg = bossSkillID.msg2
 				}
 			}
