@@ -27,7 +27,10 @@ module.exports = {
 		{zone: 9982, string: '<font color="#56B4E9">里安的地下殿堂</font> <font color="#00FFFF">上级</font>'},
 		{zone: 3019, string: '<font color="#56B4E9">里安的地下殿堂</font> <font color="#FF0000"> 7人</font>'},
 		
-		{zone: 9044, string: '<font color="#56B4E9">巴哈勒神殿</font>'}
+		{zone: 9044, string: '<font color="#56B4E9">巴哈勒神殿</font>'},
+		
+		{zone: 3101, string: '<font color="#56B4E9">費爾奎娜巢穴</font> <font color="#E69F00">下级</font>'},
+		{zone: 3201, string: '<font color="#56B4E9">費爾奎娜巢穴</font> <font color="#00FFFF">上级</font>'}
 	],
 	// 岱魔鲁斯的轮盘 (Demon’s Wheel)
 	DW_BOSS_1 : [
@@ -350,5 +353,29 @@ module.exports = {
 		{id: 119, msg: '右侧安全 →→', msg_tk: '← ←← ←←←', sign_degrees: 270, sign_distance: 200},
 		{id: 120, msg: '←← 左侧安全', msg_tk: '→→→ →→ →', sign_degrees:  90, sign_distance: 200}
 	],
-	Baharr_TipMsg : ["四连半月(就绪)", "红眼射线 (秒杀)"]
+	Baharr_TipMsg : ["四连半月(就绪)", "红眼射线 (秒杀)"],
+	// Nest
+	NT_BOSS_1 : [
+		{id: 124, msg: '双手前砸(晕坦)'}, // 142 124
+		
+		{id: 119, msg: '后 + 前 (慢)'},
+		{id: 139, msg: '后 + 前 (快)'},
+		{id: 313, msg: '内外圈 (慢)'},
+		{id: 314, msg: '内外圈 (快)'},
+		{id: 113, msg: '跳(慢)'},
+		{id: 133, msg: '跳(快)'},
+		{id: 118, msg: '跳-P (慢)'},
+		{id: 138, msg: '跳-P (快)'},
+		{id: 111, msg: '后喷(慢)'},
+		{id: 131, msg: '后喷(快)'},
+		{id: 305, msg: 'Pizza'}
+	],
+	NT_BOSS_2 : [
+		{id: 231, msg: '↓ 出圈 ↓'},
+		{id: 232, msg: '↑ 进圈 ↑'},
+		{id: 108, msg: '后喷!!'},
+		{id: 235, msg: '中毒!!'},
+		{id: 230, msg: '爆炸!!'},
+		{id: 228, msg: 'Team up'}
+	]
 }

@@ -9,7 +9,8 @@ let {
 	 RR_BOSS_1,  RR_BOSS_2,  RR_BOSS_3,
 	 AA_BOSS_1,  AA_BOSS_2,  AA_BOSS_3,
 	DRC_BOSS_1, DRC_BOSS_2, DRC_BOSS_3, DRC_TipMsg,
-	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3
+	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
+	 NT_BOSS_1, NT_BOSS_2
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -93,7 +94,7 @@ module.exports = function Tera_Guide(mod) {
 					mod.command.message("区域位置: " + whichboss);
 					sendMessage("test");
 					debug = !debug;
-					mod.command.message("debug: " + (debug ? "On" : " Off"));
+					mod.command.message("Debug: " + (debug ? "On" : " Off"));
 					break;
 				case "log":
 					BossLog = !BossLog;
@@ -416,7 +417,7 @@ module.exports = function Tera_Guide(mod) {
 		// DW_1王
 		if (whichmode==466 && event.templateId==46601 && (bossSkillID = DW_BOSS_1.find(obj => obj.id === skillid))) {
 			// BOSS HP > 50%  +1圈 +2圈 +3圈 +4圈 +5圈
-			if ([306,307,308,309,310].includes(skillid)) {
+			if ([306, 307, 308, 309, 310].includes(skillid)) {
 				circleCount += skillid % 305;
 				sendMessage((bossSkillID.msg + "=" + circleCount + " | " + DW_TipMsg1[circleCount % 2]), 25);
 				return;
@@ -469,7 +470,8 @@ module.exports = function Tera_Guide(mod) {
 		if ([770, 970].includes(whichmode) && event.templateId==2000 && (bossSkillID = RL_BOSS_2.find(obj => obj.id === skillid))) {
 			//插地眩晕
 			if (skillid===106) {
-				SpawnCircle(itemID3, 2000, 18, 180);
+				SpawnThing(   false,  100, 180,  30);
+				SpawnCircle(itemID3, 2000,  18, 180);
 			}
 			// 直线攻击
 			if (skillid===111) {
@@ -481,7 +483,7 @@ module.exports = function Tera_Guide(mod) {
 		if ([770, 970].includes(whichmode) && event.templateId==3000 && (bossSkillID = RL_BOSS_3.find(obj => obj.id === skillid))) {
 			// 前推坦
 			if (skillid===106) {
-				SpawnThing(false, 100,   0,  30);
+				SpawnThing(   false, 100,    0,  30);
 				SpawnString(itemID3, 2000, 140, 580);
 				SpawnString(itemID3, 2000, 240, 580);
 			}
@@ -541,7 +543,7 @@ module.exports = function Tera_Guide(mod) {
 			// 前盾砸(晕坦) / 甜甜圈 
 			if (skillid===116) {
 				if (whichmode===781) {
-					SpawnThing(   false,  100, 180,  60);
+					SpawnThing(   false,  100, 180,  80);
 					SpawnString(itemID3, 5000, 120, 500);
 					SpawnString(itemID3, 5000, 240, 500);
 				} else {
@@ -574,52 +576,44 @@ module.exports = function Tera_Guide(mod) {
 		if ([735, 935].includes(whichmode) && event.templateId==1000 && (bossSkillID = RK_BOSS_1.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			// 披萨_1 前右
-			if ([315, 319].includes(skillid)) {
-				SpawnCircle(itemID3, 8000, 180, 800);
-				SpawnCircle(itemID3, 8000, 135, 800);
-				return;
+			if (skillid===315||skillid===319) {
+				SpawnString(itemID3, 12000, 180, 800);
+				SpawnString(itemID3, 12000, 135, 800);
 			}
 			// 披萨_2 右上
-			if ([311, 323].includes(skillid)) {
-				SpawnCircle(itemID3, 8000, 135, 800);
-				SpawnCircle(itemID3, 8000,  90, 800);
-				return;
+			if (skillid===311||skillid===323) {
+				SpawnString(itemID3, 12000, 135, 800);
+				SpawnString(itemID3, 12000,  90, 800);
 			}
 			// 披萨_3 右下
-			if ([312, 324].includes(skillid)) {
-				SpawnCircle(itemID3, 8000,  90, 800);
-				SpawnCircle(itemID3, 8000,  45, 800);
-				return;
+			if (skillid===312||skillid===324) {
+				SpawnString(itemID3, 12000,  90, 800);
+				SpawnString(itemID3, 12000,  45, 800);
 			}
 			// 披萨_4 后右
-			if ([316, 320].includes(skillid)) {
-				SpawnCircle(itemID3, 8000,  45, 800);
-				SpawnCircle(itemID3, 8000,   0, 800);
-				return;
+			if (skillid===316||skillid===320) {
+				SpawnString(itemID3, 12000,  45, 800);
+				SpawnString(itemID3, 12000,   0, 800);
 			}
 			// 披萨_5 后左
-			if ([313, 321].includes(skillid)) {
-				SpawnCircle(itemID3, 8000,   0, 800);
-				SpawnCircle(itemID3, 8000, 315, 800);
-				return;
+			if (skillid===313||skillid===321) {
+				SpawnString(itemID3, 12000,   0, 800);
+				SpawnString(itemID3, 12000, 315, 800);
 			}
 			// 披萨_6 左下
-			if ([317, 325].includes(skillid)) {
-				SpawnCircle(itemID3, 8000, 315, 800);
-				SpawnCircle(itemID3, 8000, 270, 800);
-				return;
+			if (skillid===317||skillid===325) {
+				SpawnString(itemID3, 12000, 315, 800);
+				SpawnString(itemID3, 12000, 270, 800);
 			}
 			// 披萨_7 左上
-			if ([318, 322].includes(skillid)) {
-				SpawnCircle(itemID3, 8000, 270, 800);
-				SpawnCircle(itemID3, 8000, 225, 800);
-				return;
+			if (skillid===318||skillid===32) {
+				SpawnString(itemID3, 12000, 270, 800);
+				SpawnString(itemID3, 12000, 225, 800);
 			}
 			// 披萨_8 前左
-			if ([314, 326].includes(skillid)) {
-				SpawnCircle(itemID3, 8000, 225, 800);
-				SpawnCircle(itemID3, 8000, 180, 800);
-				return;
+			if (skillid===314||skillid===326)) {
+				SpawnString(itemID3, 12000, 225, 800);
+				SpawnString(itemID3, 12000, 180, 800);
 			}
 			// 全屏轰炸
 			if (skillid===309) {
@@ -824,7 +818,6 @@ module.exports = function Tera_Guide(mod) {
 				SpawnThing(true, 5000, bossSkillID.sign_degrees1, 250); // 王右侧 光柱+告示牌
 				SpawnThing(true, 5000, bossSkillID.sign_degrees2, 250); // 王左侧 光柱+告示牌
 			}
-			
 			sendMessage(bossSkillID.msg);
 		}
 		
@@ -978,6 +971,22 @@ module.exports = function Tera_Guide(mod) {
 				SpawnString(itemID3, 2000,   0, 500); // 垂直对称轴 尾部
 				SpawnThing(true, 5000, bossSkillID.sign_degrees, 250);
 				if (isTank) bossSkillID.msg = bossSkillID.msg_tk;
+			}
+			sendMessage(bossSkillID.msg);
+		}
+		
+		// Nest
+		if ([3101, 3201].includes(whichmode) && event.templateId==1000 && (bossSkillID = NT_BOSS_1.find(obj => obj.id === skillid))) {
+			if (skillid===313||skillid===314) {
+				SpawnThing(   false,  100, 180,  75);
+				SpawnCircle(itemID3, 4000,  10, 300);
+			}
+			sendMessage(bossSkillID.msg);
+		}
+		
+		if ([3101, 3201].includes(whichmode) && event.templateId==2000 && (bossSkillID = NT_BOSS_2.find(obj => obj.id === skillid))) {
+			if (skillid===231||skillid===232) {
+				SpawnCircle(itemID3, 3000, 10, 300);
 			}
 			sendMessage(bossSkillID.msg);
 		}
