@@ -198,7 +198,7 @@ module.exports = function Tera_Guide(mod) {
 			curAngle = event.w;
 			if (whichmode==935) {
 				if (ballCount===1) {
-					timer = 10000;
+					timer = 11000;
 					ballCount++;
 				}
 				if (ballCount===2) {
@@ -206,7 +206,7 @@ module.exports = function Tera_Guide(mod) {
 					ballCount++;
 				}
 				if (ballCount===3) {
-					timer = 4000;
+					timer = 3000;
 					ballCount = 1;
 				}
 			}
@@ -540,14 +540,14 @@ module.exports = function Tera_Guide(mod) {
 		if ([781, 981].includes(whichmode) && event.templateId==3000 && (bossSkillID = VS_BOSS_3.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			if (skillid===103 && !checked) return;
-			// 前盾砸(晕坦) / 甜甜圈 
+			// 前盾砸(晕坦) / 甜甜圈
 			if (skillid===116) {
-				if (whichmode===781) {
-					SpawnThing(   false,  100, 180,  60);
+				if (whichmode===781) { // 下级 前盾砸
+					SpawnThing(   false,  100, 180,  30);
 					SpawnString(itemID3, 5000, 120, 500);
 					SpawnString(itemID3, 5000, 240, 500);
-				} else {
-					SpawnThing(   false,  100, 180,  30);
+				} else { // 上级 甜甜圈
+					SpawnThing(   false,  100, 180,  40);
 					SpawnCircle(itemID3, 8000,  18, 200);
 					SpawnCircle(itemID3, 8000,  15, 380);
 					SpawnCircle(itemID3, 8000,  12, 560);
