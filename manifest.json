@@ -1,10 +1,7 @@
 {
     "files": {
-        "boss.js": {
-            "overwrite": false,
-            "hash": "4dfa760031d3e8304ca86e2a8ea014f8d16a6f5cc448e9215e63d4907b1517be"
-        },
-        "index.js": "34171380583b8504c23c30245e867fd5271da383d2cbb07b5324637ac0ce4885",
+        "boss.js": "2747a5af31c63cf499faf346a3cfe556a4835ac6d65822886311b001529f191e",
+        "index.js": "ff91d4b9d44c60bf4d6af4e537ec52c2a17eef6a6305d97d30af2517c164aa4c",
         "module.json": "11466ae37afb7863c5d8433fdb06c98b95c9aa9a34c84f8ae78db62cc5a83c6f"
     },
     "defs": {

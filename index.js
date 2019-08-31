@@ -10,7 +10,7 @@ let {
 	 AA_BOSS_1,  AA_BOSS_2,  AA_BOSS_3,
 	DRC_BOSS_1, DRC_BOSS_2, DRC_BOSS_3, DRC_TipMsg,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
-	 NT_BOSS_1, NT_BOSS_2
+	 NT_BOSS_1,  NT_BOSS_2
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -163,6 +163,7 @@ module.exports = function Tera_Guide(mod) {
 		// RK_2王
 		ballCount          = 1,
 		timer              = 5000;
+		// RK_3王
 		FirstMsg           = "X",
 		SecondMsg          = "X",
 		SwitchMsg          = false,
@@ -976,16 +977,61 @@ module.exports = function Tera_Guide(mod) {
 			sendMessage(bossSkillID.msg);
 		}
 		
-		// Nest
+		// 蝴蝶_1王
 		if ([3101, 3201].includes(whichmode) && event.templateId==1000 && (bossSkillID = NT_BOSS_1.find(obj => obj.id === skillid))) {
+			if (event.stage!==0) return;
+			// 直线后喷
+			if (skillid===127) {
+				SpawnThing(   false,  100,  90, 100);
+				SpawnString(itemID3, 3000,   0, 500);
+				SpawnThing(   false,  100, 270, 200);
+				SpawnString(itemID3, 3000,   0, 500);
+			}
+			// 扇形后喷
+			if (skillid===131) {
+				SpawnString(itemID3, 3000,  60, 800);
+				SpawnString(itemID3, 3000, 300, 800);
+			}
+			// 左右喷射
+			if (skillid===132) {
+				SpawnString(itemID3, 3000, 340, 800);
+				SpawnString(itemID3, 3000,  20, 800);
+				SpawnString(itemID3, 3000, 160, 800);
+				SpawnString(itemID3, 3000, 200, 800);
+			}
+			// 前后喷射
+			if (skillid===132) {
+				SpawnString(itemID3, 3000,  70, 800);
+				SpawnString(itemID3, 3000, 110, 800);
+				SpawnString(itemID3, 3000, 250, 800);
+				SpawnString(itemID3, 3000, 290, 800);
+			}
+			// 右手蓄力
+			if (skillid===148) {
+				SpawnThing(   false,  100, 135,  80);
+				SpawnCircle(itemID3, 3000,  10, 280);
+			}
+			// 左手蓄力
+			if (skillid===148) {
+				SpawnThing(   false,  100, 215,  80);
+				SpawnCircle(itemID3, 3000,  10, 280);
+			}
+			// 内外圈
 			if (skillid===313||skillid===314) {
-				SpawnThing(   false,  100, 180,  75);
+				SpawnThing(   false,  100, 180,  80);
 				SpawnCircle(itemID3, 4000,  10, 300);
 			}
 			sendMessage(bossSkillID.msg);
 		}
-		
+		// 蝴蝶_2王
 		if ([3101, 3201].includes(whichmode) && event.templateId==2000 && (bossSkillID = NT_BOSS_2.find(obj => obj.id === skillid))) {
+			if (event.stage!==0) return;
+			// 前插 后喷
+			if (skillid===127) {
+				SpawnString(itemID3, 3000,  20, 1000);
+				SpawnString(itemID3, 3000, 340, 1000);
+			}
+			// 内外圈
 			if (skillid===231||skillid===232) {
 				SpawnCircle(itemID3, 3000, 10, 300);
 			}
