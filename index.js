@@ -579,43 +579,43 @@ module.exports = function Tera_Guide(mod) {
 			if (event.stage!==0) return;
 			// 披萨_1 前右
 			if (skillid===315||skillid===319) {
-				SpawnString(itemID3, 12000, 180, 800);
-				SpawnString(itemID3, 12000, 135, 800);
+				SpawnString(itemID3, 14000, 180, 800);
+				SpawnString(itemID3, 14000, 135, 800);
 			}
 			// 披萨_2 右上
 			if (skillid===311||skillid===323) {
-				SpawnString(itemID3, 12000, 135, 800);
-				SpawnString(itemID3, 12000,  90, 800);
+				SpawnString(itemID3, 14000, 135, 800);
+				SpawnString(itemID3, 14000,  90, 800);
 			}
 			// 披萨_3 右下
 			if (skillid===312||skillid===324) {
-				SpawnString(itemID3, 12000,  90, 800);
-				SpawnString(itemID3, 12000,  45, 800);
+				SpawnString(itemID3, 14000,  90, 800);
+				SpawnString(itemID3, 14000,  45, 800);
 			}
 			// 披萨_4 后右
 			if (skillid===316||skillid===320) {
-				SpawnString(itemID3, 12000,  45, 800);
-				SpawnString(itemID3, 12000,   0, 800);
+				SpawnString(itemID3, 14000,  45, 800);
+				SpawnString(itemID3, 14000,   0, 800);
 			}
 			// 披萨_5 后左
 			if (skillid===313||skillid===321) {
-				SpawnString(itemID3, 12000,   0, 800);
-				SpawnString(itemID3, 12000, 315, 800);
+				SpawnString(itemID3, 14000,   0, 800);
+				SpawnString(itemID3, 14000, 315, 800);
 			}
 			// 披萨_6 左下
 			if (skillid===317||skillid===325) {
-				SpawnString(itemID3, 12000, 315, 800);
-				SpawnString(itemID3, 12000, 270, 800);
+				SpawnString(itemID3, 14000, 315, 800);
+				SpawnString(itemID3, 14000, 270, 800);
 			}
 			// 披萨_7 左上
 			if (skillid===318||skillid===32) {
-				SpawnString(itemID3, 12000, 270, 800);
-				SpawnString(itemID3, 12000, 225, 800);
+				SpawnString(itemID3, 14000, 270, 800);
+				SpawnString(itemID3, 14000, 225, 800);
 			}
 			// 披萨_8 前左
 			if (skillid===314||skillid===326) {
-				SpawnString(itemID3, 12000, 225, 800);
-				SpawnString(itemID3, 12000, 180, 800);
+				SpawnString(itemID3, 14000, 225, 800);
+				SpawnString(itemID3, 14000, 180, 800);
 			}
 			// 全屏轰炸
 			if (skillid===309) {
