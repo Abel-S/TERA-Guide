@@ -3,8 +3,8 @@ module.exports = {
 	DungeonInfo : [
 		{zone: 9066, string: '<font color="#56B4E9">岱魔鲁斯的轮盘</font>'},
 		
-		{zone: 9770, string: '<font color="#56B4E9">拉坎里斯的廢墟</font> <font color="#E69F00">下级</font>'},
-		{zone: 9970, string: '<font color="#56B4E9">拉坎里斯的廢墟</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9770, string: '<font color="#56B4E9">拉坎里斯的废墟</font> <font color="#E69F00">下级</font>'},
+		{zone: 9970, string: '<font color="#56B4E9">拉坎里斯的废墟</font> <font color="#00FFFF">上级</font>'},
 		
 		{zone: 9781, string: '<font color="#56B4E9">贝里克神殿</font> <font color="#E69F00">下级</font>'},
 		{zone: 9981, string: '<font color="#56B4E9">贝里克神殿</font> <font color="#00FFFF">上级</font>'},
@@ -12,8 +12,8 @@ module.exports = {
 		{zone: 9735, string: '<font color="#56B4E9">RK-9机库</font> <font color="#E69F00">下级</font>'},
 		{zone: 9935, string: '<font color="#56B4E9">RK-9机库</font> <font color="#00FFFF">上级</font>'},
 		
-		{zone: 9739, string: '<font color="#56B4E9">革命團總部</font> <font color="#E69F00">下级</font>'},
-		{zone: 9939, string: '<font color="#56B4E9">革命團總部</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9739, string: '<font color="#56B4E9">革命团总部</font> <font color="#E69F00">下级</font>'},
+		{zone: 9939, string: '<font color="#56B4E9">革命团总部</font> <font color="#00FFFF">上级</font>'},
 		
 		{zone: 9720, string: '<font color="#56B4E9">安塔洛斯的深渊</font> <font color="#E69F00">下级</font>'},
 		{zone: 9920, string: '<font color="#56B4E9">安塔洛斯的深渊</font> <font color="#00FFFF">上级</font>'},
@@ -29,10 +29,10 @@ module.exports = {
 		
 		{zone: 9044, string: '<font color="#56B4E9">巴哈勒神殿</font>'},
 		
-		{zone: 3101, string: '<font color="#56B4E9">費爾奎娜巢穴</font> <font color="#E69F00">下级</font>'},
-		{zone: 3201, string: '<font color="#56B4E9">費爾奎娜巢穴</font> <font color="#00FFFF">上级</font>'}
+		{zone: 3101, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#E69F00">下级</font>'},
+		{zone: 3201, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#00FFFF">上级</font>'}
 	],
-	// 岱魔鲁斯的轮盘 (Demon’s Wheel)
+	// 岱魔魯斯的輪盤 (Demon's Wheel)
 	DW_BOSS_1 : [
 		{id: 105, msg: '跳跃(眩晕)'},
 		{id: 106, msg: '尾气后喷'},
@@ -85,15 +85,15 @@ module.exports = {
 		"全部!!",
 		"红(逆)",           "白(逆)",           "蓝(逆)"            // 466054   466055   466056
 	],
-	// 拉坎里斯的廢墟 (Ruins of Lacanis)
-	RL_BOSS_1 : [
+	// 拉坎里斯的廢墟 (Ruinous Manor)
+	RM_BOSS_1 : [
 		{id: 107, msg: '前喷(坦)'}
 	],
-	RL_BOSS_2 : [
+	RM_BOSS_2 : [
 		{id: 106, msg: '插地(眩晕)'},
 		{id: 111, msg: '连续攻击(不可挡)'}
 	],
-	RL_BOSS_3 : [
+	RM_BOSS_3 : [
 		// 102 101 103          后喷
 		{id: 103, msg: '后喷(打手)'},
 		// 101 102 104 105     不推
@@ -187,7 +187,7 @@ module.exports = {
 		// {id: 305, msg: '鉴定'}
 	],
 	RK_TipMsg : ["Next -> ", "近", "远", "全", "BOSS将会在10S内出护盾"],
-	// 革命團總部 (Red Refuge)
+	// 革命团总部 (Red Refuge)
 	RR_BOSS_1 : [
 	
 	],
@@ -299,7 +299,7 @@ module.exports = {
 		{id: 399, msg: '二次觉醒(推人)', level_Msg: ['一层!', '<font color="#FF0000">爆炸!!</font>']},
 		{id: 360, msg: '爆炸!! 爆炸!!'}
 	],
-	// Baharr
+	// 巴哈勒神殿 (Bahaar's Sanctum)
 	Baharr : [
 		{id: 108, msg: '丢锤 (晕眩)'},
 		{id: 113, msg: '点名 (闪避)'},
@@ -338,8 +338,8 @@ module.exports = {
 		{id: 120, msg: '←← 左侧安全', msg_tk: '→→→ →→ →', sign_degrees:  90, sign_distance: 200}
 	],
 	Baharr_TipMsg : ["四连半月(就绪)", "红眼射线 (秒杀)"],
-	// Nest
-	NT_BOSS_1 : [
+	// 费尔奎娜巢穴 (Gossamer Vault)
+	GV_BOSS_1 : [
 		{id: 142, msg: '双手前砸(晕坦)'}, // 142 124
 		{id: 127, msg: '直线后喷(击退)'},
 		{id: 131, msg: '扇形后喷(击退)'},
@@ -358,7 +358,7 @@ module.exports = {
 		{id: 314, msg: '内外圈(快)'},
 		{id: 305, msg: 'Pizza'}
 	],
-	NT_BOSS_2 : [
+	GV_BOSS_2 : [
 		{id: 108, msg: '前插 | 后喷'},
 		{id: 105, msg: '前刺(闪避)'}, // 104 105
 		{id: 109, msg: '前刺(闪避)'},

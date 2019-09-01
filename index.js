@@ -3,14 +3,14 @@ const Vec3 = require('tera-vec3');
 let {
 	DungeonInfo, Baharr, Baharr_TipMsg,
 	 DW_BOSS_1,  DW_BOSS_2, DW_TipMsg1, DW_TipMsg2,
-	 RL_BOSS_1,  RL_BOSS_2,  RL_BOSS_3,
+	 RM_BOSS_1,  RM_BOSS_2,  RM_BOSS_3,
 	 VS_BOSS_1,  VS_BOSS_2,  VS_BOSS_3, VS_TipMsg,
 	 RK_BOSS_1,  RK_BOSS_2,  RK_BOSS_3, RK_TipMsg,
 	 RR_BOSS_1,  RR_BOSS_2,  RR_BOSS_3,
 	 AA_BOSS_1,  AA_BOSS_2,  AA_BOSS_3,
 	DRC_BOSS_1, DRC_BOSS_2, DRC_BOSS_3, DRC_TipMsg,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
-	 NT_BOSS_1,  NT_BOSS_2
+	 GV_BOSS_1,  GV_BOSS_2
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -206,6 +206,8 @@ module.exports = function Tera_Guide(mod) {
 					timer = 4000;
 					ballCount = 1;
 				}
+				mod.log("ballCount " + ballCount);
+				mod.log("timer " + timer);
 			}
 			SpawnString(itemID3, timer,   0, 1000);
 			SpawnString(itemID3, timer,  90,  600);
@@ -454,8 +456,8 @@ module.exports = function Tera_Guide(mod) {
 			sendMessage(bossSkillID.msg);
 		}
 		
-		// RL_1王
-		if ([770, 970].includes(whichmode) && event.templateId==1000 && (bossSkillID = RL_BOSS_1.find(obj => obj.id === skillid))) {
+		// RM_1王
+		if ([770, 970].includes(whichmode) && event.templateId==1000 && (bossSkillID = RM_BOSS_1.find(obj => obj.id === skillid))) {
 			// 前喷
 			if (skillid===107) {
 				SpawnString(itemID3, 3000, 130, 500);
@@ -463,8 +465,8 @@ module.exports = function Tera_Guide(mod) {
 			}
 			sendMessage(bossSkillID.msg);
 		}
-		// RL_2王
-		if ([770, 970].includes(whichmode) && event.templateId==2000 && (bossSkillID = RL_BOSS_2.find(obj => obj.id === skillid))) {
+		// RM_2王
+		if ([770, 970].includes(whichmode) && event.templateId==2000 && (bossSkillID = RM_BOSS_2.find(obj => obj.id === skillid))) {
 			//插地眩晕
 			if (skillid===106) {
 				SpawnThing(   false,  100, 180,  30);
@@ -476,8 +478,8 @@ module.exports = function Tera_Guide(mod) {
 			}
 			sendMessage(bossSkillID.msg);
 		}
-		// RL_3王
-		if ([770, 970].includes(whichmode) && event.templateId==3000 && (bossSkillID = RL_BOSS_3.find(obj => obj.id === skillid))) {
+		// RM_3王
+		if ([770, 970].includes(whichmode) && event.templateId==3000 && (bossSkillID = RM_BOSS_3.find(obj => obj.id === skillid))) {
 			// 前推坦
 			if (skillid===106) {
 				SpawnThing(   false, 100,    0,  30);
@@ -974,7 +976,7 @@ module.exports = function Tera_Guide(mod) {
 		}
 		
 		// 蝴蝶_1王
-		if ([3101, 3201].includes(whichmode) && event.templateId==1000 && (bossSkillID = NT_BOSS_1.find(obj => obj.id === skillid))) {
+		if ([3101, 3201].includes(whichmode) && event.templateId==1000 && (bossSkillID = GV_BOSS_1.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			// 直线后喷
 			if (skillid===127) {
@@ -1020,7 +1022,7 @@ module.exports = function Tera_Guide(mod) {
 			sendMessage(bossSkillID.msg);
 		}
 		// 蝴蝶_2王
-		if ([3101, 3201].includes(whichmode) && event.templateId==2000 && (bossSkillID = NT_BOSS_2.find(obj => obj.id === skillid))) {
+		if ([3101, 3201].includes(whichmode) && event.templateId==2000 && (bossSkillID = GV_BOSS_2.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			// 前插 后喷
 			if (skillid===127) {
