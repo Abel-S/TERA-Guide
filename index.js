@@ -25,7 +25,6 @@ module.exports = function Tera_Guide(mod) {
 		itemID4            =   413, // 采集物: 413调味草
 		itemID5            =   513, // 采集物: 513吞食之草
 		itemID6            =   912  // 采集物: 912鸵鸟蛋
-		
 	// 定义变量
 	let hooks              = [],
 		isTank             = false, // 坦克职业 / 打手职业
@@ -41,7 +40,6 @@ module.exports = function Tera_Guide(mod) {
 		uid3      = 799999999n,     // 花朵UID
 		curLocation        = {},    // 地面提示 坐标 x y z
 		curAngle           = 0,     // 地面提示 角度
-		
 		// DW
 		circleCount        = 0,     // 累计点名圆圈数
 		ballColor          = 0,     // 打投掷颜色
@@ -199,15 +197,13 @@ module.exports = function Tera_Guide(mod) {
 			curAngle = event.w;
 			if (whichmode==935) {
 				if (ballCount===1) {
-					timer = 11000;
+					timer = 10000;
 					ballCount++;
-				}
-				if (ballCount===2) {
+				} else if (ballCount===2) {
 					timer = 7000
 					ballCount++;
-				}
-				if (ballCount===3) {
-					timer = 3000;
+				} else if (ballCount===3) {
+					timer = 4000;
 					ballCount = 1;
 				}
 			}
