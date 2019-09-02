@@ -978,15 +978,16 @@ module.exports = function Tera_Guide(mod) {
 			if (event.stage!==0) return;
 			// 直线后喷
 			if (skillid===127) {
-				SpawnThing(   false,  100,  90, 100);
-				SpawnString(itemID3, 3000,   0, 500);
-				SpawnThing(   false,  100, 270, 200);
-				SpawnString(itemID3, 3000,   0, 500);
+				SpawnThing(   false,  100,  90, 140);
+				SpawnString(itemID3, 3000,   7, 500);
+				SpawnThing(   false,  100, 270, 140);
+				SpawnString(itemID3, 3000, 353, 500);
 			}
 			// 扇形后喷
 			if (skillid===131) {
-				SpawnString(itemID3, 3000,  60, 800);
-				SpawnString(itemID3, 3000, 300, 800);
+				SpawnThing(   false,  100, 180, 100);
+				SpawnString(itemID3, 3000,  70, 800);
+				SpawnString(itemID3, 3000, 290, 800);
 			}
 			// 左右喷射
 			if (skillid===132) {
@@ -996,7 +997,7 @@ module.exports = function Tera_Guide(mod) {
 				SpawnString(itemID3, 3000, 200, 800);
 			}
 			// 前后喷射
-			if (skillid===132) {
+			if (skillid===139) {
 				SpawnString(itemID3, 3000,  70, 800);
 				SpawnString(itemID3, 3000, 110, 800);
 				SpawnString(itemID3, 3000, 250, 800);
@@ -1004,13 +1005,13 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 右手蓄力
 			if (skillid===148) {
-				SpawnThing(   false,  100, 135,  80);
-				SpawnCircle(itemID3, 3000,  10, 280);
+				SpawnThing(  false,   100, 150, 140);
+				SpawnCircle(itemID3, 3000,  10, 320);
 			}
 			// 左手蓄力
-			if (skillid===148) {
-				SpawnThing(   false,  100, 215,  80);
-				SpawnCircle(itemID3, 3000,  10, 280);
+			if (skillid===149) {
+				SpawnThing(  false,   100, 200, 140);
+				SpawnCircle(itemID3, 3000,  10, 320);
 			}
 			// 内外圈
 			if (skillid===313||skillid===314) {
@@ -1023,7 +1024,7 @@ module.exports = function Tera_Guide(mod) {
 		if ([3101, 3201].includes(whichmode) && event.templateId==2000 && (bossSkillID = GV_BOSS_2.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			// 前插 后喷
-			if (skillid===127) {
+			if (skillid===108) {
 				SpawnString(itemID3, 3000,  20, 1000);
 				SpawnString(itemID3, 3000, 340, 1000);
 			}
