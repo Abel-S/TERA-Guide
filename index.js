@@ -206,8 +206,6 @@ module.exports = function Tera_Guide(mod) {
 					timer = 4000;
 					ballCount = 1;
 				}
-				mod.log("ballCount " + ballCount);
-				mod.log("timer " + timer);
 			}
 			SpawnString(itemID3, timer,   0, 1000);
 			SpawnString(itemID3, timer,  90,  600);
