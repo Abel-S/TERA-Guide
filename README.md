@@ -49,6 +49,6 @@ DW-Guide VS-Guide RK9-Guide 鉴定机制重写判定并简化
 
 AA-Guide DRC-Guide GSL-Guide Baharr-Guide 合并
 
-加入 革命團總部 (Red Refuge) 和 拉坎里斯的廢墟 (Ruins of Lacanis)
+加入 革命團總部 和 拉坎里斯的廢墟
 
 大致完成, 还需要更多时间去测试bug
