@@ -320,6 +320,7 @@ module.exports = function Tera_Guide(mod) {
 			if ([301, 302, 303].includes(msg_Id)) {
 				SecondMsg = RK_TipMsg[msg_Id % 300];
 				SpawnCircle(itemID3, 5000, 8, 300);
+				
 				// SwitchMsg - false(绿) / true(红)
 				if (!SwitchMsg) {
 					sendMessage(FirstMsg + " -> " + SecondMsg);
@@ -348,7 +349,7 @@ module.exports = function Tera_Guide(mod) {
 		if (!Enabled || whichmode==0 || whichboss==0) return;
 		
 		// GLS_2 石碑 水波攻击 范围提示
-		if ([782, 982, 3019].includes(whichmode) && (event.templateId==2021||event.templateId==2022||event.templateId==2023)) {
+		if ([782, 982, 3019].includes(whichmode) && [2021, 2022, 2023].includes(event.templateId)) {
 			var sign_skillid = event.skill.id % 1000; // 石碑攻击技能编号简化
 			sign_CurLocation = event.loc;             // 石碑的 x y z 坐标
 			sign_CurAngle = event.w;                  // 石碑的角度
@@ -426,11 +427,7 @@ module.exports = function Tera_Guide(mod) {
 				return;
 			}
 			// 鉴定-出圈 重置圈数
-			if ([311, 315, 313, 317].includes(skillid)) {
-				circleCount = 0;
-			}
-			// 鉴定-进圈 重置圈数
-			if ([312, 316, 314, 318].includes(skillid)) {
+			if ([311, 315, 313, 317].includes(skillid) || [312, 316, 314, 318].includes(skillid)) {
 				circleCount = 0;
 			}
 			sendMessage(bossSkillID.msg);
@@ -1025,8 +1022,10 @@ module.exports = function Tera_Guide(mod) {
 			if (event.stage!==0) return;
 			// 前插 后喷
 			if (skillid===108) {
-				SpawnString(itemID3, 3000,  20, 1000);
-				SpawnString(itemID3, 3000, 340, 1000);
+				SpawnThing(   false,  100,  90, 80);
+				SpawnString(itemID3, 3000,  10, 1000);
+				SpawnThing(   false,  100, 270, 80);
+				SpawnString(itemID3, 3000, 350, 1000);
 			}
 			// 内外圈
 			if (skillid===231||skillid===232) {

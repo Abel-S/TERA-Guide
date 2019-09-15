@@ -5,7 +5,7 @@ TERA-Guide
 
 岱魔鲁斯的轮盘 (Demon’s Wheel)
 
-拉坎里斯的廢墟 (Ruins of Lacanis)
+拉坎里斯的廢墟 (Ruinous Manor)
 
 贝里克神殿 (Velik’s Sanctuary)
 
@@ -19,9 +19,9 @@ RK-9机库 (RK-9 Kennel)
 
 里安的地下殿堂 (Grotto of Lost Souls)
 
-巴哈勒神殿 (Baharr)
+巴哈勒神殿 (Bahaar's Sanctum)
 
-費爾奎娜巢穴(nest)
+費爾奎娜巢穴(Gossamer Vault)
 
 ------
 
