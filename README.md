@@ -41,10 +41,6 @@ guide stream | Send To Stream
 
 ------
 
-日志:
-
-2019-08-28
-
 DW-Guide VS-Guide RK9-Guide 鉴定机制重写判定并简化
 
 AA-Guide DRC-Guide GSL-Guide Baharr-Guide 合并
