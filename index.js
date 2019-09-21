@@ -224,8 +224,9 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sDungeonEventMessage(event) {
 		if (!Enabled || whichmode==0 || whichboss==0) return;
-		var msg_Id = parseInt(event.message.replace(/[^0-9]/ig, '') % 1000);
 		// var msg_Id = parseInt(event.message.replace('@dungeon:', '') % 1000);
+		// var msg_Id = parseInt(event.message.replace(/[^0-9]/ig, '') % 1000);
+		var msg_Id = parseInt(event.message.match(/\d+/ig)) % 1000;
 		if (BossLog) {
 			mod.command.message("Dungeon-Message: " + event.message + " | " + msg_Id);
 		}
@@ -265,8 +266,9 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sQuestBalloon(event) {
 		if (!Enabled || whichmode==0 || whichboss==0) return;
-		var msg_Id = parseInt(event.message.replace(/[^0-9]/ig, '') % 1000);
 		// var msg_Id = parseInt(event.message.replace('@monsterBehavior:', '') % 1000);
+		// var msg_Id = parseInt(event.message.replace(/[^0-9]/ig, '') % 1000);
+		var msg_Id = parseInt(event.message.match(/\d+/ig)) % 1000;
 		if (BossLog) {
 			mod.command.message("Quest-Balloon: " + event.message + " | " + msg_Id);
 		}
