@@ -988,11 +988,11 @@ module.exports = function Tera_Guide(mod) {
 			// 四连半月
 			if ([121, 122, 123, 140, 141, 142].includes(skillid)) {
 				// var tmp = boss_CurLocation;
-				SpawnThing(   false,  100,  90,  60);
+				SpawnThing(   false,  100,  90,  50);
 				SpawnString(itemID3, 6000,   0, 400);
 				SpawnString(itemID3, 6000, 180, 400);
 				// boss_CurLocation = tmp;
-				SpawnThing(   false,  100, 270,  60);
+				SpawnThing(   false,  100, 270,  50);
 				SpawnString(itemID3, 6000,   0, 400);
 				SpawnString(itemID3, 6000, 180, 400);
 				
