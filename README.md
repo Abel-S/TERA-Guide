@@ -19,7 +19,7 @@ RK-9机库 (RK-9 Kennel)
 
 里安的地下殿堂 (Grotto of Lost Souls)
 
-巴哈勒神殿 (Bahaar's Sanctum)
+~~巴哈勒神殿 (Bahaar's Sanctum)~~
 
 費爾奎娜巢穴(Gossamer Vault)
 
@@ -43,7 +43,7 @@ guide stream | Send To Stream
 
 DW-Guide VS-Guide RK9-Guide 鉴定机制重写判定并简化
 
-AA-Guide DRC-Guide GSL-Guide Baharr-Guide 合并
+AA-Guide DRC-Guide GSL-Guide ~~Baharr-Guide~~ 合并
 
 加入 革命團總部 和 拉坎里斯的廢墟
 
