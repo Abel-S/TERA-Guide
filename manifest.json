@@ -1,8 +1,8 @@
 {
     "files": {
-        "boss.js": "69e3bec94e61fbe66dfb9ccb1dc2df1dabb2dd4d1a8c2753abb5d0446e82eaf4",
-        "index.js": "b7c493c72aa4b7861b414148cdfc15b267a4bf3f0924b52a7153a36304abe505",
-        "module.json": "3d3abbe3154b60d4c1abacdc82b918aa9d6fd0531ba49d0848c31ad59c5d3243"
+        "boss.js": "93f91ed49fbeffcc6b8732fd0fc5308a8c2dcb2a5252d6737de3d1881e8ac8be",
+        "index.js": "f1d09178aae8d0bb58046ecebd49702363ae75baf030d16a0cbd7cb7364fad9b",
+        "module.json": "62d5c7d280c0c159fc168bdca96eb937203c852e78feb57be1c1d8b556d91f9a"
     },
     "defs": {
         "C_PLAYER_LOCATION": 5,

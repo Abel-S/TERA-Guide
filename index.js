@@ -3,6 +3,8 @@ const Vec3 = require('tera-vec3');
 let {
 	DungeonInfo,
 	 DW_BOSS_1,  DW_BOSS_2, DW_TipMsg1, DW_TipMsg2,
+	 FI_BOSS_1,  FI_BOSS_2,  FI_BOSS_3,
+	 DF_BOSS_1,  DF_BOSS_2,  DF_BOSS_3,
 	 RM_BOSS_1,  RM_BOSS_2,  RM_BOSS_3,
 	 VS_BOSS_1,  VS_BOSS_2,  VS_BOSS_3, VS_TipMsg,
 	 RK_BOSS_1,  RK_BOSS_2,  RK_BOSS_3, RK_TipMsg,
@@ -70,7 +72,7 @@ module.exports = function Tera_Guide(mod) {
 	mod.command.add(["辅助", "guide"], (arg) => {
 		if (!arg) {
 			Enabled = !Enabled;
-			mod.command.message("辅助提示(Guide) " + (Enabled ? "启用(ON)" : "禁用(OFF)"));
+			mod.command.message("副本提示(Guide) " + (Enabled ? "启用(ON)" : "禁用(OFF)"));
 		} else {
 			switch (arg) {
 				case "stream":
@@ -182,8 +184,14 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sBossGageInfo(event) {
 		boss_HP = (Number(event.curHp) / Number(event.maxHp));
-		if (!whichmode) whichmode = event.huntingZoneId;
-		if (!whichboss) whichboss = event.templateId;
+		if (!whichmode) {
+			whichmode = event.huntingZoneId;
+			if (BossLog) console.log("whichmode " + whichmode);
+		}
+		if (!whichboss) {
+			whichboss = event.templateId;
+			if (BossLog) console.log("whichboss " + whichboss);
+		}
 		if (!boss_GameID) boss_GameID = event.id;
 		if (boss_HP <= 0 || boss_HP == 1) reset();
 	}
@@ -436,6 +444,32 @@ module.exports = function Tera_Guide(mod) {
 				sendMessage(bossSkillID.msg + " -> " + DW_TipMsg2[ballColor]);
 				return;
 			}
+			sendMessage(bossSkillID.msg);
+		}
+		
+		// FI_1王
+		if ([459, 759].includes(whichmode) && event.templateId==1000 && (bossSkillID = FI_BOSS_1.find(obj => obj.id === skillid))) {
+			sendMessage(bossSkillID.msg);
+		}
+		// FI_2王
+		if ([459, 759].includes(whichmode) && event.templateId==2000 && (bossSkillID = FI_BOSS_2.find(obj => obj.id === skillid))) {
+			sendMessage(bossSkillID.msg);
+		}
+		// FI_3王
+		if ([459, 759].includes(whichmode) && event.templateId==3000 && (bossSkillID = FI_BOSS_3.find(obj => obj.id === skillid))) {
+			sendMessage(bossSkillID.msg);
+		}
+		
+		// DF_1王
+		if ([467, 767].includes(whichmode) && event.templateId==46701 && (bossSkillID = DF_BOSS_1.find(obj => obj.id === skillid))) {
+			sendMessage(bossSkillID.msg);
+		}
+		// DF_2王
+		if ([467, 767].includes(whichmode) && event.templateId==46703 && (bossSkillID = DF_BOSS_2.find(obj => obj.id === skillid))) {
+			sendMessage(bossSkillID.msg);
+		}
+		// DF_3王
+		if ([467, 767].includes(whichmode) && event.templateId==46704 && (bossSkillID = DF_BOSS_3.find(obj => obj.id === skillid))) {
 			sendMessage(bossSkillID.msg);
 		}
 		
@@ -913,7 +947,7 @@ module.exports = function Tera_Guide(mod) {
 			sendMessage(bossSkillID.msg + powerMsg);
 		}
 		
-		// 蝴蝶_1王
+		// GV_1王
 		if ([3101, 3201].includes(whichmode) && event.templateId==1000 && (bossSkillID = GV_BOSS_1.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			// 右手蓄力
@@ -960,7 +994,7 @@ module.exports = function Tera_Guide(mod) {
 			}
 			sendMessage(bossSkillID.msg);
 		}
-		// 蝴蝶_2王
+		// GV_2王
 		if ([3101, 3201].includes(whichmode) && event.templateId==2000 && (bossSkillID = GV_BOSS_2.find(obj => obj.id === skillid))) {
 			if (event.stage!==0) return;
 			// 前插 后喷

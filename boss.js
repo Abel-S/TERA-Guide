@@ -3,6 +3,12 @@ module.exports = {
 	DungeonInfo : [
 		{zone: 9066, string: '<font color="#56B4E9">岱魔鲁斯的轮盘</font>'},
 		
+		{zone: 9059, string: '<font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#E69F00">下级</font>'},
+		{zone: 9759, string: '<font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#00FFFF">上级</font>'},
+		
+		{zone: 9767, string: '<font color="#56B4E9">费勒诺的实验室</font> <font color="#E69F00">下级</font>'},
+		{zone: 9067, string: '<font color="#56B4E9">费勒诺的实验室</font> <font color="#00FFFF">上级</font>'},
+		
 		{zone: 9770, string: '<font color="#56B4E9">拉坎里斯的废墟</font> <font color="#E69F00">下级</font>'},
 		{zone: 9970, string: '<font color="#56B4E9">拉坎里斯的废墟</font> <font color="#00FFFF">上级</font>'},
 		
@@ -28,7 +34,9 @@ module.exports = {
 		{zone: 3019, string: '<font color="#56B4E9">里安的地下殿堂</font> <font color="#FF0000"> 7人</font>'},
 		
 		{zone: 3101, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#E69F00">下级</font>'},
-		{zone: 3201, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#00FFFF">上级</font>'}
+		{zone: 3201, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#00FFFF">上级</font>'},
+		
+		{zone: 3023, string: '<font color="#E69F00">貝爾亞克城堡秘密地區</font>'}
 	],
 	// 岱魔魯斯的輪盤 (Demon's Wheel)
 	DW_BOSS_1 : [
@@ -82,6 +90,36 @@ module.exports = {
 		"红(顺) | (蓝+白)", "白(顺) | (红+蓝)", "蓝(顺) | (红+白)", // 466050   466051   466052
 		"全部!!",
 		"红(逆)",           "白(逆)",           "蓝(逆)"            // 466054   466055   466056
+	],
+	// 伯恩斯坦恶灵岛 (Forsaken Island)
+	FI_BOSS_1 : [
+		{id: 104, msg: '跳'},
+		{id: 106, msg: '旋转攻击'}
+	],
+	FI_BOSS_2 : [
+		{id: 101, msg: '推'},
+		{id: 104, msg: '全屏攻击'},
+		{id: 107, msg: '闪避'}
+	],
+	FI_BOSS_3 : [
+		{id: 101, msg: '爆炸'},
+		{id: 102, msg: '拉'},
+		{id: 105, msg: '闪避'},
+		{id: 110, msg: '出'}
+	],
+	// 费勒诺的实验室(Demokron Factory)
+	DF_BOSS_1 : [
+		
+	],
+	DF_BOSS_2 : [
+		
+	],
+	DF_BOSS_3 : [
+		{id: 205, msg: '击退(慢慢慢)'},
+		{id: 218, msg: '击退'},
+		{id: 211, msg: '内->外 (扩散)'},
+		{id: 212, msg: '外->内 (收缩)'},
+		{id: 219, msg: '内外同时'}
 	],
 	// 拉坎里斯的廢墟 (Ruinous Manor)
 	RM_BOSS_1 : [
