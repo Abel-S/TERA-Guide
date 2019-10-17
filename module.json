@@ -8,5 +8,5 @@
     "description": "为TERA的常用副本提供[技能]辅助提示",
     "servers": ["https://raw.githubusercontent.com/tera-mod/Tera-Guide/master/"],
     "supportUrl": "https://github.com/tera-mod/Tera-Guide/issues",
-    "version": "86.05"
+    "version": "86.06"
 }
