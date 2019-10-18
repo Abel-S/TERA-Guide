@@ -23,6 +23,10 @@ RK-9机库 (RK-9 Kennel)
 
 費爾奎娜巢穴(Gossamer Vault)
 
+费勒诺的实验室 (Demokron Factory)
+
+伯恩斯坦恶灵岛 (Forsaken Island)
+
 ------
 
 /8频道 键入命令 | 效果说明
@@ -47,4 +51,4 @@ AA-Guide DRC-Guide GSL-Guide ~~Baharr-Guide~~ 合并
 
 加入 革命團總部 和 拉坎里斯的廢墟
 
-大致完成, 还需要更多时间去测试bug
+加入 费勒诺的实验室 和 伯恩斯坦恶灵岛
