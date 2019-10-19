@@ -11,7 +11,8 @@ let {DungeonInfo,
 	 AA_BOSS_1,  AA_BOSS_2,  AA_BOSS_3,
 	DRC_BOSS_1, DRC_BOSS_2, DRC_BOSS_3, DRC_TipMsg,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
-	 GV_BOSS_1,  GV_BOSS_2
+	 GV_BOSS_1,  GV_BOSS_2,
+	 AQ_BOSS_1,  AQ_BOSS_2, AQ_TipMsg
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -231,7 +232,7 @@ module.exports = function Tera_Guide(mod) {
 		];
 		 */
 		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(event.huntingZoneId) && 75941< event.templateId && event.templateId <75964) {
+		if ([459, 759].includes(event.huntingZoneId) && 75941<= event.templateId && event.templateId <=75964) {
 			boxMarkers.push({ gameId: event.gameId, loc: event.loc, w: event.w });
 		}
 	}
@@ -243,6 +244,36 @@ module.exports = function Tera_Guide(mod) {
 			boxMarkers = boxMarkers.filter(obj => obj.gameId != event.gameId);
 		}
 	}
+	
+	
+	mod.command.add(('test'), (arg) => {
+		arg = Number(arg);
+		boss_CurLocation = boxMarkers[arg].loc;
+		boss_CurAngle = boxMarkers[arg].w;
+		curLocation = boxMarkers[arg].loc;
+		curAngle = boxMarkers[arg].w;
+		
+		SpawnString(itemID4, 4000, 180, 1500);
+		SpawnThing(   false,  100,  90,   80);
+		SpawnString(itemID4, 4000, 180, 1500);
+		SpawnThing(   false,  100, 270,   80);
+		SpawnString(itemID4, 4000, 180, 1500);
+	})
+	
+	mod.command.add(('test1'), (arg) => {
+		arg = Number(arg);
+		boss_CurLocation = boxMarkers[arg].loc;
+		boss_CurAngle = boxMarkers[arg].w - Math.PI;
+		curLocation = boxMarkers[arg].loc;
+		curAngle = boxMarkers[arg].w - Math.PI;
+		
+		SpawnString(itemID4, 4000, 180, 1500);
+		SpawnThing(   false,  100,  90,   80);
+		SpawnString(itemID4, 4000, 180, 1500);
+		SpawnThing(   false,  100, 270,   80);
+		SpawnString(itemID4, 4000, 180, 1500);
+	})
+	
 	
 	function sCreatureRotate(event) {
 		// AA_3王 后砸
@@ -429,7 +460,7 @@ module.exports = function Tera_Guide(mod) {
 		
 		if (whichboss !== event.templateId) return;
 		
-		if (BossLog) mod.command.message("Boss-Skill: " + whichmode + "-" + event.templateId + "-" + event.skill.id + "-" + event.stage);
+		if (BossLog) mod.command.message("Boss-Skill: " + whichmode + " " + event.templateId + "-" + event.skill.id + "_" + event.stage);
 		
 		skillid = event.skill.id % 1000;     // 攻击技能编号简化 取1000余数运算
 		boss_CurLocation = event.loc;        // BOSS的 x y z 坐标
@@ -482,8 +513,9 @@ module.exports = function Tera_Guide(mod) {
 		// FI_1王
 		if ([459, 759].includes(whichmode) && [1001, 1004].includes(event.templateId)) {
 			if (event.stage!==0 || !(bossSkillID = FI_BOSS_1.find(obj => obj.id === event.skill.id))) return;
+			// 旋转攻击
 			if (event.skill.id===1106||event.skill.id===2106) {
-				SpawnCircle(itemID3, 3000, 8, 300);
+				SpawnCircle(itemID3, 3000, 8, 320);
 			}
 			sendMessage(bossSkillID.msg);
 		}
@@ -497,20 +529,24 @@ module.exports = function Tera_Guide(mod) {
 			if (event.stage!==0 || !(bossSkillID = FI_BOSS_3.find(obj => obj.id === event.skill.id))) return;
 			// 飞弹触发红色地毯
 			if (!checked && [1106, 2106, 1107, 2107, 1108, 2108, 1109, 2109].includes(event.skill.id)) {
-				var boxMarker = boxMarkers.find(obj => obj.gameId == event.target);
-				boss_CurLocation = boxMarker.loc;
-				boss_CurAngle = boxMarker.w;
-				curLocation = boxMarker.loc;
-				curAngle = boxMarker.w;
-				
-				SpawnString(itemID4, 4000, 180, 1500);
-				SpawnThing(   false,  100,  90,   80);
-				SpawnString(itemID4, 4000, 180, 1500);
-				SpawnThing(   false,  100, 270,   80);
-				SpawnString(itemID4, 4000, 180, 1500);
-				
-				checked = true;
-				mod.setTimeout(() => { checked = false; }, 2000);
+mod.log(event.target)
+mod.log(boxMarkers)
+				var Marker;
+				if (Marker = boxMarkers.find(obj => obj.gameId == event.target)) {
+					boss_CurLocation = Marker.loc;
+					boss_CurAngle = Marker.w;
+					curLocation = Marker.loc;
+					curAngle = Marker.w;
+					
+					SpawnString(itemID4, 4000, 180, 1500);
+					SpawnThing(   false,  100,  90,   80);
+					SpawnString(itemID4, 4000, 180, 1500);
+					SpawnThing(   false,  100, 270,   80);
+					SpawnString(itemID4, 4000, 180, 1500);
+					
+					checked = true;
+					mod.setTimeout(() => { checked = false; }, 2000);
+				}
 			}
 			sendMessage(bossSkillID.msg);
 		}
@@ -1085,6 +1121,50 @@ module.exports = function Tera_Guide(mod) {
 			sendMessage(bossSkillID.msg);
 		}
 		
+		// AQ_1王
+		if (whichmode==3023 && event.templateId==1000) {
+			if (event.stage!==0 || !(bossSkillID = AQ_BOSS_1.find(obj => obj.id === event.skill.id))) return;
+			// 左右手拉
+			if ([1111,2111, 1113,2113, 1112,2112, 1114,2114].includes(event.skill.id)) {
+				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(true, 100, 270, 200); // 左拉
+				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(true, 100,  90, 200); // 右拉
+				SpawnString(itemID3, 1500, 180, 300);
+				SpawnString(itemID3, 1500,   0, 500);
+			}
+			// 后扫半圈
+			if (event.skill.id===1115||event.skill.id===2115) {
+				HalfSpawnCircle(itemID3, 2000, 20, 150);
+				HalfSpawnCircle(itemID3, 2000, 10, 300);
+			}
+			// 重击
+			if (skillid===3107) {
+				SpawnThing(   false,  100,  90,   80);
+				SpawnString(itemID3, 4000, 170, 1000);
+				SpawnThing(   false,  100, 270,   80);
+				SpawnString(itemID3, 4000, 190, 1000);
+			}
+			// 旋转攻击
+			if (event.skill.id===3115) {
+				SpawnCircle(itemID3, 3000, 8, 320);
+			}
+			if (event.skill.id===3116) {
+				mod.setTimeout(() => { SpawnCircle(itemID3, 3000, 8, 320); }, 4000);
+			}
+			sendMessage(bossSkillID.msg);
+		}
+		// AQ_2王
+		if (whichmode==3023 && event.templateId==2000) {
+			if (event.stage!==0 || !(bossSkillID = AQ_BOSS_2.find(obj => obj.id === skillid))) return;
+			// 插地板
+			if (skillid===181) {
+				SpawnThing(   false,  100,  90,   80);
+				SpawnString(itemID3, 4000, 170, 1000);
+				SpawnThing(   false,  100, 270,   80);
+				SpawnString(itemID3, 4000, 190, 1000);
+			}
+			sendMessage(bossSkillID.msg);
+		}
+		
 	}
 	// 发送提示文字
 	function sendMessage(msg, chl) {
@@ -1186,6 +1266,13 @@ module.exports = function Tera_Guide(mod) {
 			SpawnItem(item, times, degrees, radius);
 		}
 	}
+	// 构造 后方 半圆形 花圈
+	function HalfSpawnCircle(item, times, intervalDegrees, radius) { // 显示物品 持续时间 偏移间隔 半径距离
+		for (var degrees=0; degrees<360; degrees+=intervalDegrees) {
+			if (90<degrees && degrees<270) continue;
+			SpawnItem(item, times, degrees, radius);
+		}
+	}
 	
 	mod.hook('C_PLAYER_LOCATION', 5, event => {
 		if (!debug) return;
@@ -1206,5 +1293,9 @@ module.exports = function Tera_Guide(mod) {
 	mod.command.add("圆", (g1, g2, g3) => {
 		Number(g1), Number(g2), Number(g3);
 		SpawnCircle(g1, g2, 10, g3);
+	});
+	mod.command.add("半圆", (g1, g2, g3) => {
+		Number(g1), Number(g2), Number(g3);
+		HalfSpawnCircle(g1, g2, 10, g3);
 	});
 }
