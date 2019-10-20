@@ -12,7 +12,7 @@ let {DungeonInfo,
 	DRC_BOSS_1, DRC_BOSS_2, DRC_BOSS_3, DRC_TipMsg,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
 	 GV_BOSS_1,  GV_BOSS_2,
-	 AQ_BOSS_1,  AQ_BOSS_2, AQ_TipMsg
+	 AQ_BOSS_1,  AQ_BOSS_2
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -1141,7 +1141,7 @@ mod.log(boxMarkers)
 			if (event.stage!==0 || !(bossSkillID = AQ_BOSS_1.find(obj => obj.id === event.skill.id))) return;
 			// 前插
 			if (event.skill.id===1110||event.skill.id===2110) {
-				SpawnThing(   false,  100, 180,  80);
+				SpawnThing(   false,  100, 180, 180);
 				SpawnCircle(itemID3, 2000,  10, 220);
 			}
 			// 左右手拉
@@ -1172,7 +1172,7 @@ mod.log(boxMarkers)
 			}
 			// 诅咒
 			if (!myColor && (event.skill.id===3119||event.skill.id===3220)) {
-				bossSkillID.msg = bossSkillID.msg + AQ_TipMsg[myColor%30231000]
+				bossSkillID.msg = bossSkillID.msg + bossSkillID.colorMsg[myColor%30231000]
 			}
 			sendMessage(bossSkillID.msg);
 		}
