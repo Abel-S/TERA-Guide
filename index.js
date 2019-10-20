@@ -1124,10 +1124,15 @@ mod.log(boxMarkers)
 		// AQ_1王
 		if (whichmode==3023 && event.templateId==1000) {
 			if (event.stage!==0 || !(bossSkillID = AQ_BOSS_1.find(obj => obj.id === event.skill.id))) return;
+			// 前插
+			if (event.skill.id===1110||event.skill.id===2110) {
+				SpawnThing(   false,  100, 180,  80);
+				SpawnCircle(itemID3, 2000,  10, 220);
+			}
 			// 左右手拉
 			if ([1111,2111, 1113,2113, 1112,2112, 1114,2114].includes(event.skill.id)) {
-				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(true, 100, 270, 200); // 左拉
-				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(true, 100,  90, 200); // 右拉
+				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(true, 1500, 270, 200); // 左拉
+				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(true, 1500,  90, 200); // 右拉
 				SpawnString(itemID3, 1500, 180, 300);
 				SpawnString(itemID3, 1500,   0, 500);
 			}
@@ -1137,18 +1142,18 @@ mod.log(boxMarkers)
 				HalfSpawnCircle(itemID3, 2000, 10, 300);
 			}
 			// 重击
-			if (skillid===3107) {
-				SpawnThing(   false,  100,  90,   80);
-				SpawnString(itemID3, 4000, 170, 1000);
-				SpawnThing(   false,  100, 270,   80);
-				SpawnString(itemID3, 4000, 190, 1000);
+			if (skillid===107) {
+				SpawnThing(   false,  100,  90,   60);
+				SpawnString(itemID3, 3000, 170, 1000);
+				SpawnThing(   false,  100, 270,   60);
+				SpawnString(itemID3, 3000, 190, 1000);
 			}
 			// 旋转攻击
 			if (event.skill.id===3115) {
 				SpawnCircle(itemID3, 3000, 8, 320);
 			}
 			if (event.skill.id===3116) {
-				mod.setTimeout(() => { SpawnCircle(itemID3, 3000, 8, 320); }, 4000);
+				mod.setTimeout(() => { SpawnCircle(itemID3, 3000, 8, 320); }, 2000);
 			}
 			sendMessage(bossSkillID.msg);
 		}
@@ -1157,10 +1162,10 @@ mod.log(boxMarkers)
 			if (event.stage!==0 || !(bossSkillID = AQ_BOSS_2.find(obj => obj.id === skillid))) return;
 			// 插地板
 			if (skillid===181) {
-				SpawnThing(   false,  100,  90,   80);
-				SpawnString(itemID3, 4000, 170, 1000);
-				SpawnThing(   false,  100, 270,   80);
-				SpawnString(itemID3, 4000, 190, 1000);
+				SpawnThing(   false,  100,  90,   60);
+				SpawnString(itemID3, 3000, 170, 1000);
+				SpawnThing(   false,  100, 270,   60);
+				SpawnString(itemID3, 3000, 190, 1000);
 			}
 			sendMessage(bossSkillID.msg);
 		}
