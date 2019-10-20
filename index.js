@@ -422,11 +422,10 @@ module.exports = function Tera_Guide(mod) {
 	function sAbnormalityBegin(event) {
 		if (!mod.game.me.is(event.target)) return;
 		// AQ_1王 红蓝鉴定
-		if (event.id===30231000) { // 紅色詛咒氣息
-			myColor = 0
-		}
-		if (event.id===30231001) { // 藍色詛咒氣息
-			myColor = 1
+		if (event.id===30231000||event.id===30231001) { // 紅色詛咒氣息 藍色詛咒氣息
+			myColor = event.id
+			console.log('------')
+			console.log(event.id)
 		}
 	}
 	
@@ -485,7 +484,7 @@ module.exports = function Tera_Guide(mod) {
 		curLocation = boss_CurLocation;      // 传递BOSS坐标参数
 		curAngle = boss_CurAngle;            // 传递BOSS角度参数
 		
-		var bossSkillID;
+		var bossSkillID = null;
 		// DW_1王
 		if (whichmode==466 && event.templateId==46601) {
 			if (event.stage!==0 || !(bossSkillID = DW_BOSS_1.find(obj => obj.id === skillid))) return;
@@ -1158,7 +1157,7 @@ mod.log(boxMarkers)
 				HalfSpawnCircle(itemID3, 2000, 10, 300);
 			}
 			// 重击
-			if (skillid===3107) {
+			if (event.skill.id===3107) {
 				SpawnThing(   false,  100,  90,   60);
 				SpawnString(itemID3, 2500, 170, 1000);
 				SpawnThing(   false,  100, 270,   60);
@@ -1173,7 +1172,7 @@ mod.log(boxMarkers)
 			}
 			// 诅咒
 			if (!myColor && (event.skill.id===3119||event.skill.id===3220)) {
-				bossSkillID.msg = bossSkillID.msg + AQ_TipMsg[myColor]
+				bossSkillID.msg = bossSkillID.msg + AQ_TipMsg[myColor%30231000]
 			}
 			sendMessage(bossSkillID.msg);
 		}
