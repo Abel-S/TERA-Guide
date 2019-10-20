@@ -1,11 +1,12 @@
 {
     "files": {
-        "boss.js": "397d9149bb9ab93bff2e2af2f23f48b1a6d31fb61b4ac0ea92b37077bcea66c2",
-        "index.js": "4a4d1a96443d89f1aec3e1678e04b647665f9012b2c98d7d2d9fdbad418d4416",
+        "boss.js": "5977b4ae43ae8e751d3b4d32cde8d13b56e01848a8671431bd9ac3e71b9f6840",
+        "index.js": "dbce1d1ac529b573f1e8074cf59fc39945db07d1a265509f7939c780d7af105d",
         "module.json": "1208d72bec057a4be961e0a26614dfcbe12d26e93a195198873dcbbba16b50d1"
     },
     "defs": {
         "C_PLAYER_LOCATION": 5,
+        "S_ABNORMALITY_BEGIN": 4,
         "S_ACTION_STAGE": 9,
         "S_BOSS_GAGE_INFO": 3,
         "S_CHAT": 3,
