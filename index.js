@@ -69,7 +69,7 @@ module.exports = function Tera_Guide(mod) {
 		levelMsg           = [],    // 充能文字 数组
 		powerMsg           = "",    // 充能文字
 		// FI
-		boxMarkers         = [],    // 24个"恶灵封印箱"
+		boxToProcess       = [],    // 24个"恶灵封印箱"
 		// AQ
 		myColor            = null,
 		tipMsg             = "";
@@ -101,7 +101,7 @@ module.exports = function Tera_Guide(mod) {
 					break;
 				case "debug":
 					debug = !debug;
-					mod.command.message("debug: " + (debug ? "on" : " off"));
+					mod.command.message("debug: " + (debug ? "on" : "OFF"));
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -133,6 +133,8 @@ module.exports = function Tera_Guide(mod) {
 			whichmode = null;
 			whichboss = null;
 			unload();
+			// FI_3王
+			boxToProcess = [];
 		}
 	})
 	
@@ -140,6 +142,7 @@ module.exports = function Tera_Guide(mod) {
 		if (!hooks.length) {
 			hook('S_BOSS_GAGE_INFO',        3, sBossGageInfo);
 			hook('S_SPAWN_NPC',            11, sSpawnNpc);
+			hook('S_NPC_STATUS',            2, sNpcStatus);
 			hook('S_DESPAWN_NPC',           3, sDeSpawnNpc);
 			hook('S_CREATURE_ROTATE',       2, sCreatureRotate);
 			hook('S_DUNGEON_EVENT_MESSAGE', 2, sDungeonEventMessage);
@@ -190,8 +193,6 @@ module.exports = function Tera_Guide(mod) {
 		Level              = 0,
 		levelMsg           = [],
 		powerMsg           = "",
-		// FI_3王
-		boxMarkers         = [],
 		// AQ_1王
 		myColor            = null,
 		tipMsg             = "";
@@ -206,7 +207,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sSpawnNpc(event) {
-		if (SendToStream) return;
+		if (!Enabled || SendToStream) return;
 		// RK_2王 丢点名球
 		if ([735, 935].includes(event.huntingZoneId) && event.templateId==2007) {
 			curLocation = event.loc;
@@ -242,48 +243,38 @@ module.exports = function Tera_Guide(mod) {
 		];
 		 */
 		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(event.huntingZoneId) && (75941<= event.templateId && event.templateId <=75964)) {
-			boxMarkers.push({ templateId: event.templateId, gameId: event.gameId, loc: event.loc, w: event.w });
+		if ([459, 759].includes(event.huntingZoneId)) {
+			if (75941<= event.templateId && event.templateId <=75964) {
+				boxToProcess.push({
+					templateId: event.templateId,
+					gameId: event.gameId,
+					// loc: event.loc,
+					// w: event.w
+				});
+				// boxToProcess.sort(function (a, b) { return parseFloat(a.templateId) - parseFloat(b.templateId); });
+console.log("[boxToProcess] " + event.templateId);
+console.log("[boxToProcess] " + event.gameId);
+			}
+		}
+	}
+	
+	function sNpcStatus(event) {
+		if (!Enabled || SendToStream) return;
+		// FI_3王 飞弹触发红色地毯
+		if ([459, 759].includes(whichmode)) {
+			if (boxToProcess.find(obj => obj.gameId == event.target)) {
+console.log("[gameId] " + event.gameId);
+			}
 		}
 	}
 	
 	function sDeSpawnNpc(event) {
-		if (SendToStream) return;
+		if (!Enabled || SendToStream) return;
 		// FI_3王 飞弹触发红色地毯
 		if ([459, 759].includes(whichmode)) {
-			boxMarkers = boxMarkers.filter(obj => obj.gameId != event.gameId);
+			boxToProcess = boxToProcess.filter(obj => obj.gameId != event.gameId);
 		}
 	}
-	
-	
-	mod.command.add(('test'), (arg) => {
-		arg = Number(arg);
-		boss_CurLocation = boxMarkers[arg].loc;
-		boss_CurAngle = boxMarkers[arg].w;
-		curLocation = boxMarkers[arg].loc;
-		curAngle = boxMarkers[arg].w;
-		
-		SpawnString(itemID4, 4000, 180, 1500);
-		SpawnThing(   false,  100,  90,   80);
-		SpawnString(itemID4, 4000, 180, 1500);
-		SpawnThing(   false,  100, 270,   80);
-		SpawnString(itemID4, 4000, 180, 1500);
-	})
-	
-	mod.command.add(('test1'), (arg) => {
-		arg = Number(arg);
-		boss_CurLocation = boxMarkers[arg].loc;
-		boss_CurAngle = boxMarkers[arg].w - Math.PI;
-		curLocation = boxMarkers[arg].loc;
-		curAngle = boxMarkers[arg].w - Math.PI;
-		
-		SpawnString(itemID4, 4000, 180, 1500);
-		SpawnThing(   false,  100,  90,   80);
-		SpawnString(itemID4, 4000, 180, 1500);
-		SpawnThing(   false,  100, 270,   80);
-		SpawnString(itemID4, 4000, 180, 1500);
-	})
-	
 	
 	function sCreatureRotate(event) {
 		// AA_3王 后砸
@@ -443,7 +434,26 @@ module.exports = function Tera_Guide(mod) {
 	function sActionStage(event) {
 		// 模块关闭 或 不在副本中 或 找不到BOSS血条
 		if (!Enabled || !whichmode || !whichboss) return;
+
+
+if ([459, 759].includes(whichmode)) {
+	if (boxToProcess.find(obj => obj.gameId == event.target)) {
+		console.log("[templateId] " + event.templateId);
 		
+		boss_CurLocation = boxMarkers[event.target].loc;
+		boss_CurAngle = boxMarkers[event.target].w;
+		curLocation = boxMarkers[event.target].loc;
+		curAngle = boxMarkers[event.target].w;
+		
+		SpawnString(itemID4, 4000, 180, 1500);
+		SpawnThing(   false,  100,  90,   80);
+		SpawnString(itemID4, 4000, 180, 1500);
+		SpawnThing(   false,  100, 270,   80);
+		SpawnString(itemID4, 4000, 180, 1500);
+	}
+}
+
+
 		// GLS_2 石碑 水波攻击 范围提示
 		if ([782, 982, 3019].includes(whichmode) && [2021, 2022, 2023].includes(event.templateId)) {
 			if (event.stage!==0) return;
@@ -491,7 +501,6 @@ module.exports = function Tera_Guide(mod) {
 		skillid = event.skill.id % 1000;     // 攻击技能编号简化 取1000余数运算
 		boss_CurLocation = event.loc;        // BOSS的 x y z 坐标
 		boss_CurAngle = event.w;             // BOSS的角度
-		boss_GameID = event.gameId;          // BOSS gameId
 		curLocation = boss_CurLocation;      // 传递BOSS坐标参数
 		curAngle = boss_CurAngle;            // 传递BOSS角度参数
 		
@@ -553,24 +562,6 @@ module.exports = function Tera_Guide(mod) {
 		// FI_3王
 		if ([459, 759].includes(whichmode) && event.templateId==1003) {
 			if (event.stage!==0 || !(bossSkillID = FI_BOSS_3.find(obj => obj.id === event.skill.id))) return;
-			// 飞弹触发红色地毯
-			if ([1106, 2106, 1107, 2107, 1108, 2108, 1109, 2109].includes(event.skill.id)) {
-mod.log(event.target)
-mod.log(boxMarkers)
-				var Marker;
-				if (Marker = boxMarkers.find(obj => obj.gameId == event.target)) {
-					boss_CurLocation = Marker.loc;
-					boss_CurAngle = Marker.w;
-					curLocation = Marker.loc;
-					curAngle = Marker.w;
-					
-					SpawnString(itemID4, 4000, 180, 1500);
-					SpawnThing(   false,  100,  90,   90);
-					SpawnString(itemID4, 4000, 180, 1500);
-					SpawnThing(   false,  100, 270,   90);
-					SpawnString(itemID4, 4000, 180, 1500);
-				}
-			}
 			sendMessage(bossSkillID.msg);
 		}
 		
@@ -1207,10 +1198,10 @@ mod.log(boxMarkers)
 			}
 			// 后退 | 前搓
 			if (skillid===202) {
-				SpawnThing(   false,  100,  90,  60);
+				SpawnThing(   false,  100,  90,  80);
 				SpawnString(itemID3, 3000,   0, 500);
 				SpawnString(itemID3, 3000, 180, 500);
-				SpawnThing(   false,  100, 270,  60);
+				SpawnThing(   false,  100, 270,  80);
 				SpawnString(itemID3, 3000,   0, 500);
 				SpawnString(itemID3, 3000, 180, 500);
 			}
