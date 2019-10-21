@@ -67,11 +67,12 @@ module.exports = function Tera_Guide(mod) {
 		power              = false, // 充能计数
 		Level              = 0,     // 充能层数
 		levelMsg           = [],    // 充能文字 数组
-		powerMsg           = '',    // 充能文字
+		powerMsg           = "",    // 充能文字
 		// FI
 		boxMarkers         = [],    // 24个"恶灵封印箱"
 		// AQ
-		myColor            = null;
+		myColor            = null,
+		tipMsg             = "";
 	// 控制命令
 	mod.command.add(["辅助", "guide"], (arg) => {
 		if (!arg) {
@@ -129,8 +130,8 @@ module.exports = function Tera_Guide(mod) {
 			mod.command.message("进入副本 " + dungeonInfo.string);
 			load();
 		} else {
-			whichmode = 0;
-			whichboss = 0;
+			whichmode = null;
+			whichboss = null;
 			unload();
 		}
 	})
@@ -143,7 +144,9 @@ module.exports = function Tera_Guide(mod) {
 			hook('S_CREATURE_ROTATE',       2, sCreatureRotate);
 			hook('S_DUNGEON_EVENT_MESSAGE', 2, sDungeonEventMessage);
 			hook('S_QUEST_BALLOON',         1, sQuestBalloon);
-			hook('S_ABNORMALITY_BEGIN',     4, sAbnormalityBegin);
+			hook('S_ABNORMALITY_BEGIN',     4, UpdateAbnormality);
+			hook('S_ABNORMALITY_REFRESH',   2, UpdateAbnormality);
+			hook('S_ABNORMALITY_END',       1, sAbnormalityEnd);
 			hook('S_ACTION_STAGE',          9, sActionStage);
 		}
 	}
@@ -164,6 +167,7 @@ module.exports = function Tera_Guide(mod) {
 	function reset() {
 		// 清除所有定时器
 		mod.clearAllTimeouts();
+		// 清除BOSS信息
 		whichmode          = null,
 		whichboss          = null,
 		boss_GameID        = null,
@@ -185,11 +189,12 @@ module.exports = function Tera_Guide(mod) {
 		power              = false,
 		Level              = 0,
 		levelMsg           = [],
-		powerMsg           = '',
+		powerMsg           = "",
 		// FI_3王
 		boxMarkers         = [],
 		// AQ_1王
-		myColor            = null;
+		myColor            = null,
+		tipMsg             = "";
 	}
 	
 	function sBossGageInfo(event) {
@@ -237,15 +242,15 @@ module.exports = function Tera_Guide(mod) {
 		];
 		 */
 		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(event.huntingZoneId) && 75941<= event.templateId && event.templateId <=75964) {
-			boxMarkers.push({ gameId: event.gameId, loc: event.loc, w: event.w });
+		if ([459, 759].includes(event.huntingZoneId) && (75941<= event.templateId && event.templateId <=75964)) {
+			boxMarkers.push({ templateId: event.templateId, gameId: event.gameId, loc: event.loc, w: event.w });
 		}
 	}
 	
 	function sDeSpawnNpc(event) {
 		if (SendToStream) return;
 		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(whichmode) && boxMarkers.find(obj => obj.gameId == event.gameId)) {
+		if ([459, 759].includes(whichmode)) {
 			boxMarkers = boxMarkers.filter(obj => obj.gameId != event.gameId);
 		}
 	}
@@ -419,13 +424,19 @@ module.exports = function Tera_Guide(mod) {
 		}
 	}
 	
-	function sAbnormalityBegin(event) {
+	function UpdateAbnormality(event) {
 		if (!mod.game.me.is(event.target)) return;
-		// AQ_1王 红蓝鉴定
-		if (event.id===30231000||event.id===30231001) { // 紅色詛咒氣息 藍色詛咒氣息
-			myColor = event.id
-			console.log('------')
-			console.log(event.id)
+		// AQ_1王 内外圈-鉴定 紅色詛咒氣息 藍色詛咒氣息
+		if (whichmode==3023 && whichboss==1000 && (event.id===30231000||event.id===30231001)) {
+			myColor = event.id;
+		}
+	}
+	
+	function sAbnormalityEnd(event) {
+		if (!mod.game.me.is(event.target)) return;
+		// AQ_1王 内外圈-鉴定
+		if (whichmode==3023 && whichboss==1000 && (event.id===30231000||event.id===30231001)) {
+			myColor = null;
 		}
 	}
 	
@@ -543,7 +554,7 @@ module.exports = function Tera_Guide(mod) {
 		if ([459, 759].includes(whichmode) && event.templateId==1003) {
 			if (event.stage!==0 || !(bossSkillID = FI_BOSS_3.find(obj => obj.id === event.skill.id))) return;
 			// 飞弹触发红色地毯
-			if (!checked && [1106, 2106, 1107, 2107, 1108, 2108, 1109, 2109].includes(event.skill.id)) {
+			if ([1106, 2106, 1107, 2107, 1108, 2108, 1109, 2109].includes(event.skill.id)) {
 mod.log(event.target)
 mod.log(boxMarkers)
 				var Marker;
@@ -554,13 +565,10 @@ mod.log(boxMarkers)
 					curAngle = Marker.w;
 					
 					SpawnString(itemID4, 4000, 180, 1500);
-					SpawnThing(   false,  100,  90,   80);
+					SpawnThing(   false,  100,  90,   90);
 					SpawnString(itemID4, 4000, 180, 1500);
-					SpawnThing(   false,  100, 270,   80);
+					SpawnThing(   false,  100, 270,   90);
 					SpawnString(itemID4, 4000, 180, 1500);
-					
-					checked = true;
-					mod.setTimeout(() => { checked = false; }, 2000);
 				}
 			}
 			sendMessage(bossSkillID.msg);
@@ -1035,10 +1043,10 @@ mod.log(boxMarkers)
 				if (power) {
 					// 三连击, 左后, 左后 (扩散), 右后, 右后 (扩散), 后砸前砸, 尾巴
 					if ([118, 143, 145, 146, 154, 144, 147, 148, 155, 161, 162, 213, 215].includes(skillid)) {
-						powerMsg = ' | ' + levelMsg[Level];
+						powerMsg = " | " + levelMsg[Level];
 						Level++;
 					} else {
-						powerMsg = '';
+						powerMsg = "";
 					}
 				}
 				// 屏蔽[三连击]技能连续触发充能
@@ -1142,14 +1150,19 @@ mod.log(boxMarkers)
 			// 前插
 			if (event.skill.id===1110||event.skill.id===2110) {
 				SpawnThing(   false,  100, 180, 180);
-				SpawnCircle(itemID3, 2000,  10, 220);
+				SpawnCircle(itemID3, 3000,  10, 220);
 			}
 			// 左右手拉
 			if ([1111,2111, 1113,2113, 1112,2112, 1114,2114].includes(event.skill.id)) {
-				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(false, 100, 270, 200); // 左拉
-				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(false, 100,  90, 200); // 右拉
-				SpawnString(itemID3, 1500, 180, 300);
-				SpawnString(itemID3, 1500,   0, 500);
+				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(false, 100, 270, 180); // 左拉
+				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(false, 100,  90, 180); // 右拉
+				SpawnString(itemID3, 2000, 180, 320);
+				SpawnString(itemID3, 2000,   0, 480);
+				
+				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(false, 100,  90, 20); // 左拉
+				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(false, 100, 270, 20); // 右拉
+				SpawnString(itemID3, 2000, 180, 320);
+				SpawnString(itemID3, 2000,   0, 480);
 			}
 			// 后扫半圈
 			if (event.skill.id===1115||event.skill.id===2115) {
@@ -1159,9 +1172,9 @@ mod.log(boxMarkers)
 			// 重击
 			if (event.skill.id===3107) {
 				SpawnThing(   false,  100,  90,   60);
-				SpawnString(itemID3, 2500, 170, 1000);
+				SpawnString(itemID3, 2000, 170, 1000);
 				SpawnThing(   false,  100, 270,   60);
-				SpawnString(itemID3, 2500, 190, 1000);
+				SpawnString(itemID3, 2000, 190, 1000);
 			}
 			// 旋转攻击
 			if (event.skill.id===3115) {
@@ -1171,10 +1184,14 @@ mod.log(boxMarkers)
 				mod.setTimeout(() => { SpawnCircle(itemID3, 3000, 8, 320); }, 2000);
 			}
 			// 诅咒
-			if (!myColor && (event.skill.id===3119||event.skill.id===3220)) {
-				bossSkillID.msg = bossSkillID.msg + bossSkillID.colorMsg[myColor%30231000]
+			if (event.skill.id===3119||event.skill.id===3220) {
+				if (!myColor) {
+					tipMsg = "";
+				} else {
+					tipMsg = bossSkillID.TIP[myColor%30231000];
+				}
 			}
-			sendMessage(bossSkillID.msg);
+			sendMessage(bossSkillID.msg + tipMsg);
 		}
 		// AQ_2王
 		if (whichmode==3023 && event.templateId==2000) {
@@ -1182,9 +1199,18 @@ mod.log(boxMarkers)
 			// 插地板
 			if (skillid===181) {
 				SpawnThing(   false,  100,  90,   60);
-				SpawnString(itemID3, 2500, 170, 1000);
+				SpawnString(itemID3, 3000, 170, 1000);
 				SpawnThing(   false,  100, 270,   60);
-				SpawnString(itemID3, 2500, 190, 1000);
+				SpawnString(itemID3, 3000, 190, 1000);
+			}
+			// 后退 | 前搓
+			if (skillid===202) {
+				SpawnThing(   false,  100,  90,  60);
+				SpawnString(itemID3, 3000,   0, 500);
+				SpawnString(itemID3, 3000, 180, 500);
+				SpawnThing(   false,  100, 270,  60);
+				SpawnString(itemID3, 3000,   0, 500);
+				SpawnString(itemID3, 3000, 180, 500);
 			}
 			sendMessage(bossSkillID.msg);
 		}
