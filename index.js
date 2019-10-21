@@ -1156,13 +1156,13 @@ mod.log(boxMarkers)
 			if ([1111,2111, 1113,2113, 1112,2112, 1114,2114].includes(event.skill.id)) {
 				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(false, 100, 270, 180); // 左拉
 				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(false, 100,  90, 180); // 右拉
-				SpawnString(itemID3, 2000, 180, 320);
-				SpawnString(itemID3, 2000,   0, 480);
+				SpawnString(itemID3, 2000, 180, 280);
+				SpawnString(itemID3, 2000,   0, 520);
 				
 				if ([1111,2111, 1113,2113].includes(event.skill.id)) SpawnThing(false, 100,  90, 20); // 左拉
 				if ([1112,2112, 1114,2114].includes(event.skill.id)) SpawnThing(false, 100, 270, 20); // 右拉
-				SpawnString(itemID3, 2000, 180, 320);
-				SpawnString(itemID3, 2000,   0, 480);
+				SpawnString(itemID3, 2000, 180, 280);
+				SpawnString(itemID3, 2000,   0, 520);
 			}
 			// 后扫半圈
 			if (event.skill.id===1115||event.skill.id===2115) {
@@ -1190,8 +1190,10 @@ mod.log(boxMarkers)
 				} else {
 					tipMsg = bossSkillID.TIP[myColor%30231000];
 				}
+				sendMessage(bossSkillID.msg + tipMsg);
+				return;
 			}
-			sendMessage(bossSkillID.msg + tipMsg);
+			sendMessage(bossSkillID.msg);
 		}
 		// AQ_2王
 		if (whichmode==3023 && event.templateId==2000) {
