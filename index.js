@@ -68,8 +68,6 @@ module.exports = function Tera_Guide(mod) {
 		Level              = 0,     // 充能层数
 		levelMsg           = [],    // 充能文字 数组
 		powerMsg           = "",    // 充能文字
-		// FI
-		boxToProcess       = [],    // 24个"恶灵封印箱"
 		// AQ
 		myColor            = null,
 		tipMsg             = "";
@@ -133,8 +131,6 @@ module.exports = function Tera_Guide(mod) {
 			whichmode = null;
 			whichboss = null;
 			unload();
-			// FI_3王
-			boxToProcess = [];
 		}
 	})
 	
@@ -142,8 +138,6 @@ module.exports = function Tera_Guide(mod) {
 		if (!hooks.length) {
 			hook('S_BOSS_GAGE_INFO',        3, sBossGageInfo);
 			hook('S_SPAWN_NPC',            11, sSpawnNpc);
-			hook('S_NPC_STATUS',            2, sNpcStatus);
-			hook('S_DESPAWN_NPC',           3, sDeSpawnNpc);
 			hook('S_CREATURE_ROTATE',       2, sCreatureRotate);
 			hook('S_DUNGEON_EVENT_MESSAGE', 2, sDungeonEventMessage);
 			hook('S_QUEST_BALLOON',         1, sQuestBalloon);
@@ -228,51 +222,6 @@ module.exports = function Tera_Guide(mod) {
 			SpawnString(itemID3, timer,  90,  600);
 			SpawnString(itemID3, timer, 180, 1000);
 			SpawnString(itemID3, timer, 270,  600);
-		}
-		/* 
-		const boxTempIds = [
-			//      1      2      3      4      5      6
-			      75953, 75955, 75957, 75959, 75961, 75963,
-			75941,                                         75942, // 1
-			75943,                                         75944, // 2
-			75945,                                         75946, // 3
-			75947,                                         75948, // 4
-			75949,                                         75950, // 5
-			75951,                                         75952, // 6
-			      75954, 75956, 75958, 75960, 75962, 75964
-		];
-		 */
-		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(event.huntingZoneId)) {
-			if (75941<= event.templateId && event.templateId <=75964) {
-				boxToProcess.push({
-					templateId: event.templateId,
-					gameId: event.gameId,
-					// loc: event.loc,
-					// w: event.w
-				});
-				// boxToProcess.sort(function (a, b) { return parseFloat(a.templateId) - parseFloat(b.templateId); });
-console.log("[boxToProcess] " + event.templateId);
-console.log("[boxToProcess] " + event.gameId);
-			}
-		}
-	}
-	
-	function sNpcStatus(event) {
-		if (!Enabled || SendToStream) return;
-		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(whichmode)) {
-			if (boxToProcess.find(obj => obj.gameId == event.target)) {
-console.log("[gameId] " + event.gameId);
-			}
-		}
-	}
-	
-	function sDeSpawnNpc(event) {
-		if (!Enabled || SendToStream) return;
-		// FI_3王 飞弹触发红色地毯
-		if ([459, 759].includes(whichmode)) {
-			boxToProcess = boxToProcess.filter(obj => obj.gameId != event.gameId);
 		}
 	}
 	
@@ -434,26 +383,7 @@ console.log("[gameId] " + event.gameId);
 	function sActionStage(event) {
 		// 模块关闭 或 不在副本中 或 找不到BOSS血条
 		if (!Enabled || !whichmode || !whichboss) return;
-
-
-if ([459, 759].includes(whichmode)) {
-	if (boxToProcess.find(obj => obj.gameId == event.target)) {
-		console.log("[templateId] " + event.templateId);
 		
-		boss_CurLocation = boxMarkers[event.target].loc;
-		boss_CurAngle = boxMarkers[event.target].w;
-		curLocation = boxMarkers[event.target].loc;
-		curAngle = boxMarkers[event.target].w;
-		
-		SpawnString(itemID4, 4000, 180, 1500);
-		SpawnThing(   false,  100,  90,   80);
-		SpawnString(itemID4, 4000, 180, 1500);
-		SpawnThing(   false,  100, 270,   80);
-		SpawnString(itemID4, 4000, 180, 1500);
-	}
-}
-
-
 		// GLS_2 石碑 水波攻击 范围提示
 		if ([782, 982, 3019].includes(whichmode) && [2021, 2022, 2023].includes(event.templateId)) {
 			if (event.stage!==0) return;
