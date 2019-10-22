@@ -223,6 +223,16 @@ module.exports = function Tera_Guide(mod) {
 			SpawnString(itemID3, timer, 180, 1000);
 			SpawnString(itemID3, timer, 270,  600);
 		}
+		// 移除 恶灵岛上级 1号门
+		if (event.huntingZoneId==759 && event.templateId==2003) return;
+		// 移除 恶灵岛上级 2号门
+		if (event.huntingZoneId==759 && event.templateId==200) return;
+		if (event.huntingZoneId==759 && event.templateId==210) return;
+		// 移除 恶灵岛上级 3号门
+		if (event.huntingZoneId==759 && event.templateId==211) return;
+		/* if ([459, 759].includes(event.huntingZoneId)) {
+			console.log(event.templateId);
+		} */
 	}
 	
 	function sCreatureRotate(event) {
@@ -1014,28 +1024,28 @@ module.exports = function Tera_Guide(mod) {
 				SpawnThing(  false,   100, 200, 140);
 				SpawnCircle(itemID3, 3000,  10, 320);
 			}
-			// 扇形后喷
-			if (skillid===131) {
-				SpawnThing(   false,  100, 180, 100);
-				SpawnString(itemID3, 3000,  70, 800);
-				SpawnString(itemID3, 3000, 290, 800);
-			}
 			// 直线后喷
-			if (skillid===127) {
+			if (skillid===127||skillid===107) {
 				SpawnThing(   false,  100,  90, 140);
 				SpawnString(itemID3, 3000,   7, 500);
 				SpawnThing(   false,  100, 270, 140);
 				SpawnString(itemID3, 3000, 353, 500);
 			}
+			// 扇形后喷
+			if (skillid===131||skillid===111) {
+				SpawnThing(   false,  100, 180, 100);
+				SpawnString(itemID3, 3000,  70, 800);
+				SpawnString(itemID3, 3000, 290, 800);
+			}
 			// 左右喷射
-			if (skillid===132) {
+			if (skillid===132||skillid===112) {
 				SpawnString(itemID3, 3000, 340, 800);
 				SpawnString(itemID3, 3000,  20, 800);
 				SpawnString(itemID3, 3000, 160, 800);
 				SpawnString(itemID3, 3000, 200, 800);
 			}
 			// 前后喷射
-			if (skillid===139) {
+			if (skillid===139||skillid===119) {
 				SpawnString(itemID3, 3000,  70, 800);
 				SpawnString(itemID3, 3000, 110, 800);
 				SpawnString(itemID3, 3000, 250, 800);
@@ -1061,6 +1071,13 @@ module.exports = function Tera_Guide(mod) {
 			// 内外圈
 			if (skillid===231||skillid===232) {
 				SpawnCircle(itemID3, 3000, 10, 300);
+			}
+			// 前插 后喷
+			if (skillid===236) {
+				SpawnThing(   false,  100,  90,   80);
+				SpawnString(itemID3, 4000, 165, 1000);
+				SpawnThing(   false,  100, 270,   80);
+				SpawnString(itemID3, 4000, 195, 1000);
 			}
 			sendMessage(bossSkillID.msg);
 		}
