@@ -99,7 +99,7 @@ module.exports = function Tera_Guide(mod) {
 					break;
 				case "debug":
 					debug = !debug;
-					mod.command.message("debug: " + (debug ? "on" : "OFF"));
+					mod.command.message("debug: " + (debug ? "on" : "off"));
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -224,15 +224,13 @@ module.exports = function Tera_Guide(mod) {
 			SpawnString(itemID3, timer, 270,  600);
 		}
 		// 移除 恶灵岛上级 1号门
-		if (event.huntingZoneId==759 && event.templateId==2003) return;
+		if (event.huntingZoneId==759 && event.templateId==2003) return false;
 		// 移除 恶灵岛上级 2号门
-		if (event.huntingZoneId==759 && event.templateId==200) return;
-		if (event.huntingZoneId==759 && event.templateId==210) return;
+		if (event.huntingZoneId==759 && event.templateId==200) return false;
+		if (event.huntingZoneId==759 && event.templateId==210) return false;
 		// 移除 恶灵岛上级 3号门
-		if (event.huntingZoneId==759 && event.templateId==211) return;
-		/* if ([459, 759].includes(event.huntingZoneId)) {
-			console.log(event.templateId);
-		} */
+		if (event.huntingZoneId==759 && event.templateId==211) return false;
+		
 	}
 	
 	function sCreatureRotate(event) {
