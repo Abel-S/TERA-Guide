@@ -1,44 +1,33 @@
 module.exports = {
 	// 进入副本提示文
 	DungeonInfo : [
-		{zone: 9066, string: '<font color="#56B4E9">岱魔鲁斯的轮盘</font>'},
-		
-		{zone: 9059, string: '<font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#E69F00">下级</font>'},
-		{zone: 9759, string: '<font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 9767, string: '<font color="#56B4E9">费勒诺的实验室</font> <font color="#E69F00">下级</font>'},
-		{zone: 9067, string: '<font color="#56B4E9">费勒诺的实验室</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 9770, string: '<font color="#56B4E9">拉坎里斯的废墟</font> <font color="#E69F00">下级</font>'},
-		{zone: 9970, string: '<font color="#56B4E9">拉坎里斯的废墟</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 9781, string: '<font color="#56B4E9">贝里克神殿</font> <font color="#E69F00">下级</font>'},
-		{zone: 9981, string: '<font color="#56B4E9">贝里克神殿</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 9735, string: '<font color="#56B4E9">RK-9机库</font> <font color="#E69F00">下级</font>'},
-		{zone: 9935, string: '<font color="#56B4E9">RK-9机库</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 9739, string: '<font color="#56B4E9">革命团总部</font> <font color="#E69F00">下级</font>'},
-		{zone: 9939, string: '<font color="#56B4E9">革命团总部</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 9720, string: '<font color="#56B4E9">安塔洛斯的深渊</font> <font color="#E69F00">下级</font>'},
-		{zone: 9920, string: '<font color="#56B4E9">安塔洛斯的深渊</font> <font color="#00FFFF">上级</font>'},
-		{zone: 3017, string: '<font color="#56B4E9">安塔洛斯的深渊</font> <font color="#FF0000"> 7人</font>'},
-		
-		{zone: 9783, string: '<font color="#56B4E9">泰内布利斯城堡</font> <font color="#E69F00">下级</font>'},
-		{zone: 9983, string: '<font color="#56B4E9">泰内布利斯城堡</font> <font color="#00FFFF">上级</font>'},
-		{zone: 3018, string: '<font color="#56B4E9">泰内布利斯城堡</font> <font color="#FF0000"> 7人</font>'},
-		
-		{zone: 9782, string: '<font color="#56B4E9">里安的地下殿堂</font> <font color="#E69F00">下级</font>'},
-		{zone: 9982, string: '<font color="#56B4E9">里安的地下殿堂</font> <font color="#00FFFF">上级</font>'},
-		{zone: 3019, string: '<font color="#56B4E9">里安的地下殿堂</font> <font color="#FF0000"> 7人</font>'},
-		
-		{zone: 3101, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#E69F00">下级</font>'},
-		{zone: 3201, string: '<font color="#56B4E9">费尔奎娜巢穴</font> <font color="#00FFFF">上级</font>'},
-		
-		{zone: 3023, string: '<font color="#56B4E9">贝尔亚克城堡</font>'}
+		{zone: 9066, string: '进入副本 <font color="#56B4E9">岱魔鲁斯的轮盘</font>'},
+		{zone: 9059, string: '进入副本 <font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#E69F00">下级</font>'},
+		{zone: 9759, string: '进入副本 <font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9767, string: '进入副本 <font color="#56B4E9">费勒诺的实验室</font> <font color="#E69F00">下级</font>'},
+		{zone: 9067, string: '进入副本 <font color="#56B4E9">费勒诺的实验室</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9770, string: '进入副本 <font color="#56B4E9">拉坎里斯的废墟</font> <font color="#E69F00">下级</font>'},
+		{zone: 9970, string: '进入副本 <font color="#56B4E9">拉坎里斯的废墟</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9781, string: '进入副本 <font color="#56B4E9">贝里克神殿</font> <font color="#E69F00">下级</font>'},
+		{zone: 9981, string: '进入副本 <font color="#56B4E9">贝里克神殿</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9735, string: '进入副本 <font color="#56B4E9">RK-9机库</font> <font color="#E69F00">下级</font>'},
+		{zone: 9935, string: '进入副本 <font color="#56B4E9">RK-9机库</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9739, string: '进入副本 <font color="#56B4E9">革命团总部</font> <font color="#E69F00">下级</font>'},
+		{zone: 9939, string: '进入副本 <font color="#56B4E9">革命团总部</font> <font color="#00FFFF">上级</font>'},
+		{zone: 9720, string: '进入副本 <font color="#56B4E9">安塔洛斯的深渊</font> <font color="#E69F00">下级</font>'},
+		{zone: 9920, string: '进入副本 <font color="#56B4E9">安塔洛斯的深渊</font> <font color="#00FFFF">上级</font>'},
+		{zone: 3017, string: '进入副本 <font color="#56B4E9">安塔洛斯的深渊</font> <font color="#FF0000"> 7人</font>'},
+		{zone: 9783, string: '进入副本 <font color="#56B4E9">泰内布利斯城堡</font> <font color="#E69F00">下级</font>'},
+		{zone: 9983, string: '进入副本 <font color="#56B4E9">泰内布利斯城堡</font> <font color="#00FFFF">上级</font>'},
+		{zone: 3018, string: '进入副本 <font color="#56B4E9">泰内布利斯城堡</font> <font color="#FF0000"> 7人</font>'},
+		{zone: 9782, string: '进入副本 <font color="#56B4E9">里安的地下殿堂</font> <font color="#E69F00">下级</font>'},
+		{zone: 9982, string: '进入副本 <font color="#56B4E9">里安的地下殿堂</font> <font color="#00FFFF">上级</font>'},
+		{zone: 3019, string: '进入副本 <font color="#56B4E9">里安的地下殿堂</font> <font color="#FF0000"> 7人</font>'},
+		{zone: 3101, string: '进入副本 <font color="#56B4E9">费尔奎娜巢穴</font> <font color="#E69F00">下级</font>'},
+		{zone: 3201, string: '进入副本 <font color="#56B4E9">费尔奎娜巢穴</font> <font color="#00FFFF">上级</font>'},
+		{zone: 3023, string: '进入副本 <font color="#56B4E9">贝尔亚克城堡</font>'}
 	],
-	// 岱魔魯斯的輪盤 (Demon's Wheel)
+	// 岱魔鲁斯的轮盘 (Demon's Wheel)
 	DW_BOSS_1 : [
 		{id: 105, msg: '跳跃(眩晕)'},
 		{id: 106, msg: '尾气后喷'},
@@ -56,12 +45,12 @@ module.exports = {
 		{id: 321, msg: '+3圈'},
 		{id: 322, msg: '+4圈'},
 		{id: 323, msg: '+5圈'},
-		// 鉴定 - 计算总圈数(双蓝/红单) 相同进圈 不同出圈
+		// 鉴定 - 计算总圈数(双数为蓝/单数为红)
 		{id: 311, msg: '↓ 出圈 ↓'}, // 王-红buff
 		{id: 315, msg: '↓ 出圈 ↓'}, // 王-红buff
 		{id: 313, msg: '↓ 出圈 ↓'}, // 王-蓝buff
 		{id: 317, msg: '↓ 出圈 ↓'}, // 王-蓝buff
-		
+		// 相同进圈 不同出圈
 		{id: 312, msg: '↑ 进圈 ↑'}, // 王-红buff
 		{id: 316, msg: '↑ 进圈 ↑'}, // 王-红buff
 		{id: 314, msg: '↑ 进圈 ↑'}, // 王-蓝buff
@@ -72,11 +61,11 @@ module.exports = {
 	DW_BOSS_2 : [
 		{id: 113, msg: '激光!!'},
 		{id: 116, msg: '拉人(群体)'},
-		// {id: 217, msg: '蓝圈 - 1次伤害'},
+		// 217 蓝圈 - 1次伤害
 		{id: 223, msg: '红圈 - 2次伤害'},
 		{id: 303, msg: '打投掷'},
-		{id: 309, msg: '进场 | 王举(蓝)球时 进圈'}, // ==> DW_TipMsg2[4]
-		{id: 310, msg: '进场 | 王举(红)球时 进圈'}, // ==> DW_TipMsg2[4]
+		{id: 309, msg: '进场 | 王举(蓝)球时 进圈'},
+		{id: 310, msg: '进场 | 王举(红)球时 进圈'},
 		// 王举(蓝)球
 		{id: 311, msg: '↑ 进圈(蓝) ↑'},
 		{id: 313, msg: '↓ 出圈(蓝) ↓'},
@@ -96,24 +85,25 @@ module.exports = {
 		{id: 1104, msg: '大跳(眩晕)'},
 		{id: 2104, msg: '大跳(眩晕)'},
 		{id: 1106, msg: '旋转攻击'},
-		{id: 2106, msg: '旋转攻击'}
+		{id: 2106, msg: '旋转攻击'},
+		{id: 3107, msg: '点名(前方击退)'}
 		// 3111 诅咒
 		// 3106 鉴定-外圈爆炸
 		// 3101 鉴定-内圈爆炸
 	],
 	FI_BOSS_2 : [
-		{id: 3101, msg: '原地跳跃(击退)'},
-		{id: 3102, msg: '5人黄圈(爆炸)'},
+		{id: 3101, msg: '跳跃(击退)'},
+		{id: 3102, msg: '黄圈x5(闪避)'},
 		{id: 3104, msg: '全屏攻击!!'},
 		{id: 3105, msg: '拉拢 | 推开'},
-		{id: 3107, msg: '毒圈(闪避)'}
+		{id: 3107, msg: '毒圈x1(闪避)'}
 	],
 	FI_BOSS_3 : [
 		{id: 1101, msg: '← 扩散 →'},
 		{id: 2101, msg: '← 扩散 →'},
 		{id: 1102, msg: '→ 拉拢 ←'},
 		{id: 2102, msg: '→ 拉拢 ←'},
-		
+		/* 
 		{id: 1106, msg: '小心地毯'}, // 前方导弹
 		{id: 2106, msg: '小心地毯'},
 		{id: 1107, msg: '小心地毯'}, // 后方导弹
@@ -122,7 +112,7 @@ module.exports = {
 		{id: 2108, msg: '小心地毯'},
 		{id: 1109, msg: '小心地毯'}, // 左方导弹
 		{id: 2109, msg: '小心地毯'},
-		
+		 */
 		{id: 1110, msg: '↓ 雷电 ↓'},
 		{id: 2110, msg: '↓ 雷电 ↓'},
 		
@@ -130,7 +120,7 @@ module.exports = {
 		{id: 3108, msg: '诅咒x2'},
 		{id: 3109, msg: '地毯鉴定'}
 	],
-	FI_TipMsg : ['诅咒x1 | 内外圈', '诅咒x2', '小心激光!'],
+	FI_TipMsg : ['诅咒 | 内外圈', '诅咒x2', '小心激光!'],
 	// 费勒诺的实验室 (Demokron Factory)
 	DF_BOSS_1 : [
 		
@@ -141,11 +131,11 @@ module.exports = {
 	DF_BOSS_3 : [
 		{id: 205, msg: '击退(慢慢慢)'},
 		{id: 218, msg: '击退'},
-		{id: 211, msg: '内->外 (扩散)'},
-		{id: 212, msg: '外->内 (收缩)'},
+		{id: 211, msg: '扩散 (内->外)'},
+		{id: 212, msg: '收缩 (外->内)'},
 		{id: 219, msg: '内外同时'}
 	],
-	// 拉坎里斯的廢墟 (Ruinous Manor)
+	// 拉坎里斯的废墟 (Ruinous Manor)
 	RM_BOSS_1 : [
 		{id: 107, msg: '前喷(坦)'}
 	],
@@ -160,17 +150,15 @@ module.exports = {
 		// 101 102 104 106 107 推坦
 		{id: 106, msg: '前推(坦)'},
 		{id: 110, msg: '尾巴横扫!!'}, // 108 110 111
-		// {id: 317, msg: '分散吃球!!'},
-		// {id: 319, msg: '分散吃球!!'}, // 愤怒
-		// {id: 303, msg: '内外圈鉴定'},
-		// {id: 304, msg: '内外圈鉴定'}, // 愤怒
-		{id: 113, msg: '↓ 站外围 ↓'}, // 113  114 115
-		{id: 116, msg: '↑ 靠近王 ↑'}, // 116  117 118
+		// 317 分散吃球
+		// 319 分散吃球 愤怒
+		{id: 113, msg: '↓ 出圈 ↓'}, // 113  114 115
+		{id: 116, msg: '↑ 进圈 ↑'}, // 116  117 118
 		// < 30% 
 		{id: 311, msg: '蓄力推人!!'},
 		{id: 322, msg: '命运!!(补师解王buff)'}
 	],
-	// 贝里克神殿 (Velik’s Sanctuary)
+	// 贝里克神殿 (Velik's Sanctuary)
 	VS_BOSS_1 : [
 		{id: 301, msg: '沉默(全体)'},
 		{id: 304, msg: '内外圈'},
@@ -189,7 +177,7 @@ module.exports = {
 		{id: 138, msg: '滚开!!'},
 		{id: 144, msg: '↓ 外圈安全 ↓'},
 		{id: 145, msg: '↑ 内圈安全 ↑'},
-		// {id: 149, msg: '前刺(坦)'},
+		// 149 前刺(坦)
 		{id: 151, msg: '↓ 砸地(眩晕) + 点名(三抓)'},
 		{id: 152, msg: '前砸(眩晕) | 后踢(击退)'},
 		{id: 701, msg: '后扫(击退) | 前戳(闪避)'},
@@ -202,7 +190,7 @@ module.exports = {
 		{id: 401, msg: '驱散!!'},
 		{id: 402, msg: '晕王!!'}
 	],
-	//            0           1         2         3         1+3=4     2+3=5     3+3=6
+	//            0           1           2           3           1+3=4       2+3=5       3+3=6
 	VS_TipMsg : ["Next -> ", "注(近x2)", "闪(分散)", "炸(解掉)", "注(远x2)", "闪(集中)", "炸(加血)"],
 	// RK-9机库 (RK-9 Kennel)
 	RK_BOSS_1 : [
@@ -244,11 +232,12 @@ module.exports = {
 		{id: 118, msg: 'S拳 左手 ←←', msg_tk: '← ←← ←←←'}, // 118 121 123
 		{id: 116, msg: 'S拳 →→ 右手', msg_tk: '→→→ →→ →'}, // 116 120 122
 		{id: 119, msg: 'S拳 →→ 右手', msg_tk: '→→→ →→ →'}, // 119 120 122
-		{id: 128, msg: '火箭拳 | 后喷'}, // 火箭拳 128 129 | 后喷 130 131
+		{id: 128, msg: '火箭拳 | 后喷'},
+		// 128 129 火箭拳 | 130 131 后喷
 		{id: 321, msg: '破盾!!'},
 		{id: 323, msg: '雷达!!'},
 		{id: 324, msg: '内圈眩晕'}
-		// {id: 305, msg: '鉴定'}
+		// 305 鉴定
 	],
 	RK_TipMsg : ["Next -> ", "近", "远", "全", "BOSS将会在10S内出护盾"],
 	// 革命团总部 (Red Refuge)
@@ -264,17 +253,13 @@ module.exports = {
 		{id: 175, msg: '真·怒吼(眩晕)'},
 		{id: 201, msg: '真·面目(闪避)'}
 	],
-	// 安塔洛斯深渊 (Antaroth’s Abyss)
+	// 安塔洛斯的深渊 (Antaroth's Abyss)
 	AA_BOSS_1 : [
 		{id: 116, msg: '↓ 出圈 ↓'},
 		{id: 117, msg: '↑ 进圈 ↑'},
 		{id: 300, msg: '~我要飞得更高~'}
 	],
 	AA_BOSS_2 : [
-		// {id: 111, msg: '左手+后拉'},
-		// {id: 112, msg: '右手+后拉'},
-		// {id: 110, msg: '前插(眩晕)'},
-		// {id: 115, msg: '旋转'},
 		{id: 119, msg: '诅咒!!'}
 	],
 	AA_BOSS_3 : [
@@ -288,8 +273,8 @@ module.exports = {
 		{id: 312, msg: '水波'},
 		{id: 313, msg: '水波'},
 		{id: 314, msg: '水波'},
-		{id: 400, msg: '3幻影 剑气'}, // 三幻影-剑气 205 500 400 204 204
-		{id: 401, msg: '3幻影 转圈'}  // 三幻影-转圈 205 500 401 115 309
+		{id: 400, msg: '幻影x3 剑气'}, // 三幻影-剑气 205 500 400 204 204
+		{id: 401, msg: '幻影x3 转圈'}  // 三幻影-转圈 205 500 401 115 309
 	],
 	// 泰内布利斯城堡 (Dark Reach Citadel)
 	DRC_BOSS_1 : [
@@ -319,7 +304,7 @@ module.exports = {
 		{id: 309, msg: '注视!!'},
 		{id: 315, msg: '恐惧(吸血)'}
 	],
-	DRC_TipMsg : ["100能量鉴定!!"],
+	DRC_TipMsg : ["100%能量!!"],
 	// 里安的地下殿堂 (Grotto of Lost Souls)
 	GLS_BOSS_1 : [
 		{id: 106, msg: '重击(坦)'},
@@ -368,12 +353,12 @@ module.exports = {
 		{id: 124, msg: '前砸(晕坦)'},
 		{id: 104, msg: '前砸(晕坦)'},
 		{id: 133, msg: '跳扑(击飞)'},
-		{id: 138, msg: '跳扑(击飞)'},
 		{id: 113, msg: '(慢) 跳扑(击飞)'},
+		{id: 138, msg: '跳扑(击飞)'},
 		{id: 118, msg: '(慢) 跳扑(击飞)'},
-		// 147 向前爬行
-		{id: 148, msg: '右手蓄力(击飞)'},
+		// 147 向前连续攻击
 		{id: 149, msg: '左手蓄力(击飞)'},
+		{id: 148, msg: '右手蓄力(击飞)'},
 		{id: 127, msg: '|直线后喷|'},
 		{id: 107, msg: '(慢) |直线后喷|'},
 		{id: 131, msg: '后喷'},
@@ -382,19 +367,19 @@ module.exports = {
 		{id: 112, msg: '← 左右喷射 →'},
 		{id: 139, msg: '↑ 前后喷射 ↓'},
 		{id: 119, msg: '↑ 前后喷射 ↓'},
-		{id: 313, msg: '内外圈'},
 		{id: 314, msg: '内外圈'},
+		{id: 313, msg: '内外圈'},
 		
 		{id: 305, msg: 'Pizza'},
-		{id: 311, msg: '全屏击退'}, // 呃呃...忍不下去了
-		{id: 312, msg: '全屏击退'}  // 呃呃...忍不下去了
+		{id: 311, msg: '全屏(击退)'}, // 呃呃...忍不下去了
+		{id: 312, msg: '全屏(击退)'}  // 呃呃...忍不下去了
 	],
 	GV_BOSS_2 : [
 		{id: 105, msg: '前刺'}, // 104 105
 		{id: 109, msg: '闪避(慢慢慢)'},
 		{id: 108, msg: '前插 | 后喷(击退)'},
 		{id: 228, msg: '补师加血'},
-		{id: 227, msg: '爆炸!!(闪避)'},
+		{id: 227, msg: '爆炸(闪避)!!'},
 		{id: 230, msg: '花粉爆炸!!'},
 		{id: 231, msg: '↓ 出圈 ↓'},
 		{id: 232, msg: '↑ 进圈 ↑'},
@@ -403,8 +388,8 @@ module.exports = {
 	],
 	// 贝尔亚克城堡 (Akalath Quarantine)
 	AQ_BOSS_1 : [
-		{id: 1104, msg: '点名-跳劈'},
-		{id: 2104, msg: '点名-跳劈'},
+		{id: 1104, msg: '大跳(眩晕)'},
+		{id: 2104, msg: '大跳(眩晕)'},
 		{id: 1110, msg: '前插(眩晕)'},
 		{id: 2110, msg: '前插(眩晕)'},
 		{id: 1111, msg: '↓ 左拉'},
@@ -419,7 +404,7 @@ module.exports = {
 		{id: 2115, msg: '后半圈'},
 		{id: 1116, msg: '爆炸(开盾)!!'}, // 1117
 		{id: 2116, msg: '爆炸(开盾)!!'}, // 2117
-		{id: 3107, msg: '重击'},
+		{id: 3107, msg: '点名(前方击退)'},
 		{id: 3115, msg: '旋转攻击'}, // 1106 2106
 		{id: 3116, msg: '小圈 | 旋转攻击'}, // 1106 2106
 		{id: 3119, msg: '诅咒 ', TIP: ["↓ 出 ↓", "↑ 进 ↑"]}, // 红出 | 蓝进
@@ -430,12 +415,12 @@ module.exports = {
 		{id: 166, msg: '转身点名'}, // 169 166 前搓 左购拳 右勾拳
 		{id: 175, msg: '怒吼(眩晕)!!'},
 		{id: 181, msg: '插地板(直线)'},
-		// {id: 214, msg: '插地板x3'}, // 181
+		// 214 插地板x3 181
 		{id: 182, msg: '踩地(击倒)'}, // 183 184
-		// {id: 302, msg: '点名-踩地(击倒)'}, // 209 182 183 184
+		// 302 209 点名-踩地(击倒) 182 183 184
 		{id: 185, msg: '爆炸(开盾)!!'},
-		{id: 202, msg: '后退 | 前搓'}, // 177
+		{id: 202, msg: '后退 | 前刺'},  // 177
 		{id: 207, msg: '幻影x5(流血)'}, // 204 206 205
-		{id: 212, msg: '闪现(流血)'} // 180
+		{id: 212, msg: '闪现(流血)'}    // 180
 	]
 }

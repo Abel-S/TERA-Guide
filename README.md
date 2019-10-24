@@ -3,17 +3,17 @@ TERA-Guide
 
 # 功能简介: 为TERA的常用副本提供[技能]辅助提示
 
-岱魔鲁斯的轮盘 (Demon’s Wheel)
+岱魔鲁斯的轮盘 (Demon's Wheel)
 
-拉坎里斯的廢墟 (Ruinous Manor)
+拉坎里斯的废墟 (Ruinous Manor)
 
 贝里克神殿 (Velik’s Sanctuary)
 
 RK-9机库 (RK-9 Kennel)
 
-革命團總部 (Red Refuge)
+革命团总部 (Red Refuge)
 
-安塔洛斯的深渊 (Antaroth’s Abyss)
+安塔洛斯的深渊 (Antaroth's Abyss)
 
 泰内布利斯城堡 (Dark Reach Citadel)
 
@@ -21,7 +21,7 @@ RK-9机库 (RK-9 Kennel)
 
 ~~巴哈勒神殿 (Bahaar's Sanctum)~~
 
-費爾奎娜巢穴(Gossamer Vault)
+费尔奎娜巢穴 (Gossamer Vault)
 
 费勒诺的实验室 (Demokron Factory)
 

@@ -1,7 +1,7 @@
 {
     "files": {
-        "boss.js": "f5035cceea7cd646bc59e4c8f7ece7f06d78a6ed592ddfa139ae8b68e267989a",
-        "index.js": "81c23c651d541263ec4e2f03f3b630b4f552eb6dec8d7785631b285ca41c1c38",
+        "boss.js": "56bd114722da5ee8d19f92ceec1bd05535330435b70a0ed77fa7c978e2f16c51",
+        "index.js": "d0d282d38c2ea4aa6ff747e8146e57dc97ec46ab79e525a247a98e03c96c74f3",
         "module.json": "1208d72bec057a4be961e0a26614dfcbe12d26e93a195198873dcbbba16b50d1"
     },
     "defs": {
@@ -16,11 +16,13 @@
         "S_DESPAWN_BUILD_OBJECT": 2,
         "S_DESPAWN_COLLECTION": 2,
         "S_DESPAWN_DROPITEM": 4,
+        "S_DESPAWN_NPC": 3,
         "S_DUNGEON_EVENT_MESSAGE": 2,
         "S_QUEST_BALLOON": 1,
         "S_SPAWN_BUILD_OBJECT": 2,
         "S_SPAWN_COLLECTION": 4,
         "S_SPAWN_DROPITEM": 8,
-        "S_SPAWN_NPC": 11
+        "S_SPAWN_NPC": 11,
+        "S_SPAWN_PROJECTILE": 5
     }
 }
