@@ -1,7 +1,7 @@
 {
     "files": {
         "boss.js": "56bd114722da5ee8d19f92ceec1bd05535330435b70a0ed77fa7c978e2f16c51",
-        "index.js": "d0d282d38c2ea4aa6ff747e8146e57dc97ec46ab79e525a247a98e03c96c74f3",
+        "index.js": "762d0c106a0ef6fdf667923c4325907fd3be4f4ff7a4fc82ad16f629db7b0320",
         "module.json": "1208d72bec057a4be961e0a26614dfcbe12d26e93a195198873dcbbba16b50d1"
     },
     "defs": {
@@ -16,8 +16,10 @@
         "S_DESPAWN_BUILD_OBJECT": 2,
         "S_DESPAWN_COLLECTION": 2,
         "S_DESPAWN_DROPITEM": 4,
-        "S_DESPAWN_NPC": 3,
         "S_DUNGEON_EVENT_MESSAGE": 2,
+        "S_LEAVE_PARTY": 1,
+        "S_LEAVE_PARTY_MEMBER": 2,
+        "S_PARTY_MEMBER_LIST": 7,
         "S_QUEST_BALLOON": 1,
         "S_SPAWN_BUILD_OBJECT": 2,
         "S_SPAWN_COLLECTION": 4,

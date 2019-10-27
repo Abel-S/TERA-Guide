@@ -20,7 +20,6 @@ module.exports = function Tera_Guide(mod) {
 		SendToStream       = false, // true 关闭队长通知, 并将消息发送到聊天[代理]频道
 		BossLog            = false,
 		debug              = false,
-		test               = false,
 		itemID1            =     1, // 告示牌: 1一般布告栏, 2兴高采烈布告栏, 3狂人布告栏
 		itemID2            = 98260, // 战利品: 古龍貝勒古斯的頭 (光柱), 369: 鑽石
 		itemID3            =   413, // 采集物: 413调味草
@@ -30,6 +29,7 @@ module.exports = function Tera_Guide(mod) {
 	// 定义变量
 	let hooks              = [],
 		job                = -1,
+		partyMembers       = [],
 		isTank             = false, // 坦克职业
 		isHealer           = false, // 补师职业
 		whichzone          = null,  // 登陆地区(zone)
@@ -48,8 +48,6 @@ module.exports = function Tera_Guide(mod) {
 		// DW
 		circleCount        = 0,     // 累计点名圆圈数
 		ballColor          = 0,     // 打投掷颜色
-		// FI
-		boxToProcess       = [],    // 恶灵封印箱
 		// VS
 		checked            = false, // 鉴定
 		inverted           = false, // 恢复正常 / 进入灵魂
@@ -95,7 +93,7 @@ module.exports = function Tera_Guide(mod) {
 					mod.command.message("bossID: "   + boss_GameID);
 					mod.command.message("isTank: "   + isTank);
 					mod.command.message("isHealer: " + isHealer);
-					sendMessage("test");
+					mod.command.message("partyMembers: " + partyMembers.length);
 					break;
 				case "log":
 					BossLog = !BossLog;
@@ -104,10 +102,6 @@ module.exports = function Tera_Guide(mod) {
 				case "debug":
 					debug = !debug;
 					mod.command.message("debug: " + (debug ? "on" : "off"));
-					break;
-				case "test":
-					test = !test;
-					mod.command.message("test: " + (test ? "on" : "off"));
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -139,11 +133,22 @@ module.exports = function Tera_Guide(mod) {
 		}
 	})
 	
+	mod.hook('S_PARTY_MEMBER_LIST', 7, (event) => {
+		partyMembers = event.members;
+	})
+	
+	mod.hook('S_LEAVE_PARTY_MEMBER', 2, (event) => {
+		partyMembers = partyMembers.filter(obj => obj.name != event.name);
+	})
+	
+	mod.hook('S_LEAVE_PARTY', 1, (event) => {
+		partyMembers = [];
+	})
+	
 	function load() {
 		if (!hooks.length) {
 			hook('S_BOSS_GAGE_INFO',        3, sBossGageInfo);
 			hook('S_SPAWN_NPC',            11, sSpawnNpc);
-			hook('S_DESPAWN_NPC',           3, sDeSpawnNpc);
 			hook('S_SPAWN_PROJECTILE',      5, sSpawnProjectile);
 			hook('S_CREATURE_ROTATE',       2, sCreatureRotate);
 			hook('S_DUNGEON_EVENT_MESSAGE', 2, sDungeonEventMessage);
@@ -166,16 +171,14 @@ module.exports = function Tera_Guide(mod) {
 			}
 			hooks = [];
 		}
-		// FI
-		boxToProcess = [];
 		reset();
+		whichmode = null;
 	}
 	
 	function reset() {
 		// 清除所有定时器
 		mod.clearAllTimeouts();
 		// 清除BOSS信息
-		whichmode          = null;
 		whichboss          = null;
 		boss_GameID        = null;
 		// DW
@@ -215,8 +218,8 @@ module.exports = function Tera_Guide(mod) {
 	function sSpawnNpc(event) {
 		if (!Enabled || SendToStream) return;
 		
-		if (BossLog && whichmode==event.huntingZoneId) {
-			mod.command.message("Spawn-Npc: " + event.huntingZoneId + "-" + event.templateId);
+		if (BossLog && partyMembers.find(obj => obj.gameId != event.owner)) {
+			mod.command.message("Spawn-Npc: [" + event.huntingZoneId + "] " + event.templateId);
 		}
 		
 		// RK_2王 丢点名球
@@ -256,48 +259,13 @@ module.exports = function Tera_Guide(mod) {
 			-------------------------- 入口 --------------------------
 		];
 		 */
-		if ([459, 759].includes(event.huntingZoneId)) {
-			if ([75941,75942,75943,75944,75945,75946, 75957,75958,75959,75960].includes(event.templateId)) {
-				boxToProcess.push({
-					templateId: event.templateId,
-					gameId: event.gameId,
-					loc: event.loc,
-					w: event.w
-				});
-				// boxToProcess.sort(function (a, b) { return (a.templateId - b.templateId); });
-if (test) mod.command.message("add " + boxToProcess.length);
-			}
-		}
-	}
-	
-	function sDeSpawnNpc(event) {
-		if ([459, 759].includes(whichmode)) {
-			var box = boxToProcess.find(obj => obj.gameId == event.gameId);
-			if (box) {
-				boss_CurLocation = box.loc;
-				boss_CurAngle = box.w;
-				curLocation = box.loc;
-				curAngle = box.w;
-				
-				SpawnString(itemID4, 2000, 180, 1000);
-				SpawnThing(   false,  100,  90,  100);
-				SpawnString(itemID4, 2000, 180, 1500);
-				SpawnThing(   false,  100, 270,  100);
-				SpawnString(itemID4, 2000, 180, 1500);
-				boxToProcess = boxToProcess.filter(obj => obj.gameId != event.gameId);
-if (test) mod.command.message("del " + boxToProcess.length + " gameId " + event.gameId);
-			}
-		}
+		
 	}
 	
 	function sSpawnProjectile(event) {
-		if (test && [459, 759].includes(whichmode) && boss_GameID==event.gameId) {
-			mod.command.message("SpawnProjectile" + 
-			" id "             + event.id +
-			" skill "          + event.skill.id +
-			" templateId "     + event.templateId +
-			" w "              + event.w
-			);
+		if ([459, 759].includes(whichmode) && event.templateId==1003 && event.skill.id==3107) {
+			boss_CurLocation = event.dest;
+			SpawnThing(true, 4000, 0, 0);
 		}
 	}
 	
@@ -460,6 +428,10 @@ if (test) mod.command.message("del " + boxToProcess.length + " gameId " + event.
 		// 模块关闭 或 不在副本中 或 找不到BOSS血条
 		if (!Enabled || !whichmode || !whichboss) return;
 		
+		if (BossLog && partyMembers.find(obj => obj.gameId != event.gameId)) {
+			mod.command.message("Boss-Skill: [" + whichmode + "] " + event.templateId + " - " + event.skill.id + "_" + event.stage);
+		}
+		
 		// GLS_2 石碑 水波攻击 范围提示
 		if ([782, 982, 3019].includes(whichmode) && [2021, 2022, 2023].includes(event.templateId)) {
 			if (event.stage!=0) return;
@@ -501,8 +473,6 @@ if (test) mod.command.message("del " + boxToProcess.length + " gameId " + event.
 		}
 		
 		if (whichboss != event.templateId) return;
-		
-		if (BossLog) mod.command.message("Boss-Skill: [" + whichmode + "] " + event.templateId + "-" + event.skill.id + "_" + event.stage);
 		
 		skillid = event.skill.id % 1000;     // 愤怒简化 取1000余数运算
 		boss_CurLocation = event.loc;        // BOSS的 x y z 坐标
@@ -575,15 +545,6 @@ if (test) mod.command.message("del " + boxToProcess.length + " gameId " + event.
 		// FI_3王
 		if ([459, 759].includes(whichmode) && event.templateId==1003) {
 			if (event.stage!=0 || !(bossSkillID = FI_BOSS_3.find(obj => obj.id==event.skill.id))) return;
-
-		if (test && [1106,2106, 1107,2107, 1108,2108, 1109,2109].includes(event.skill.id)) {
-mod.command.message("ActionStage"+
-	" target "         + event.target +
-	" skill "          + event.skill.id +
-	" templateId "     + event.templateId
-)
-		}
-
 			sendMessage(bossSkillID.msg);
 		}
 		
@@ -1154,7 +1115,7 @@ mod.command.message("ActionStage"+
 			if (skillid==231||skillid==232) {
 				SpawnCircle(itemID3, 3000, 10, 300);
 			}
-			// 前插 后喷
+			// 前推
 			if (skillid==236) {
 				SpawnThing(   false,  100,  90,   80);
 				SpawnString(itemID3, 4000, 165, 1000);
@@ -1187,6 +1148,7 @@ mod.command.message("ActionStage"+
 			// 后扫半圈
 			if (event.skill.id==1115||event.skill.id==2115) {
 				Half_Circle(itemID3, 2000, 20, 160);
+				Half_Circle(itemID3, 2000, 12, 220);
 				Half_Circle(itemID3, 2000, 10, 300);
 			}
 			// 重击
@@ -1223,10 +1185,10 @@ mod.command.message("ActionStage"+
 			}
 			// 后退 | 前搓
 			if (skillid==202) {
-				SpawnThing(   false,  100,  90,  80);
+				SpawnThing(   false,  100,  90,  90);
 				SpawnString(itemID3, 3000,   0, 500);
 				SpawnString(itemID3, 3000, 180, 500);
-				SpawnThing(   false,  100, 270,  80);
+				SpawnThing(   false,  100, 270,  90);
 				SpawnString(itemID3, 3000,   0, 500);
 				SpawnString(itemID3, 3000, 180, 500);
 			}
