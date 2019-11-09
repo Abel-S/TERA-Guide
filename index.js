@@ -428,10 +428,6 @@ module.exports = function Tera_Guide(mod) {
 		// 模块关闭 或 不在副本中 或 找不到BOSS血条
 		if (!Enabled || !whichmode || !whichboss) return;
 		
-		if (BossLog && partyMembers.find(obj => obj.gameId != event.gameId)) {
-			mod.command.message("Boss-Skill: [" + whichmode + "] " + event.templateId + " - " + event.skill.id + "_" + event.stage);
-		}
-		
 		// GLS_2 石碑 水波攻击 范围提示
 		if ([782, 982, 3019].includes(whichmode) && [2021, 2022, 2023].includes(event.templateId)) {
 			if (event.stage!=0) return;
@@ -473,6 +469,10 @@ module.exports = function Tera_Guide(mod) {
 		}
 		
 		if (whichboss != event.templateId) return;
+		
+		if (BossLog) {
+			mod.command.message("Boss-Skill: [" + whichmode + "] " + event.templateId + " - " + event.skill.id + "_" + event.stage);
+		}
 		
 		skillid = event.skill.id % 1000;     // 愤怒简化 取1000余数运算
 		boss_CurLocation = event.loc;        // BOSS的 x y z 坐标
@@ -1104,6 +1104,7 @@ module.exports = function Tera_Guide(mod) {
 		// GV_2王
 		if ([3101, 3201].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = GV_BOSS_2.find(obj => obj.id==skillid))) return;
+			if (whichmode==3101 && skillid==227) return;
 			// 前插 后喷
 			if (skillid==108) {
 				SpawnThing(   false,  100,  90,   80);
