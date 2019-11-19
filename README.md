@@ -34,7 +34,7 @@ RK-9机库 (RK-9 Kennel)
 /8频道 键入命令 | 效果说明
 --- | ---
 辅助 | 开启/关闭模组
-辅助 组队 | 提示文字 发送到 真实组队频道(默认仅自己可见)
+~~辅助 组队 | 提示文字 发送到 真实组队频道(默认仅自己可见)~~
 辅助 主播 | 提示文字 发送到 代理频道 且屏蔽花朵提示
 
 ------
@@ -42,5 +42,5 @@ RK-9机库 (RK-9 Kennel)
 Proxy(/8) Usage (proxy command) | description
 --- | ---
 guide | enabled / disabled
-guide party | Send To Party
+~~guide party | Send To Party~~
 guide stream | Send To Stream

@@ -124,8 +124,8 @@ module.exports = function Tera_Guide(mod) {
 	// 切换场景
 	mod.game.me.on('change_zone', (zone, quick) => {
 		whichzone = zone;
-		var dungeonInfo = DungeonInfo.find(obj => obj.zone == zone);
-		if (dungeonInfo) {
+		var dungeonInfo;
+		if (dungeonInfo = DungeonInfo.find(obj => obj.zone == zone)) {
 			mod.command.message(dungeonInfo.string);
 			load();
 		} else {
