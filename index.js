@@ -12,7 +12,9 @@ let {DungeonInfo,
 	DRC_BOSS_1, DRC_BOSS_2, DRC_BOSS_3, DRC_TipMsg,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
 	 GV_BOSS_1,  GV_BOSS_2,
-	 AQ_BOSS_1,  AQ_BOSS_2
+	 AQ_BOSS_1,  AQ_BOSS_2,
+	 
+	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -1194,6 +1196,22 @@ module.exports = function Tera_Guide(mod) {
 				SpawnString(itemID3, 3000, 180, 500);
 			}
 			sendMessage(bossSkillID.msg);
+		}
+		
+		// SI_1王
+		if (whichmode==3020 && event.templateId==1200) {
+			if (event.stage!=0 || !(bossSkillID = SI_BOSS_1.find(obj => obj.id==skillid))) return;
+			mod.command.message(whichmode + "-" + skillid + "-" + bossSkillID.msg);
+		}
+		// SI_2王
+		if (whichmode==3020 && event.templateId==1900) {
+			if (event.stage!=0 || !(bossSkillID = SI_BOSS_2.find(obj => obj.id==skillid))) return;
+			mod.command.message(whichmode + "-" + skillid + "-" + bossSkillID.msg);
+		}
+		// SI_3王
+		if (whichmode==3020 && event.templateId==2200) {
+			if (event.stage!=0 || !(bossSkillID = SI_BOSS_3.find(obj => obj.id==skillid))) return;
+			mod.command.message(whichmode + "-" + skillid + "-" + bossSkillID.msg);
 		}
 		
 	}

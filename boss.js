@@ -25,7 +25,9 @@ module.exports = {
 		{zone: 3019, string: '进入副本 <font color="#56B4E9">里安的地下殿堂</font> <font color="#FF0000"> 7人</font>'},
 		{zone: 3101, string: '进入副本 <font color="#56B4E9">费尔奎娜巢穴</font> <font color="#E69F00">下级</font>'},
 		{zone: 3201, string: '进入副本 <font color="#56B4E9">费尔奎娜巢穴</font> <font color="#00FFFF">上级</font>'},
-		{zone: 3023, string: '进入副本 <font color="#56B4E9">贝尔亚克城堡</font>'}
+		{zone: 3023, string: '进入副本 <font color="#56B4E9">贝尔亚克城堡</font>'},
+		
+		{zone: 3020, string: '进入副本 <font color="#56B4E9">金鳞号</font>'}
 	],
 	// 岱魔鲁斯的轮盘 (Demon's Wheel)
 	DW_BOSS_1 : [
@@ -424,5 +426,201 @@ module.exports = {
 		{id: 202, msg: '后退 | 前刺'},  // 177
 		{id: 207, msg: '幻影x5(流血)'}, // 204 206 205
 		{id: 212, msg: '闪现(流血)'}    // 180
+	],
+	
+	// 金麟號 (Sailing Instance)
+	SI_BOSS_1 : [
+        {
+            id: 101,
+            msg: "fireBall"
+        },
+        {
+            id: 102,
+            msg: "LightingStuck"
+        },
+        {
+            id: 103,
+            msg: "darkLighting"
+        },
+        {
+            id: 104,
+            msg: "IceStorm"
+        },
+        {
+            id: 105,
+            msg: "EscapingBomb"
+        },
+        {
+            id: 106,
+            msg: "darkLighting(projectile)"
+        },
+        {
+            id: 201,
+            msg: "ManaCharge"
+        },
+        {
+            id: 202,
+            msg: "backDash"
+        }
+	],
+	SI_BOSS_2 : [
+        {
+            id: 101,
+            msg: "人类 男 祭师_惩罚 光"
+        },
+        {
+            id: 102,
+            msg: "人类 男 祭师_惩罚 帷幕"
+        },
+        {
+            id: 103,
+            msg: "人类 男 祭师_治愈的 风"
+        },
+        {
+            id: 104,
+            msg: "人类 男 祭师_恢复场发射体"
+        },
+        {
+            id: 105,
+            msg: "人类 男 祭师_毁灭"
+        },
+        {
+            id: 106,
+            msg: "人类 男 祭师_毁灭 发射体"
+        },
+        {
+            id: 107,
+            msg: "人类 男 祭师_毁灭 发射体2"
+        }
+	],
+	SI_BOSS_3 : [
+        {
+            id: 101,
+            msg: "해적단장_combo1_노말"
+        },
+        {
+            id: 102,
+            msg: "해적단장_combo1R_공용"
+        },
+        {
+            id: 103,
+            msg: "해적단장_combo2_노말"
+        },
+        {
+            id: 104,
+            msg: "해적단장_combo2R_공용"
+        },
+        {
+            id: 105,
+            msg: "해적단장_combo3_노말"
+        },
+        {
+            id: 106,
+            msg: "해적단장_combo3R_공용"
+        },
+        {
+            id: 107,
+            msg: "해적단장_combo4_노말"
+        },
+        {
+            id: 108,
+            msg: "해적단장_blastslash_노말"
+        },
+        {
+            id: 109,
+            msg: "해적단장_sideslash_노말"
+        },
+        {
+            id: 120,
+            msg: "해적단장_차지4_SelfBuffOn_공용"
+        },
+        {
+            id: 121,
+            msg: "해적단장_차지1_SelfBuffOn_공용"
+        },
+        {
+            id: 122,
+            msg: "해적단장_차지2_SelfBuffOn_공용"
+        },
+        {
+            id: 123,
+            msg: "해적단장_차지3_SelfBuffOn_공용"
+        },
+        {
+            id: 124,
+            msg: "해적단장_근폭_combo1_노말"
+        },
+        {
+            id: 125,
+            msg: "해적단장_원폭_WhirlwindStart_노말"
+        },
+        {
+            id: 126,
+            msg: "해적단장_큰근폭_blastSlashShot_노말"
+        },
+        {
+            id: 127,
+            msg: "해적단장_DownBlow_노말"
+        },
+        {
+            id: 128,
+            msg: "해적단장_SoulStrike_노말"
+        },
+        {
+            id: 129,
+            msg: "해적단장_ThrowAxe_노말"
+        },
+        {
+            id: 131,
+            msg: "해적단장_도끼회수_ShockingShoutStart_공용"
+        },
+        {
+            id: 132,
+            msg: "해적단장_모드체인지_defenceStart_공용"
+        },
+        {
+            id: 133,
+            msg: "해적단장_도끼점프_DownBlow_공용"
+        },
+        {
+            id: 134,
+            msg: "해적단장_큰원폭_WhirlwindStart_노말"
+        },
+        {
+            id: 135,
+            msg: "해적단장_도끼신호_ShockingShoutStart_공용"
+        },
+        {
+            id: 136,
+            msg: "위치알려주는발사체"
+        },
+        {
+            id: 137,
+            msg: "안-밖"
+        },
+        {
+            id: 138,
+            msg: "안-밖(발사체)"
+        },
+        {
+            id: 139,
+            msg: "밖-안"
+        },
+        {
+            id: 201,
+            msg: "등장연출"
+        },
+        {
+            id: 202,
+            msg: "defence 3초"
+        },
+        {
+            id: 203,
+            msg: "defence 10초"
+        },
+        {
+            id: 204,
+            msg: "패턴변경"
+        }
 	]
 }
