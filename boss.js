@@ -427,200 +427,141 @@ module.exports = {
 		{id: 207, msg: '幻影x5(流血)'}, // 204 206 205
 		{id: 212, msg: '闪现(流血)'}    // 180
 	],
-	
 	// 金麟號 (Sailing Instance)
 	SI_BOSS_1 : [
-        {
-            id: 101,
-            msg: "fireBall"
-        },
-        {
-            id: 102,
-            msg: "LightingStuck"
-        },
-        {
-            id: 103,
-            msg: "darkLighting"
-        },
-        {
-            id: 104,
-            msg: "IceStorm"
-        },
-        {
-            id: 105,
-            msg: "EscapingBomb"
-        },
-        {
-            id: 106,
-            msg: "darkLighting(projectile)"
-        },
-        {
-            id: 201,
-            msg: "ManaCharge"
-        },
-        {
-            id: 202,
-            msg: "backDash"
-        }
+		// 101"fireBall"
+		// 102"LightingStuck"
+		// 103"darkLighting"
+		{
+			id: 104, // "attackRange": "100", "duration": 7000,
+			msg: "吸蓝(闪避)" // "IceStorm"
+		}
+		// 105 "EscapingBomb"
+		// 106 "darkLighting(projectile)"
+		// 201 "ManaCharge"
+		// 202 "backDash"
 	],
 	SI_BOSS_2 : [
-        {
-            id: 101,
-            msg: "人类 男 祭师_惩罚 光"
-        },
-        {
-            id: 102,
-            msg: "人类 男 祭师_惩罚 帷幕"
-        },
-        {
-            id: 103,
-            msg: "人类 男 祭师_治愈的 风"
-        },
-        {
-            id: 104,
-            msg: "人类 男 祭师_恢复场发射体"
-        },
-        {
-            id: 105,
-            msg: "人类 男 祭师_毁灭"
-        },
-        {
-            id: 106,
-            msg: "人类 男 祭师_毁灭 发射体"
-        },
-        {
-            id: 107,
-            msg: "人类 男 祭师_毁灭 发射体2"
-        }
+		// 101 "휴먼 남 사제_징벌의 빛"
+		// 102 "휴먼 남 사제_징벌의 장막"
+		{
+			id: 103, // "attackRange": "200.000000",
+			msg: "吸蓝(闪避)"// "휴먼 남 사제_치유의 바람"
+		},
+		// 104 "휴먼 남 사제_회복장판발사체"
+		// 105 "휴먼 남 사제_파멸"
+		// 106 "휴먼 남 사제_파멸 발사체"
+		// 107 "휴먼 남 사제_파멸 발사체2"
 	],
 	SI_BOSS_3 : [
-        {
-            id: 101,
-            msg: "해적단장_combo1_노말"
-        },
-        {
-            id: 102,
-            msg: "해적단장_combo1R_공용"
-        },
-        {
-            id: 103,
-            msg: "해적단장_combo2_노말"
-        },
-        {
-            id: 104,
-            msg: "해적단장_combo2R_공용"
-        },
-        {
-            id: 105,
-            msg: "해적단장_combo3_노말"
-        },
-        {
-            id: 106,
-            msg: "해적단장_combo3R_공용"
-        },
-        {
-            id: 107,
-            msg: "해적단장_combo4_노말"
-        },
-        {
-            id: 108,
-            msg: "해적단장_blastslash_노말"
-        },
-        {
-            id: 109,
-            msg: "해적단장_sideslash_노말"
-        },
-        {
-            id: 120,
-            msg: "해적단장_차지4_SelfBuffOn_공용"
-        },
-        {
-            id: 121,
-            msg: "해적단장_차지1_SelfBuffOn_공용"
-        },
-        {
-            id: 122,
-            msg: "해적단장_차지2_SelfBuffOn_공용"
-        },
-        {
-            id: 123,
-            msg: "해적단장_차지3_SelfBuffOn_공용"
-        },
-        {
-            id: 124,
-            msg: "해적단장_근폭_combo1_노말"
-        },
-        {
-            id: 125,
-            msg: "해적단장_원폭_WhirlwindStart_노말"
-        },
-        {
-            id: 126,
-            msg: "해적단장_큰근폭_blastSlashShot_노말"
-        },
-        {
-            id: 127,
-            msg: "해적단장_DownBlow_노말"
-        },
-        {
-            id: 128,
-            msg: "해적단장_SoulStrike_노말"
-        },
-        {
-            id: 129,
-            msg: "해적단장_ThrowAxe_노말"
-        },
-        {
-            id: 131,
-            msg: "해적단장_도끼회수_ShockingShoutStart_공용"
-        },
+		// 101 "해적단장_combo1_노말"
+		// 102 "해적단장_combo1R_공용"
+		// 103 "해적단장_combo2_노말"
+		// 104 "해적단장_combo2R_공용"
+		// 105 "해적단장_combo3_노말"
+		// 106 "해적단장_combo3R_공용"
+		// 107 "해적단장_combo4_노말"
+		// 109 "해적단장_sideslash_노말"
+		// 201 "등장연출" "登场"
+		// 204 "패턴변경" "30% 变身"
+		{
+			id: 108, // 128
+			msg: "蓄力(晕坦)" // "해적단장_blastslash_노말" C_150 R_120
+		},
+		{
+			id: 128,
+			msg: "高尔夫(击飞)" // "해적단장_SoulStrike_노말"
+		},
+
+		{
+			id: 121,
+			msg: "前砸 | 转圈" // (绿)_来吧 "해적단장_차지1_SelfBuffOn_공용"
+		},
+		{
+			id: 122,
+			msg: "转圈 | 前砸" // (紫)_滚开 "해적단장_차지2_SelfBuffOn_공용"
+		},
+		{
+			id: 123,
+			msg: "↓远离↓" // (绿)_爆炸" 해적단장_차지3_SelfBuffOn_공용"
+		},
+		{
+			id: 120,
+			msg: "↑靠近↑" // (紫)_深渊 "해적단장_차지4_SelfBuffOn_공용"
+		},
+/* 
+		{// 第一击 / 第二击
+			id: 124,
+			msg: "前砸" // "해적단장_근폭_combo1_노말"
+		},
+		{// 第一击 / 第二击
+			id: 125,
+			msg: "转圈" //"해적단장_원폭_WhirlwindStart_노말"
+		},
+
+		{// 第三击
+			id: 126,
+			msg: "大_前砸" // "해적단장_큰근폭_blastSlashShot_노말"
+		},
+		{// 第三击
+			id: 134,
+			msg: "大_转圈" // "해적단장_큰원폭_WhirlwindStart_노말"
+		},
+ */
+
+		{
+			id: 137,
+			msg: "<- 扩散 ->" // "안-밖"
+		},
+		{
+			id: 139,
+			msg: "-> 收圈 <-" // "밖-안"
+		},
+
+		{
+			id: 133,
+			msg: "后擒-> 扩散(击飞)" // "해적단장_도끼점프_DownBlow_공용"
+		},
+		{
+			id: 127,
+			msg: "后擒-> ", // "해적단장_DownBlow_노말"
+			TIP: ["转圈", "前砸"]
+		},
+
+		{
+			id: 129,
+			msg: "随仇-直线骷髅" // "해적단장_ThrowAxe_노말"
+		},
+
+		{
+			id: 131,
+			msg: "毒圈射线" // "해적단장_도끼회수_ShockingShoutStart_공용"
+		},
+		{
+			id: 135,
+			msg: "毒圈射线" // "해적단장_도끼신호_ShockingShoutStart_공용"
+		},
+
+		{
+			id: 203,
+			msg: "开始_跳绳(防御10秒)" // "defence 10초"
+		},
+
         {
             id: 132,
-            msg: "해적단장_모드체인지_defenceStart_공용"
-        },
-        {
-            id: 133,
-            msg: "해적단장_도끼점프_DownBlow_공용"
-        },
-        {
-            id: 134,
-            msg: "해적단장_큰원폭_WhirlwindStart_노말"
-        },
-        {
-            id: 135,
-            msg: "해적단장_도끼신호_ShockingShoutStart_공용"
+            msg: "132 ? (转换模式)" // "해적단장_모드체인지_defenceStart_공용"
         },
         {
             id: 136,
-            msg: "위치알려주는발사체"
-        },
-        {
-            id: 137,
-            msg: "안-밖"
+            msg: "136 ? (通知位置的发射体)" // "위치알려주는발사체"
         },
         {
             id: 138,
-            msg: "안-밖(발사체)"
-        },
-        {
-            id: 139,
-            msg: "밖-안"
-        },
-        {
-            id: 201,
-            msg: "등장연출"
+            msg: "138 ?" // "안-밖(발사체)"
         },
         {
             id: 202,
-            msg: "defence 3초"
-        },
-        {
-            id: 203,
-            msg: "defence 10초"
-        },
-        {
-            id: 204,
-            msg: "패턴변경"
+            msg: "202 ? (防御3秒)" // "defence 3초"
         }
 	]
 }
