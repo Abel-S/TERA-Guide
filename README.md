@@ -29,7 +29,7 @@ RK-9机库 (RK-9 Kennel)
 
 贝尔亚克城堡 (Akalath Quarantine)
 
-金鳞号 (Sailing Instance) <-- 仅添加 全技能 初始文本注释
+金鳞号 (Sailing Instance) <-- 80%
 
 ------
 
