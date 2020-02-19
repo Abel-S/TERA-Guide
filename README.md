@@ -29,7 +29,7 @@ RK-9机库 (RK-9 Kennel)
 
 贝尔亚克城堡 (Akalath Quarantine)
 
-金鳞号 (Sailing Instance) <-- 80%
+金鳞号 (Sailing Instance) <-- 80% need more test
 
 ------
 
