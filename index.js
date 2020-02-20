@@ -476,8 +476,8 @@ module.exports = function Tera_Guide(mod) {
 		
 		// 金鳞船 - 海浪老兵(弓箭)
 		if (whichmode==3020 && event.templateId==1700) {
-			boss_CurLocation = curLocation = event.loc;
-			boss_CurAngle = curAngle = event.w;
+			boss_CurLocation = event.loc;
+			boss_CurAngle = event.w;
 			// 陷阱炸弹
 			if (event.skill.id==1105) {
 				SpawnThing(true, 3000, 0, 0);
@@ -489,14 +489,14 @@ module.exports = function Tera_Guide(mod) {
 		}
 		// 金鳞船 - 闪电
 		if (whichmode==3020 && event.templateId==9101 && event.skill.id==1122) {
-			boss_CurLocation = curLocation = event.loc;
-			boss_CurAngle = curAngle = event.w;
+			boss_CurLocation = event.loc;
+			boss_CurAngle = event.w;
 			SpawnThing(    true, 2000,  0,  0);
 		}
 		// 金鳞船 - 气息
 		if (whichmode==3020 && event.templateId==9102 && event.skill.id==1123) {
-			boss_CurLocation = curLocation = event.loc;
-			boss_CurAngle = curAngle = event.w;
+			boss_CurLocation = event.loc;
+			boss_CurAngle = event.w;
 			SpawnThing(    true, 3000,   0,   0);
 			SpawnString(itemID4, 2000, 150, 340);
 			SpawnString(itemID4, 2000, 210, 340);
@@ -1259,6 +1259,7 @@ module.exports = function Tera_Guide(mod) {
 			if (skillid==133) {
 				if (event.stage==0) return;
 				boss_CurLocation = event.dest;
+				boss_CurAngle = event.w;
 				SpawnThing(    true, 3000, 0,   0);
 				SpawnCircle(itemID3, 3000, 8, 300);
 				SpawnCircle(itemID3, 3000, 4, 600);
@@ -1267,7 +1268,7 @@ module.exports = function Tera_Guide(mod) {
 			// 后擒 -> 转圈 | ↓30% 前砸
 			if (skillid==127) {
 				boss_CurLocation = event.dest;
-				SpawnThing(   false,  100, 0,   0);
+				boss_CurAngle = event.w;
 				if (boss_HP > 0.3) {
 					SpawnCircle(itemID3, 3000, 8, 280);		// 125 转圈
 					SpawnCircle(itemID3, 3000, 4, 570);
