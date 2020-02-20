@@ -1,11 +1,10 @@
 {
     "files": {
-        "boss.js": "1723fd4d23064242ac51e2beef58e63f54ec36cfecc2c9a90ee5c21fbe302b4e",
-        "index.js": "2fbca24b115e959dc8d839fe7dbee926f43153a657dc83bcebe020b88c051547",
+        "boss.js": "82a17816c7e0f2bf8f76e19f76001bd649413f7c5559d333324ed9631ea8fffa",
+        "index.js": "8d451c5bfa302ba7c29733c6d3bc0aaa446ab7c77ca311b6a09596a01db41e69",
         "module.json": "fa3bac71288d3ddb41bf7d75aeb21bb21f56bb79526d30efd593ee531e4e2de8"
     },
     "defs": {
-        "C_PLAYER_LOCATION": 5,
         "S_ABNORMALITY_BEGIN": 4,
         "S_ABNORMALITY_END": 1,
         "S_ACTION_STAGE": 9,

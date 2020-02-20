@@ -20,7 +20,6 @@ module.exports = function Tera_Guide(mod) {
 	let Enabled            =  true, // 总开关
 		SendToStream       = false, // true 关闭队长通知, 并将消息发送到聊天[代理]频道
 		BossLog            = false,
-		debug              = false,
 		itemID1            =     1, // 告示牌: 1一般布告栏, 2兴高采烈布告栏, 3狂人布告栏
 		itemID2            = 98260, // 战利品: 古龍貝勒古斯的頭 (光柱), 369: 鑽石
 		itemID3            =   413, // 采集物: 413调味草
@@ -69,10 +68,10 @@ module.exports = function Tera_Guide(mod) {
 		power              = false, // 充能计数
 		Level              = 0,     // 充能层数
 		levelMsg           = [],    // 充能文字 数组
-		powerMsg           = "",    // 充能文字
+		PowerMsg           = "",    // 充能文字
 		// AQ
 		myColor            = null,  // 红蓝诅咒
-		tipMsg             = "";    // 进出提示
+		TipMsg             = "";    // 进出提示
 	// 控制命令
 	mod.command.add(["辅助", "guide"], (arg) => {
 		if (!arg) {
@@ -99,10 +98,6 @@ module.exports = function Tera_Guide(mod) {
 				case "log":
 					BossLog = !BossLog;
 					mod.command.message("Boss-Log: " + (BossLog ? "ON" : "OFF"));
-					break;
-				case "debug":
-					debug = !debug;
-					mod.command.message("debug: " + (debug ? "on" : "off"));
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -203,10 +198,10 @@ module.exports = function Tera_Guide(mod) {
 		power              = false;
 		Level              = 0;
 		levelMsg           = [];
-		powerMsg           = "";
+		PowerMsg           = "";
 		// AQ_1王
 		myColor            = null;
-		tipMsg             = "";
+		TipMsg             = "";
 	}
 	
 	function sBossGageInfo(event) {
@@ -1054,10 +1049,10 @@ module.exports = function Tera_Guide(mod) {
 				if (power) {
 					// 三连击, 左后, 左后 (扩散), 右后, 右后 (扩散), 后砸前砸, 尾巴
 					if ([118, 143, 145, 146, 154, 144, 147, 148, 155, 161, 162, 213, 215].includes(skillid)) {
-						powerMsg = " | " + levelMsg[Level];
+						PowerMsg = " | " + levelMsg[Level];
 						Level++;
 					} else {
-						powerMsg = "";
+						PowerMsg = "";
 					}
 				}
 				// 屏蔽[三连击]技能连续触发充能
@@ -1088,7 +1083,7 @@ module.exports = function Tera_Guide(mod) {
 				SpawnItem(  itemID5, 2000,   0, 450);
 				SpawnThing(true, 2000, bossSkillID.sign_degrees, 250); // 光柱+告示牌
 			}
-			sendMessage(bossSkillID.msg + powerMsg);
+			sendMessage(bossSkillID.msg + PowerMsg);
 		}
 		
 		// GV_1王
@@ -1205,11 +1200,11 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 诅咒
 			if (myColor && (event.skill.id==3119||event.skill.id==3220)) {
-				tipMsg = bossSkillID.TIP[myColor%30231000];
+				TipMsg = bossSkillID.TIP[myColor%30231000];
 			} else {
-				tipMsg = "";
+				TipMsg = "";
 			}
-			sendMessage(bossSkillID.msg + tipMsg);
+			sendMessage(bossSkillID.msg + TipMsg);
 		}
 		// AQ_2王
 		else if (whichmode==3023 && event.templateId==2000) {
@@ -1248,8 +1243,8 @@ module.exports = function Tera_Guide(mod) {
 			if (!(bossSkillID = SI_BOSS_3.find(obj => obj.id==skillid))) return;
 			// 前砸晕坦
 			if (skillid==108) {
-				SpawnThing(   false, 2000, 180, 180);
-				SpawnCircle(itemID3, 2000,  20, 100);
+				SpawnThing(   false, 2000, 180, 170);
+				SpawnCircle(itemID4, 2000,  20, 120);
 			}
 			// 直线骷髅
 			if (skillid==129) {
@@ -1263,9 +1258,10 @@ module.exports = function Tera_Guide(mod) {
 				if (event.stage==0) return;
 				boss_CurLocation = event.dest;
 				SpawnThing(    true, 3000, 0,   0);
-				SpawnCircle(itemID3, 3000, 8, 260);
-				SpawnCircle(itemID3, 3000, 6, 420);
-				SpawnCircle(itemID3, 3000, 4, 640);
+				// SpawnCircle(itemID3, 3000, 10, 200);
+				SpawnCircle(itemID3, 3000,  8, 300);
+				// SpawnCircle(itemID3, 3000,  6, 500);
+				SpawnCircle(itemID3, 3000,  4, 600);
 			}
 			// 后擒 -> 转圈 | ↓30% 前砸
 			if (skillid==127) {
@@ -1273,46 +1269,46 @@ module.exports = function Tera_Guide(mod) {
 				boss_CurLocation = event.dest;
 				SpawnThing(    true, 3000, 0,   0);
 				if (boss_HP > 0.3) {
-					SpawnCircle(itemID3, 3000, 8, 260);
-					SpawnCircle(itemID3, 3000, 8, 420);
+					SpawnCircle(itemID3, 3000, 8, 280);		// 125 转圈
+					SpawnCircle(itemID3, 3000, 4, 570);
 					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[0]}`);
 					return;
 				} else {
-					SpawnThing(    true, 3000, 180, 160);
-					SpawnCircle(itemID4, 3000,   8, 260);
+					SpawnThing(    true, 3000, 180, 170);	// 124 前砸
+					SpawnCircle(itemID4, 3000,   8, 290);
 					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[1]}`);
 					return;
 				}
 			}
 			// 三连击 开始技能
 			if (skillid==121) {
-				SpawnThing(    true, 3000, 180, 160);		// 124 前砸
-				SpawnCircle(itemID4, 3000,   8, 260);
+				SpawnThing(    true, 3000, 180, 170);		// 124 前砸
+				SpawnCircle(itemID4, 3000,   8, 290);
 				mod.setTimeout(() => {
-					SpawnCircle(itemID3, 2000,   8, 260);	// -> 125 转圈
+					SpawnCircle(itemID3, 2000, 8, 280);		// -> 125 转圈
+					SpawnCircle(itemID3, 3000, 4, 570);
 				}, 3000);
 			}
-			
 			if (skillid==122) {
-				SpawnCircle(itemID4, 3000,   8, 260);		// 125 转圈 
+				SpawnCircle(itemID3, 3000, 8, 280);			// 125 转圈 
+				SpawnCircle(itemID3, 3000, 4, 570);
 				mod.setTimeout(() => {
-					SpawnThing(   false, 2000, 180, 160);	// -> 124 前砸
-					SpawnCircle(itemID3, 2000,   8, 260);
+					SpawnThing(   false, 2000, 180, 170);	// -> 124 前砸
+					SpawnCircle(itemID4, 2000,   8, 290);
 				}, 3000);
 			}
-			// 123 大前砸
-			if (skillid==126) {
-				mod.setTimeout(() => {
-					SpawnThing(   false, (boss_HP>0.3)?2000:6000, 180, 160);
-					SpawnCircle(itemID4, (boss_HP>0.3)?2000:6000,   8, 360);
+			// 三连击 结束技能
+			if (skillid==123) {
+				mod.setTimeout(() => {						// 123 126 大前砸
+					SpawnThing(   false, (boss_HP>0.3)?2000:6000, 180, 200);
+					SpawnCircle(itemID4, (boss_HP>0.3)?2000:6000,   8, 450);
 				}, 5000);
 				return;
 			}
-			// 120 大转圈
-			if (skillid==134) {
-				mod.setTimeout(() => {
-					SpawnThing(   false, (boss_HP>0.3)?2000:6000, 180, 120);
-					SpawnCircle(itemID3, (boss_HP>0.3)?2000:6000,   8, 220);
+			if (skillid==120) {
+				mod.setTimeout(() => {						// 120 134 大转圈
+					SpawnThing(   false, (boss_HP>0.3)?2000:6000, 180, 150);
+					SpawnCircle(itemID3, (boss_HP>0.3)?2000:6000,   8, 280);
 				}, 5000);
 				return;
 			}
@@ -1430,27 +1426,4 @@ module.exports = function Tera_Guide(mod) {
 		}
 	}
 	
-	mod.hook('C_PLAYER_LOCATION', 5, event => {
-		if (!debug) return;
-		boss_CurLocation = event.loc;
-		boss_CurAngle = event.w;
-		curLocation = event.loc;
-		curAngle = event.w;
-	});
-	mod.command.add("点", (a1, a2, a3, a4) => {
-		Number(a1), Number(a2), Number(a3), Number(a4);
-		SpawnThing(a1, a2, a3, a4);
-	});
-	mod.command.add("线", (b1, b2, b3, b4) => {
-		Number(b1), Number(b2), Number(b3), Number(b4);
-		SpawnString(b1, b2, b3, b4);
-	});
-	mod.command.add("圆", (c1, c2, c4) => {
-		Number(c1), Number(c2), Number(c4);
-		SpawnCircle(c1, c2, 10, c4);
-	});
-	mod.command.add("半圆", (d1, d2, d4) => {
-		Number(d1), Number(d2), Number(d4);
-		Half_Circle(d1, d2, 10, d4);
-	});
 }

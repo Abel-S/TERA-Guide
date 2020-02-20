@@ -470,9 +470,9 @@ module.exports = {
 	//  {id: 124, msg: '前砸'},        // "해적단장_근폭_combo1_노말"          第一击 / 第二击
 	//  {id: 125, msg: '转圈'},        // "해적단장_원폭_WhirlwindStart_노말"  第一击 / 第二击
 		{id: 123, msg: '↓ 出 ↓'},      // "해적단장_차지3_SelfBuffOn_공용" (绿)_爆炸  +No.2 buff
-		{id: 126, msg: '大前砸'},      // "해적단장_큰근폭_blastSlashShot_노말" 第三击
+	//  {id: 126, msg: '大前砸'},      // "해적단장_큰근폭_blastSlashShot_노말" 第三击
 		{id: 120, msg: '↑ 进 ↑'},      // "해적단장_차지4_SelfBuffOn_공용" (紫)_深渊  +No.2 buff
-		{id: 134, msg: '大转圈'},      // "해적단장_큰원폭_WhirlwindStart_노말" 第三击
+	//  {id: 134, msg: '大转圈'},      // "해적단장_큰원폭_WhirlwindStart_노말" 第三击
 		{id: 137, msg: '扩散'},        // "안-밖" 内到外
 		{id: 139, msg: '收缩'},        // "밖-안" 外到内
 		
