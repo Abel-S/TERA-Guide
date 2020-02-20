@@ -461,8 +461,8 @@ module.exports = {
 		{id: 108, msg: '蓄力(晕坦)'},    // "해적단장_blastslash_노말" C_150 R_120
 		{id: 128, msg: '高尔夫(击飞)'},  // "해적단장_SoulStrike_노말"
 		{id: 129, msg: '随仇-直线骷髅'}, // "해적단장_ThrowAxe_노말"
-		{id: 131, msg: "毒圈射线131"},   // "해적단장_도끼회수_ShockingShoutStart_공용"
-		{id: 135, msg: "毒圈射线135"},   // "해적단장_도끼신호_ShockingShoutStart_공용"
+	//  {id: 131, msg: "毒圈射线131"},   // "해적단장_도끼회수_ShockingShoutStart_공용"
+	//  {id: 135, msg: "毒圈射线135"},   // "해적단장_도끼신호_ShockingShoutStart_공용"
 		{id: 203, msg: "跳绳(防御10秒)"},// "defence 10초"
 		
 		{id: 121, msg: '前砸 | 转圈'}, // "해적단장_차지1_SelfBuffOn_공용" (绿)_来吧  +No.1 buff
@@ -476,8 +476,8 @@ module.exports = {
 		{id: 137, msg: '扩散'},        // "안-밖" 内到外
 		{id: 139, msg: '收缩'},        // "밖-안" 外到内
 		
-		{id: 133, msg: '后擒-> 扩散(击飞)'}, // "해적단장_도끼점프_DownBlow_공용"
-		{id: 127, msg: '后擒-> ', TIP: ["转圈", "前砸"]}, // "해적단장_DownBlow_노말"
+		{id: 133, msg: '扩散(击飞)'}, // "해적단장_도끼점프_DownBlow_공용"
+		{id: 127, msg: '后擒', TIP: ["↑ 进 ↑", "前砸"]}, // "해적단장_DownBlow_노말"
 		
         {id: 132,msg: "132 ? (转换模式)"}, // "해적단장_모드체인지_defenceStart_공용"
         {id: 136,msg: "136 ? (通知位置的发射体)"}, // "위치알려주는발사체"
