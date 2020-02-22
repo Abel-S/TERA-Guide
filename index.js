@@ -429,7 +429,7 @@ module.exports = function Tera_Guide(mod) {
 	function sAbnormalityEnd(event) {
 		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
-			partyMakers = [];
+			partyMakers = partyMakers.filter(m => m.target != event.target);
 			UpdateMarkers();
 		}
 		
@@ -494,6 +494,8 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 雷龙
 			if (event.skill.id==1101) {
+				curLocation = event.loc;
+				curAngle = event.w;
 				SpawnString(itemID4, 5000, 180, 1000);
 			}
 		}
@@ -1263,23 +1265,16 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 后擒 -> 转圈 | ↓30% 前砸
 			if (skillid==127) {
-				boss_CurLocation = event.dest;
-				boss_CurAngle = event.w;
 				if (boss_HP > 0.3) {
-					SpawnCircle(itemID3, 3000, 8, 280);		// 125 转圈
-					SpawnCircle(itemID3, 3000, 4, 560);
 					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[0]}`);
 					return;
 				} else {
-					SpawnThing(    true, 3000, 180, 170);	// 124 前砸
-					SpawnCircle(itemID4, 3000,   8, 290);
 					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[1]}`);
 					return;
 				}
 			}
 			// 三连击 开始技能
 			if (skillid==121) {
-				boss_CurLocation = event.loc;
 				SpawnThing(    true, 3000, 180, 170);		// 124 前砸
 				SpawnCircle(itemID4, 3000,   8, 290);
 				
@@ -1293,7 +1288,6 @@ module.exports = function Tera_Guide(mod) {
 				SpawnCircle(itemID3, 3000, 4, 560);
 				
 				mod.setTimeout(() => {
-					boss_CurLocation = event.loc;
 					SpawnThing(    true, 2000, 180, 170);	// -> 124 前砸
 					SpawnCircle(itemID4, 2000,   8, 290);
 				}, 3000);
@@ -1301,14 +1295,12 @@ module.exports = function Tera_Guide(mod) {
 			// 三连击 结束技能
 			if (skillid==123) {								// 126 大前砸
 				mod.setTimeout(() => {
-					boss_CurLocation = event.loc;
 					SpawnThing(   false, 2000, 180, 200);
-					SpawnCircle(itemID4, 2000,   4, 450);
+					SpawnCircle(itemID4, 2000,   6, 450);
 				}, (boss_HP>0.3)?5000:7000);
 			}
 			if (skillid==120) {								// 134 大转圈
 				mod.setTimeout(() => {
-					boss_CurLocation = event.loc;
 					SpawnThing(   false, 2000, 180, 150);
 					SpawnCircle(itemID3, 2000,   8, 280);
 				}, (boss_HP>0.3)?5000:7000);
