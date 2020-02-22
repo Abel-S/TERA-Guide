@@ -429,7 +429,7 @@ module.exports = function Tera_Guide(mod) {
 	function sAbnormalityEnd(event) {
 		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
-			partyMakers = partyMakers.filter(m => m.gameId != event.target);
+			partyMakers = [];
 			UpdateMarkers();
 		}
 		
