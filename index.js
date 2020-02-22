@@ -13,7 +13,7 @@ let {DungeonInfo,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
 	 GV_BOSS_1,  GV_BOSS_2,
 	 AQ_BOSS_1,  AQ_BOSS_2,
-	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3, SI_TipMsg
+	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -29,7 +29,8 @@ module.exports = function Tera_Guide(mod) {
 	// 定义变量
 	let hooks              = [],
 		job                = -1,
-		partyMembers       = [],
+		partyMembers       = [],    // 队员信息
+		partyMakers        = [],    // 队员标记
 		isTank             = false, // 坦克职业
 		isHealer           = false, // 补师职业
 		whichzone          = null,  // 登陆地区(zone)
@@ -175,6 +176,9 @@ module.exports = function Tera_Guide(mod) {
 	function reset() {
 		// 清除所有定时器
 		mod.clearAllTimeouts();
+		// 清除队员标记
+		partyMakers        = [];
+		UpdateMarkers();
 		// 清除BOSS信息
 		whichboss          = null;
 		boss_GameID        = null;
@@ -406,13 +410,13 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sAbnormalityBegin(event) {
-		// 金鳞船 亡靈閃電的襲擊
-		if (event.id==30209101) {
-			sendMessage(SI_TipMsg[0] + " | " + partyMembers.find(m => m.gameId == event.target).name, 25)
-		}
-		// 金鳞船 海洋魔女的氣息
-		if (event.id==30209102) {
-			sendMessage(SI_TipMsg[1] + " | " + partyMembers.find(m => m.gameId == event.target).name, 25)
+		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
+		if (event.id==30209101||event.id==30209102) {
+			partyMakers.push({
+				color: event.id % 30209101,
+				target: event.target
+			});
+			UpdateMarkers();
 		}
 		
 		if (!mod.game.me.is(event.target)) return;
@@ -423,6 +427,12 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sAbnormalityEnd(event) {
+		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
+		if (event.id==30209101||event.id==30209102) {
+			partyMakers = partyMakers.filter(m => m.gameId != event.target);
+			UpdateMarkers();
+		}
+		
 		if (!mod.game.me.is(event.target)) return;
 		// AQ_1王 内外圈-鉴定 紅色詛咒氣息 藍色詛咒氣息
 		if (event.id==30231000||event.id==30231001) {
@@ -480,26 +490,12 @@ module.exports = function Tera_Guide(mod) {
 			boss_CurAngle = event.w;
 			// 陷阱炸弹
 			if (event.skill.id==1105) {
-				SpawnThing(true, 3000, 0, 0);
+				SpawnThing(true, 5000, 0, 0);
 			}
 			// 雷龙
 			if (event.skill.id==1101) {
 				SpawnString(itemID4, 5000, 180, 1000);
 			}
-		}
-		// 金鳞船 - 闪电
-		if (whichmode==3020 && event.templateId==9101 && event.skill.id==1122) {
-			boss_CurLocation = event.loc;
-			boss_CurAngle = event.w;
-			SpawnThing(    true, 2000,  0,  0);
-		}
-		// 金鳞船 - 气息
-		if (whichmode==3020 && event.templateId==9102 && event.skill.id==1123) {
-			boss_CurLocation = event.loc;
-			boss_CurAngle = event.w;
-			SpawnThing(    true, 3000,   0,   0);
-			SpawnString(itemID4, 2000, 150, 340);
-			SpawnString(itemID4, 2000, 210, 340);
 		}
 		
 		if (whichboss != event.templateId) return;
@@ -1260,10 +1256,10 @@ module.exports = function Tera_Guide(mod) {
 				if (event.stage==0) return;
 				boss_CurLocation = event.dest;
 				boss_CurAngle = event.w;
-				SpawnThing(    true, 3000, 0,   0);
-				SpawnCircle(itemID3, 3000, 8, 300);
-				SpawnCircle(itemID3, 3000, 4, 600);
-				SpawnCircle(itemID3, 3000, 4, 900);
+				SpawnThing(   false,  100, 0,   0);
+				SpawnCircle(itemID3, 5000, 8, 300);
+				SpawnCircle(itemID3, 5000, 4, 600);
+				SpawnCircle(itemID3, 5000, 4, 900);
 			}
 			// 后擒 -> 转圈 | ↓30% 前砸
 			if (skillid==127) {
@@ -1271,7 +1267,7 @@ module.exports = function Tera_Guide(mod) {
 				boss_CurAngle = event.w;
 				if (boss_HP > 0.3) {
 					SpawnCircle(itemID3, 3000, 8, 280);		// 125 转圈
-					SpawnCircle(itemID3, 3000, 4, 570);
+					SpawnCircle(itemID3, 3000, 4, 560);
 					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[0]}`);
 					return;
 				} else {
@@ -1289,12 +1285,12 @@ module.exports = function Tera_Guide(mod) {
 				
 				mod.setTimeout(() => {
 					SpawnCircle(itemID3, 2000, 8, 280);		// -> 125 转圈
-					SpawnCircle(itemID3, 2000, 4, 570);
+					SpawnCircle(itemID3, 2000, 4, 560);
 				}, 3000);
 			}
 			if (skillid==122) {
 				SpawnCircle(itemID3, 3000, 8, 280);			// 125 转圈 
-				SpawnCircle(itemID3, 3000, 4, 570);
+				SpawnCircle(itemID3, 3000, 4, 560);
 				
 				mod.setTimeout(() => {
 					boss_CurLocation = event.loc;
@@ -1307,7 +1303,7 @@ module.exports = function Tera_Guide(mod) {
 				mod.setTimeout(() => {
 					boss_CurLocation = event.loc;
 					SpawnThing(   false, 2000, 180, 200);
-					SpawnCircle(itemID4, 2000,   8, 450);
+					SpawnCircle(itemID4, 2000,   4, 450);
 				}, (boss_HP>0.3)?5000:7000);
 			}
 			if (skillid==120) {								// 134 大转圈
@@ -1430,5 +1426,10 @@ module.exports = function Tera_Guide(mod) {
 			SpawnItem(item, times, degrees, radius);
 		}
 	}
-	
+	// 更新 队内玩家 标记
+	function UpdateMarkers() {
+		mod.send('S_PARTY_MARKER', 1, {
+			markers: partyMakers
+		});
+	}
 }
