@@ -18,8 +18,8 @@ let {DungeonInfo,
 
 module.exports = function Tera_Guide(mod) {
 	let Enabled            =  true, // 总开关
+		CleanItems         = false, // true 仅提示 文字通知, 无光柱以及花朵范围
 		SendToStream       = false, // true 关闭队长通知, 并将消息发送到聊天[代理]频道
-		BossLog            = false,
 		itemID1            =     1, // 告示牌: 1一般布告栏, 2兴高采烈布告栏, 3狂人布告栏
 		itemID2            = 98260, // 战利品: 古龍貝勒古斯的頭 (光柱), 369: 鑽石
 		itemID3            =   413, // 采集物: 413调味草
@@ -29,6 +29,7 @@ module.exports = function Tera_Guide(mod) {
 	// 定义变量
 	let hooks              = [],
 		job                = -1,
+		TipMsg             = "",    // 可变文字
 		partyMembers       = [],    // 队员信息
 		partyMakers        = [],    // 队员标记
 		isTank             = false, // 坦克职业
@@ -37,6 +38,7 @@ module.exports = function Tera_Guide(mod) {
 		whichmode          = null,  // 副本地图(huntingZoneId)
 		whichboss          = null,  // 区域位置(templateId)
 		boss_GameID        = null,  // BOSS gameId
+		enraged            = false, // BOSS 愤怒
 		boss_HP            = 0,     // BOSS 血量%
 		boss_CurLocation   = {},    // BOSS 坐标
 		boss_CurAngle      = 0,     // BOSS 角度
@@ -72,7 +74,8 @@ module.exports = function Tera_Guide(mod) {
 		PowerMsg           = "",    // 充能文字
 		// AQ
 		myColor            = null,  // 红蓝诅咒
-		TipMsg             = "";    // 进出提示
+		// SI
+		bossBuff           = 0;     // 紫绿武器
 	// 控制命令
 	mod.command.add(["辅助", "guide"], (arg) => {
 		if (!arg) {
@@ -80,14 +83,23 @@ module.exports = function Tera_Guide(mod) {
 			mod.command.message("副本提示(Guide) " + (Enabled ? "启用(ON)" : "禁用(OFF)"));
 		} else {
 			switch (arg) {
+				case "cl":
+				case "clean":
+				case "纯净":
+					CleanItems = !CleanItems;
+					mod.command.message("纯净模式(Clean) " + (CleanItems ? "文字(ON)" : "花朵(OFF)"));
+					break;
+				case "st":
 				case "stream":
 				case "主播":
 					SendToStream = !SendToStream;
 					mod.command.message("主播模式(Stream) " + (SendToStream ? "启用(ON)" : "禁用(OFF)"));
 					break;
 				case "info":
+				case "状态":
 					mod.command.message("模块开关: " + Enabled);
-					mod.command.message("主播模式 " + (SendToStream ? "启用" : "禁用"));
+					mod.command.message("纯净模式: " + CleanItems);
+					mod.command.message("主播模式: " + SendToStream);
 					mod.command.message("登陆地区: " + whichzone);
 					mod.command.message("副本地图: " + whichmode);
 					mod.command.message("区域位置: " + whichboss);
@@ -95,10 +107,6 @@ module.exports = function Tera_Guide(mod) {
 					mod.command.message("isTank: "   + isTank);
 					mod.command.message("isHealer: " + isHealer);
 					mod.command.message("partyMembers: " + partyMembers.length);
-					break;
-				case "log":
-					BossLog = !BossLog;
-					mod.command.message("Boss-Log: " + (BossLog ? "ON" : "OFF"));
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -128,24 +136,25 @@ module.exports = function Tera_Guide(mod) {
 		} else {
 			unload();
 		}
-	})
+	});
 	
 	mod.hook('S_PARTY_MEMBER_LIST', 7, (event) => {
 		partyMembers = event.members;
 		// partyMembers = event.members.filter(m => !mod.game.me.is(m.gameId));
-	})
+	});
 	
 	mod.hook('S_LEAVE_PARTY_MEMBER', 2, (event) => {
-		partyMembers = partyMembers.filter(obj => obj.name != event.name);
-	})
+		partyMembers = partyMembers.filter(m => m.playerId != event.playerId);
+	});
 	
 	mod.hook('S_LEAVE_PARTY', 1, (event) => {
 		partyMembers = [];
-	})
+	});
 	
 	function load() {
 		if (!hooks.length) {
 			hook('S_BOSS_GAGE_INFO',        3, sBossGageInfo);
+			hook('S_NPC_STATUS',            2, sNpcStatus);
 			hook('S_SPAWN_NPC',            11, sSpawnNpc);
 			hook('S_SPAWN_PROJECTILE',      5, sSpawnProjectile);
 			hook('S_CREATURE_ROTATE',       2, sCreatureRotate);
@@ -174,6 +183,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function reset() {
+		TipMsg             = "";
 		// 清除所有定时器
 		mod.clearAllTimeouts();
 		// 清除队员标记
@@ -182,6 +192,7 @@ module.exports = function Tera_Guide(mod) {
 		// 清除BOSS信息
 		whichboss          = null;
 		boss_GameID        = null;
+		enraged            = false;
 		// DW
 		circleCount        = 0;
 		ballColor          = 0;
@@ -205,23 +216,26 @@ module.exports = function Tera_Guide(mod) {
 		PowerMsg           = "";
 		// AQ_1王
 		myColor            = null;
-		TipMsg             = "";
+		// SI_3王
+		bossBuff           = 0;
 	}
 	
 	function sBossGageInfo(event) {
 		boss_HP = (Number(event.curHp) / Number(event.maxHp));
+		boss_GameID = event.id;
+		
 		if (!whichmode) whichmode = event.huntingZoneId;
 		if (!whichboss) whichboss = event.templateId;
-		if (!boss_GameID) boss_GameID = event.id;
 		if (boss_HP <= 0 || boss_HP == 1) reset();
 	}
 	
+	function sNpcStatus(event) {
+		if (boss_GameID != event.gameId) return;
+		boss_Enraged = event.enraged;
+	}
+	
 	function sSpawnNpc(event) {
-		if (!Enabled || SendToStream) return;
-		
-		if (BossLog && partyMembers.find(obj => obj.gameId != event.owner)) {
-			mod.command.message("Spawn-Npc: [" + event.huntingZoneId + "] " + event.templateId);
-		}
+		if (!Enabled || CleanItems || SendToStream) return;
 		
 		// RK_2王 丢点名球
 		if ([735, 935].includes(event.huntingZoneId) && event.templateId==2007) {
@@ -280,10 +294,6 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sDungeonEventMessage(event) {
 		if (!Enabled || !whichmode || !whichboss) return;
-		// var msg_Id = parseInt(event.message.replace('@dungeon:', '') % 1000);
-		// var msg_Id = parseInt(event.message.replace(/[^0-9]/ig, '') % 1000);
-		var msg_Id = parseInt(event.message.match(/\d+/ig)) % 1000;
-		if (BossLog) mod.command.message("D-Message: " + event.message + " | " + msg_Id);
 		
 		// DRC_1王 能量满100提醒 下级-9783103 上级-9983103
 		if ([783, 983, 3018].includes(whichmode) && whichboss==1000 && msg_Id==103) {
@@ -321,10 +331,6 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sQuestBalloon(event) {
 		if (!Enabled || !whichmode || !whichboss) return;
-		// var msg_Id = parseInt(event.message.replace('@monsterBehavior:', '') % 1000);
-		// var msg_Id = parseInt(event.message.replace(/[^0-9]/ig, '') % 1000);
-		var msg_Id = parseInt(event.message.match(/\d+/ig)) % 1000;
-		if (BossLog) mod.command.message("Q-Balloon: " + event.message + " | " + msg_Id);
 		
 		// DW_2王 轮盘选中球的颜色(王的说话)
 		if (whichmode==466 && whichboss==46602) {
@@ -417,6 +423,12 @@ module.exports = function Tera_Guide(mod) {
 				target: event.target
 			});
 			UpdateMarkers();
+			
+			if (mod.gameId.me.is(event.target)) {
+				mod.setTimeout(() => {
+					sendMessage(SI_TipMsg[2], 25);
+				}, 2000);
+			}
 		}
 		
 		if (!mod.game.me.is(event.target)) return;
@@ -501,10 +513,6 @@ module.exports = function Tera_Guide(mod) {
 		}
 		
 		if (whichboss != event.templateId) return;
-		
-		if (BossLog) {
-			mod.command.message("Boss-Skill: [" + whichmode + "] " + event.templateId + " - " + event.skill.id + "_" + event.stage);
-		}
 		
 		skillid = event.skill.id % 1000;     // 愤怒简化 取1000余数运算
 		boss_CurLocation = event.loc;        // BOSS的 x y z 坐标
@@ -1255,57 +1263,77 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 后擒 -> 扩散4圈
 			if (skillid==133) {
-				if (event.stage==0) return;
-				boss_CurLocation = event.dest;
-				boss_CurAngle = event.w;
-				SpawnThing(   false,  100, 0,   0);
-				SpawnCircle(itemID3, 5000, 8, 300);
-				SpawnCircle(itemID3, 5000, 4, 600);
-				SpawnCircle(itemID3, 5000, 4, 900);
+				if (event.stage==1) {
+					boss_CurLocation = event.dest;
+					boss_CurAngle = event.w;
+					SpawnThing(   false,  100, 0,   0);
+					SpawnCircle(itemID3, 5000, 8, 300);
+					SpawnCircle(itemID3, 5000, 4, 600);
+					SpawnCircle(itemID3, 5000, 4, 900);
+					return;
+				}
 			}
 			// 后擒 -> 转圈 | ↓30% 前砸
 			if (skillid==127) {
 				if (boss_HP > 0.3) {
-					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[0]}`);
-					return;
+					TipMsg = " | " + bossSkillID.TIP[0];
 				} else {
-					sendMessage(`${bossSkillID.msg} | ${bossSkillID.TIP[1]}`);
-					return;
+					TipMsg = " | " + bossSkillID.TIP[1];
 				}
+			} else {
+				TipMsg = "";
 			}
 			// 三连击 开始技能
 			if (skillid==121) {
-				SpawnThing(    true, 3000, 180, 170);		// 124 前砸
+				SpawnThing(    true, 3000, 180, enraged?(170+170):170);			// 124 前砸
 				SpawnCircle(itemID4, 3000,   8, 290);
 				
 				mod.setTimeout(() => {
 					SpawnCircle(itemID3, 2000, 8, 280);		// -> 125 转圈
 					SpawnCircle(itemID3, 2000, 4, 560);
 				}, 3000);
+				bossBuff = skillid;
+				return;
 			}
 			if (skillid==122) {
 				SpawnCircle(itemID3, 3000, 8, 280);			// 125 转圈 
 				SpawnCircle(itemID3, 3000, 4, 560);
 				
 				mod.setTimeout(() => {
-					SpawnThing(    true, 2000, 180, 170);	// -> 124 前砸
+					SpawnThing(    true, 2000, 180, enraged?(170+170):170);		// -> 124 前砸
 					SpawnCircle(itemID4, 2000,   8, 290);
 				}, 3000);
+				bossBuff = skillid;
+				return;
 			}
 			// 三连击 结束技能
 			if (skillid==123) {								// 126 大前砸
+				TipMsg = SI_TipMsg[(bossBuff+skillid) % 221];
+				var delay;
+				if (boss_HP>0.3) {
+					delay = enraged?4000:5000;
+				} else {
+					delay = enraged?6000:7000;
+				}
 				mod.setTimeout(() => {
-					SpawnThing(   false, 2000, 180, 200);
+					SpawnThing(   false, 2000, 180, enraged?(200+200):200);
 					SpawnCircle(itemID4, 2000,   6, 450);
-				}, (boss_HP>0.3)?5000:7000);
+				}, delay);
 			}
 			if (skillid==120) {								// 134 大转圈
+				TipMsg = SI_TipMsg[(bossBuff+skillid) % 221];
+				var delay;
+				if (boss_HP>0.3) {
+					delay = enraged?4000:5000;
+				} else {
+					delay = enraged?6000:7000;
+				}
 				mod.setTimeout(() => {
-					SpawnThing(   false, 2000, 180, 150);
+					SpawnThing(   false, 2000, 180, enraged?(150+150):150);
 					SpawnCircle(itemID3, 2000,   8, 280);
-				}, (boss_HP>0.3)?5000:7000);
+				}, delay);
 			}
-			sendMessage(bossSkillID.msg);
+			sendMessage(bossSkillID.msg + TipMsg);
 		}
 		else {
 			
@@ -1325,8 +1353,8 @@ module.exports = function Tera_Guide(mod) {
 	}
 	// 地面提示(光柱+告示牌)
 	function SpawnThing(show, times, degrees, radius) {          // 是否显示 持续时间 偏移角度 半径距离
-		if (SendToStream) return;
-	
+		if (CleanItems || SendToStream) return;
+		
 		var r = null, rads = null, finalrad = null, spawnx = null, spawny = null;
 		r = boss_CurAngle - Math.PI;
 		rads = (degrees * Math.PI/180);
@@ -1373,7 +1401,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	// 地面提示(花朵)
 	function SpawnItem(item, times, degrees, radius) {           // 显示物品 持续时间 偏移角度 半径距离
-		if (SendToStream) return;
+		if (CleanItems || SendToStream) return;
 		
 		var r = null, rads = null, finalrad = null, spawnx = null, spawny = null;
 		r = curAngle - Math.PI;

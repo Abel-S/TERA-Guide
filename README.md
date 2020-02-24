@@ -29,13 +29,14 @@ RK-9机库 (RK-9 Kennel)
 
 贝尔亚克城堡 (Akalath Quarantine)
 
-金鳞号 (Sailing Instance) <-- 95% need more test
+金鳞号 (Sailing Instance) <-- 98% need more test
 
 ------
 
 /8频道 键入命令 | 效果说明
 --- | ---
 辅助 | 开启/关闭模组
+辅助 纯净 | 仅文字提示, 禁用[光柱/花朵提示]
 辅助 主播 | [提示文字] 发送到 代理频道 且禁用[光柱/花朵提示]
 
 ------
@@ -43,4 +44,5 @@ RK-9机库 (RK-9 Kennel)
 Proxy(/8) Usage (proxy command) | description
 --- | ---
 guide | enabled / disabled
-guide stream | Send To Stream
+guide clean(cl) | Only notice and clean items
+guide stream(st) | Send To Stream

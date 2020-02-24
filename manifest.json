@@ -1,7 +1,7 @@
 {
     "files": {
-        "boss.js": "61d39c8f5290c197b80819fe2c1ef157492060d2034928c9c984d2d9d888c29e",
-        "index.js": "bc58a1036da06458fa9dc59b20a16534ba738ddce306e3bf0c4e6c511dfe4748",
+        "boss.js": "8b6c0f3b20d20e68e1f9fa97b1f352ef15569642e39ab8341fe72a44fae5ba9e",
+        "index.js": "122e6f32d8014fc0a4bef76db984adb6dd081e15f86635ae5b6524cdde82c31a",
         "module.json": "fa3bac71288d3ddb41bf7d75aeb21bb21f56bb79526d30efd593ee531e4e2de8"
     },
     "defs": {
@@ -17,6 +17,7 @@
         "S_DUNGEON_EVENT_MESSAGE": 2,
         "S_LEAVE_PARTY": 1,
         "S_LEAVE_PARTY_MEMBER": 2,
+        "S_NPC_STATUS": 2,
         "S_PARTY_MARKER": 1,
         "S_PARTY_MEMBER_LIST": 7,
         "S_QUEST_BALLOON": 1,
