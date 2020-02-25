@@ -57,7 +57,7 @@ module.exports = function Tera_Guide(mod) {
 		nextMsg            = 0,     // 预告下一次[鉴定消息数组]角标
 		// RK
 		ballCount          = 1,     // 出球数
-		timer              = 5000;  // 提示物显示时间
+		timer              = 5000,  // 提示物显示时间
 		FirstMsg           = "X",   // 第一技能
 		SecondMsg          = "X",   // 第二技能
 		switchMsg          = false, // 正常顺序 / 反向顺序
@@ -129,11 +129,14 @@ module.exports = function Tera_Guide(mod) {
 	// 切换场景
 	mod.game.me.on('change_zone', (zone, quick) => {
 		whichzone = zone;
+		whichmode = zone % 9000;
 		var dungeonInfo;
 		if (dungeonInfo = DungeonInfo.find(obj => obj.zone == zone)) {
 			mod.command.message(dungeonInfo.string);
+			if (whichmode < 100) whichmode = whichmode + 400;
 			load();
 		} else {
+			whichmode = null;
 			unload();
 		}
 	});
@@ -179,7 +182,6 @@ module.exports = function Tera_Guide(mod) {
 			hooks = [];
 		}
 		reset();
-		whichmode = null;
 	}
 	
 	function reset() {
@@ -221,21 +223,21 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sBossGageInfo(event) {
-		boss_HP = (Number(event.curHp) / Number(event.maxHp));
-		boss_GameID = event.id;
+		if (!whichboss || whichboss != event.templateId) whichboss = event.templateId;
+		if (!boss_GameID || boss_GameID != event.id) boss_GameID = event.id;
 		
-		if (!whichmode) whichmode = event.huntingZoneId;
-		if (!whichboss) whichboss = event.templateId;
+		boss_HP = (Number(event.curHp) / Number(event.maxHp));
 		if (boss_HP <= 0 || boss_HP == 1) reset();
 	}
 	
 	function sNpcStatus(event) {
 		if (boss_GameID != event.gameId) return;
+		
 		boss_Enraged = event.enraged;
 	}
 	
 	function sSpawnNpc(event) {
-		if (!Enabled || CleanItems || SendToStream) return;
+		if (!Enabled || !whichmode || CleanItems || SendToStream) return;
 		
 		// RK_2王 丢点名球
 		if ([735, 935].includes(event.huntingZoneId) && event.templateId==2007) {
@@ -278,6 +280,8 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sSpawnProjectile(event) {
+		if (!Enabled || !whichmode || CleanItems || SendToStream) return;
+		// 恶灵岛上级 尾王飞弹位置
 		if ([459, 759].includes(whichmode) && event.templateId==1003 && event.skill.id==3107) {
 			boss_CurLocation = event.dest;
 			SpawnThing(true, 4000, 0, 0);
@@ -285,6 +289,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sCreatureRotate(event) {
+		if (!Enabled || !whichmode) return;
 		// AA_3王 后砸
 		if (lastTwoUpDate && boss_GameID==event.gameId) {
 			lastRotationDate = Date.now();
@@ -293,7 +298,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sDungeonEventMessage(event) {
-		if (!Enabled || !whichmode || !whichboss) return;
+		if (!Enabled || !whichmode) return;
 		
 		// DRC_1王 能量满100提醒 下级-9783103 上级-9983103
 		if ([783, 983, 3018].includes(whichmode) && whichboss==1000 && msg_Id==103) {
@@ -330,7 +335,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sQuestBalloon(event) {
-		if (!Enabled || !whichmode || !whichboss) return;
+		if (!Enabled || !whichmode) return;
 		
 		// DW_2王 轮盘选中球的颜色(王的说话)
 		if (whichmode==466 && whichboss==46602) {
@@ -416,6 +421,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sAbnormalityBegin(event) {
+		if (!Enabled || !whichmode) return;
 		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
 			partyMakers.push({
@@ -439,6 +445,7 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sAbnormalityEnd(event) {
+		if (!Enabled || !whichmode) return;
 		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
 			partyMakers = partyMakers.filter(m => m.target != event.target);
@@ -1452,4 +1459,5 @@ module.exports = function Tera_Guide(mod) {
 			markers: partyMakers
 		});
 	}
+	
 }

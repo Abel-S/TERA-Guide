@@ -1,7 +1,7 @@
 {
     "files": {
-        "boss.js": "8b6c0f3b20d20e68e1f9fa97b1f352ef15569642e39ab8341fe72a44fae5ba9e",
-        "index.js": "122e6f32d8014fc0a4bef76db984adb6dd081e15f86635ae5b6524cdde82c31a",
+        "boss.js": "2c0aad66efcc6b946ad86c31ce9e404a6eb6480151b3e0cdd09628eb7d557bd8",
+        "index.js": "c2b9779f2902bcf9106a9340dd0432bac3996c424edec7a3925dd021c8b9effb",
         "module.json": "fa3bac71288d3ddb41bf7d75aeb21bb21f56bb79526d30efd593ee531e4e2de8"
     },
     "defs": {
