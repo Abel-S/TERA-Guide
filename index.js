@@ -1343,8 +1343,8 @@ module.exports = function Tera_Guide(mod) {
 			}
 			sendMessage(bossSkillID.msg + TipMsg);
 		}
-		// SI_3王
-		else if ([3026,3126].includes(whichmode) && event.templateId==1000) {
+		// CK
+		else if ([3026,3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		} else {
