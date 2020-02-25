@@ -13,7 +13,8 @@ let {DungeonInfo,
 	GLS_BOSS_1, GLS_BOSS_2, GLS_BOSS_3,
 	 GV_BOSS_1,  GV_BOSS_2,
 	 AQ_BOSS_1,  AQ_BOSS_2,
-	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3
+	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3, SI_TipMsg,
+	 CK_BOSS
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -906,7 +907,7 @@ module.exports = function Tera_Guide(mod) {
 			// 破盾
 			if (skillid==321) {
 				mod.setTimeout(() => {
-					sendMessage(RK_TipMsg[4])
+					sendMessage(RK_TipMsg[4]);
 				}, 90000);
 			}
 			// 雷达
@@ -1342,7 +1343,11 @@ module.exports = function Tera_Guide(mod) {
 			}
 			sendMessage(bossSkillID.msg + TipMsg);
 		}
-		else {
+		// SI_3王
+		else if ([3026,3126].includes(whichmode) && event.templateId==1000) {
+			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
+			sendMessage(bossSkillID.msg);
+		} else {
 			
 		}
 	}
