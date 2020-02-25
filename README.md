@@ -31,6 +31,8 @@ RK-9机库 (RK-9 Kennel)
 
 金鳞号 (Sailing Instance) <-- 98% need more test
 
+凯尔赛克隐藏地(Corrupted Skynest) <-- 未测试!!
+
 ------
 
 /8频道 键入命令 | 效果说明
