@@ -14,7 +14,7 @@ let {DungeonInfo,
 	 GV_BOSS_1,  GV_BOSS_2,
 	 AQ_BOSS_1,  AQ_BOSS_2,
 	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3, SI_TipMsg,
-	 CK_BOSS
+	 CK_BOSS,    CK_TipMsg
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -76,7 +76,10 @@ module.exports = function Tera_Guide(mod) {
 		// AQ
 		myColor            = null,  // 红蓝诅咒
 		// SI
-		bossBuff           = 0;     // 紫绿武器
+		bossBuff           = 0,     // 紫绿武器
+		// CK
+		myDeBuff           = null,  // 业火/寒气
+		bossWord           = null;  // 愤怒/恐惧
 	// 控制命令
 	mod.command.add(["辅助", "guide"], (arg) => {
 		if (!arg) {
@@ -221,6 +224,9 @@ module.exports = function Tera_Guide(mod) {
 		myColor            = null;
 		// SI_3王
 		bossBuff           = 0;
+		// CK
+		myDeBuff           = null;
+		bossWord           = null;
 	}
 	
 	function sBossGageInfo(event) {
@@ -233,13 +239,11 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sNpcStatus(event) {
 		if (boss_GameID != event.gameId) return;
-		
 		boss_Enraged = event.enraged;
 	}
 	
 	function sSpawnNpc(event) {
 		if (!Enabled || !whichmode || CleanItems || SendToStream) return;
-		
 		// RK_2王 丢点名球
 		if ([735, 935].includes(event.huntingZoneId) && event.templateId==2007) {
 			curLocation = event.loc;
@@ -300,7 +304,7 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sDungeonEventMessage(event) {
 		if (!Enabled || !whichmode) return;
-		
+		var msg_Id = parseInt(event.message.match(/\d+/ig)) % 1000;
 		// DRC_1王 能量满100提醒 下级-9783103 上级-9983103
 		if ([783, 983, 3018].includes(whichmode) && whichboss==1000 && msg_Id==103) {
 			sendMessage(DRC_TipMsg[0]);
@@ -337,7 +341,7 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sQuestBalloon(event) {
 		if (!Enabled || !whichmode) return;
-		
+		var msg_Id = parseInt(event.message.match(/\d+/ig)) % 1000;
 		// DW_2王 轮盘选中球的颜色(王的说话)
 		if (whichmode==466 && whichboss==46602) {
 			// 逆-466054 [红色] 顺-466050 | 逆-466055 [白色] 顺-466051 | 逆-466056 [蓝色] 顺-466052
@@ -419,6 +423,11 @@ module.exports = function Tera_Guide(mod) {
 				}
 			}
 		}
+		// 凯尔 鉴定
+		if ([3026, 3126].includes(whichmode) && whichboss==1000) {
+			// 感受毁灭的愤怒吧-3026004-3126004 感受毁灭的恐惧吧-3026005-3126005
+			bossWord = parseInt(event.message.match(/\d+/ig));
+		}
 	}
 	
 	function sAbnormalityBegin(event) {
@@ -443,6 +452,11 @@ module.exports = function Tera_Guide(mod) {
 		if (event.id==30231000||event.id==30231001) {
 			myColor = event.id;
 		}
+		
+		// 凯尔       破灭业火 / 破灭寒气
+		if ([30260001, 31260001, 30260002, 31260002].includes(event.id)) {
+			myDeBuff = event.id;
+		}
 	}
 	
 	function sAbnormalityEnd(event) {
@@ -457,6 +471,11 @@ module.exports = function Tera_Guide(mod) {
 		// AQ_1王 内外圈-鉴定 紅色詛咒氣息 藍色詛咒氣息
 		if (event.id==30231000||event.id==30231001) {
 			myColor = null;
+		}
+		
+		// 凯尔       破灭业火 / 破灭寒气
+		if ([30260001, 31260001, 30260002, 31260002].includes(event.id)) {
+			myDeBuff = null;
 		}
 	}
 	
@@ -1316,7 +1335,7 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 三连击 结束技能
 			if (skillid==123) {								// 126 大前砸
-				TipMsg = SI_TipMsg[(bossBuff+skillid) % 221];
+				TipMsg = SI_TipMsg[(bossBuff+skillid) % 241];
 				var delay;
 				if (boss_HP>0.3) {
 					delay = enraged?4000:5000;
@@ -1329,7 +1348,7 @@ module.exports = function Tera_Guide(mod) {
 				}, delay);
 			}
 			if (skillid==120) {								// 134 大转圈
-				TipMsg = SI_TipMsg[(bossBuff+skillid) % 221];
+				TipMsg = SI_TipMsg[(bossBuff+skillid) % 241];
 				var delay;
 				if (boss_HP>0.3) {
 					delay = enraged?4000:5000;
@@ -1346,6 +1365,16 @@ module.exports = function Tera_Guide(mod) {
 		// CK
 		else if ([3026,3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
+			// 内火 外冰
+			if ([212, 215].includes(skillid)) {
+				sendMessage(`${bossSkillID.msg} | ${(bossWord%2 ?"吃同":"吃异")} - ${CK_TipMsg[(bossWord%2 +myDeBuff %2) %2]}`);
+				return;
+			}
+			// 内冰 外火
+			if ([213, 214].includes(skillid)) {
+				sendMessage(`${bossSkillID.msg} | ${(bossWord%2 ?"吃同":"吃异")} - ${CK_TipMsg[(bossWord%2 +myDeBuff %2 +1) %2]}`);
+				return;
+			}
 			sendMessage(bossSkillID.msg);
 		} else {
 			
