@@ -440,7 +440,7 @@ module.exports = function Tera_Guide(mod) {
 			});
 			UpdateMarkers();
 			
-			if (mod.gameId.me.is(event.target)) {
+			if (mod.game.me.is(event.target)) {
 				mod.setTimeout(() => {
 					sendMessage(SI_TipMsg[2], 25);
 				}, 2000);
