@@ -463,7 +463,8 @@ module.exports = function Tera_Guide(mod) {
 		if (!Enabled || !whichmode) return;
 		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
-			partyMakers = partyMakers.filter(m => m.target != event.target);
+			// partyMakers = partyMakers.filter(m => m.target != event.target);
+			partyMakers = [];
 			UpdateMarkers();
 		}
 		
@@ -532,11 +533,11 @@ module.exports = function Tera_Guide(mod) {
 				SpawnThing(true, 5000, 0, 0);
 			}
 			// 雷龙
-			if (event.skill.id==1101) {
+			/* if (event.skill.id==1101) {
 				curLocation = event.loc;
 				curAngle = event.w;
 				SpawnString(itemID4, 5000, 180, 1000);
-			}
+			} */
 		}
 		
 		if (whichboss != event.templateId) return;
@@ -1334,7 +1335,7 @@ module.exports = function Tera_Guide(mod) {
 				return;
 			}
 			// 三连击 结束技能
-			if (skillid==123) {								// 126 大前砸
+			/* if (skillid==123) {								// 126 大前砸
 				TipMsg = SI_TipMsg[(bossBuff+skillid) % 241];
 				var delay;
 				if (boss_HP>0.3) {
@@ -1359,20 +1360,20 @@ module.exports = function Tera_Guide(mod) {
 					SpawnThing(   false, 2000, 180, enraged?(150+150):150);
 					SpawnCircle(itemID3, 2000,   8, 280);
 				}, delay);
-			}
+			} */
 			sendMessage(bossSkillID.msg + TipMsg);
 		}
 		// CK
-		else if ([3026,3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
+		else if ([3026, 3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
 			// 内火 外冰
 			if ([212, 215].includes(skillid)) {
-				sendMessage(`${bossSkillID.msg} | ${(bossWord%2 ?"吃同":"吃异")} - ${CK_TipMsg[(bossWord%2 +myDeBuff %2) %2]}`);
+				sendMessage(`${bossSkillID.msg} | ${CK_TipMsg[(bossWord%2 +myDeBuff %2) %2]}`);
 				return;
 			}
 			// 内冰 外火
 			if ([213, 214].includes(skillid)) {
-				sendMessage(`${bossSkillID.msg} | ${(bossWord%2 ?"吃同":"吃异")} - ${CK_TipMsg[(bossWord%2 +myDeBuff %2 +1) %2]}`);
+				sendMessage(`${bossSkillID.msg} | ${CK_TipMsg[(bossWord%2 +myDeBuff %2 +1) %2]}`);
 				return;
 			}
 			sendMessage(bossSkillID.msg);
