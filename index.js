@@ -1335,9 +1335,9 @@ module.exports = function Tera_Guide(mod) {
 				return;
 			}
 			// 三连击 结束技能
-			/* if (skillid==123) {								// 126 大前砸
+			if (skillid==123) {								// 126 大前砸
 				TipMsg = SI_TipMsg[(bossBuff+skillid) % 241];
-				var delay;
+				/* var delay;
 				if (boss_HP>0.3) {
 					delay = enraged?4000:5000;
 				} else {
@@ -1346,11 +1346,11 @@ module.exports = function Tera_Guide(mod) {
 				mod.setTimeout(() => {
 					SpawnThing(   false, 2000, 180, enraged?(200+200):200);
 					SpawnCircle(itemID4, 2000,   6, 450);
-				}, delay);
+				}, delay); */
 			}
 			if (skillid==120) {								// 134 大转圈
 				TipMsg = SI_TipMsg[(bossBuff+skillid) % 241];
-				var delay;
+				/* var delay;
 				if (boss_HP>0.3) {
 					delay = enraged?4000:5000;
 				} else {
@@ -1359,8 +1359,8 @@ module.exports = function Tera_Guide(mod) {
 				mod.setTimeout(() => {
 					SpawnThing(   false, 2000, 180, enraged?(150+150):150);
 					SpawnCircle(itemID3, 2000,   8, 280);
-				}, delay);
-			} */
+				}, delay); */
+			}
 			sendMessage(bossSkillID.msg + TipMsg);
 		}
 		// CK
