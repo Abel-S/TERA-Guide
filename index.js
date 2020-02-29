@@ -89,7 +89,7 @@ module.exports = function Tera_Guide(mod) {
 		whichzone = zone;
 		whichmode = zone % 9000;
 		
-		if (mod.game.me.inDungeon) {
+		if (mod.game.me.inDungeon && DungeonInfo.find(obj => obj.zone == zone)) {
 			mod.command.message(DungeonInfo.find(obj => obj.zone == zone).string);
 			if (whichmode < 100) whichmode = whichmode + 400;
 			load();
