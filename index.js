@@ -604,11 +604,10 @@ module.exports = function Tera_Guide(mod) {
 			if (event.stage!=0 || !(bossSkillID = AQ_BOSS_1.find(obj => obj.id==event.skill.id))) return;
 			// 诅咒
 			if (myColor && (event.skill.id==3119||event.skill.id==3220)) {
-				TipMsg = bossSkillID.TIP[myColor%30231000];
-			} else {
-				TipMsg = "";
+				sendMessage(bossSkillID.msg + bossSkillID.TIP[myColor%30231000]);
+				return;
 			}
-			sendMessage(bossSkillID.msg + TipMsg);
+			sendMessage(bossSkillID.msg);
 		}
 		// AQ_2王
 		else if (whichmode==3023 && event.templateId==2000) {
@@ -629,42 +628,42 @@ module.exports = function Tera_Guide(mod) {
 		// SI_3王
 		else if (whichmode==3020 && event.templateId==2200) {
 			if (!(bossSkillID = SI_BOSS_3.find(obj => obj.id==skillid))) return;
+			// 后擒 -> 转圈 | ↓30% 前砸
+			if (skillid==127) {
+				if (boss_HP > 0.3) {
+					sendMessage(bossSkillID.msg + bossSkillID.TIP[0]);
+					return;
+				} else {
+					sendMessage(bossSkillID.msg + bossSkillID.TIP[1]);
+					return;
+				}
+			}
 			// 三连击 开始技能
 			if (skillid==121 || skillid==122) {
 				bossBuff = skillid;
 				return;
 			}
 			// 三连击 结束技能
-			if (skillid==123 || skillid==120) {		// 126 大前砸 / 134 大转圈
-				TipMsg = SI_TipMsg[(bossBuff+skillid) % 241];
-			} else {
-				TipMsg = "";
+			if (skillid==120 || skillid==123) {		// 126 大前砸 / 134 大转圈
+				sendMessage(SI_TipMsg[(bossBuff+skillid) % 241]);
+				return;
 			}
-			// 后擒 -> 转圈 | ↓30% 前砸
-			if (skillid==127) {
-				if (boss_HP > 0.3) {
-					TipMsg = " | " + bossSkillID.TIP[0];
-				} else {
-					TipMsg = " | " + bossSkillID.TIP[1];
-				}
-			} else {
-				TipMsg = "";
-			}
-			sendMessage(bossSkillID.msg + TipMsg);
+			sendMessage(bossSkillID.msg);
 		}
 		// 凯尔
 		else if ([3026, 3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
 			// 内火-外冰
 			if ([212, 215].includes(skillid)) {
-				sendMessage(bossSkillID.msg + CK_TipMsg[(bossWord%2 +myDeBuff %2) %2]);
+				sendMessage(bossSkillID.msg + CK_TipMsg[(bossWord+myDeBuff)%2]);
+				return;
 			}
 			// 内冰-外火
-			else if ([213, 214].includes(skillid)) {
-				sendMessage(bossSkillID.msg} + CK_TipMsg[(bossWord%2 +myDeBuff %2 +1) %2]);
-			} else {
-				sendMessage(bossSkillID.msg);
+			if ([213, 214].includes(skillid)) {
+				sendMessage(bossSkillID.msg} + CK_TipMsg[(bossWord+myDeBuff+1)%2]);
+				return;
 			}
+			sendMessage(bossSkillID.msg);
 		}
 		// 狂气
 		else if (whichmode==3027 && event.templateId==1000) {
