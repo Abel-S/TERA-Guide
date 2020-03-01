@@ -12,7 +12,8 @@ let {DungeonInfo,
 	 GV_BOSS_1,  GV_BOSS_2,
 	 AQ_BOSS_1,  AQ_BOSS_2,
 	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3, SI_TipMsg,
-	 CK_BOSS,    CK_TipMsg
+	 CK_BOSS,    CK_TipMsg,
+	 KQ_BOSS
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -654,16 +655,20 @@ module.exports = function Tera_Guide(mod) {
 		// 凯尔
 		else if ([3026, 3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
-			// 内火 外冰
+			// 内火-外冰
 			if ([212, 215].includes(skillid)) {
-				sendMessage(`${bossSkillID.msg} | ${CK_TipMsg[(bossWord%2 +myDeBuff %2) %2]}`);
-				return;
+				sendMessage(bossSkillID.msg + CK_TipMsg[(bossWord%2 +myDeBuff %2) %2]);
 			}
-			// 内冰 外火
-			if ([213, 214].includes(skillid)) {
-				sendMessage(`${bossSkillID.msg} | ${CK_TipMsg[(bossWord%2 +myDeBuff %2 +1) %2]}`);
-				return;
+			// 内冰-外火
+			else if ([213, 214].includes(skillid)) {
+				sendMessage(bossSkillID.msg} + CK_TipMsg[(bossWord%2 +myDeBuff %2 +1) %2]);
+			} else {
+				sendMessage(bossSkillID.msg);
 			}
+		}
+		// 狂气
+		else if (whichmode==3027 && event.templateId==1000) {
+			if (event.stage!=0 || !(bossSkillID = KQ_BOSS.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		} else {
 			

@@ -33,6 +33,8 @@ RK-9机库 (RK-9 Kennel)
 
 凯尔赛克隐藏地(Corrupted Skynest)
 
+狂气竞技场
+
 ------
 
 /8频道 键入命令 | 效果说明
