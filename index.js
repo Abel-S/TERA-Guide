@@ -660,7 +660,7 @@ module.exports = function Tera_Guide(mod) {
 			}
 			// 内冰-外火
 			if ([213, 214].includes(skillid)) {
-				sendMessage(bossSkillID.msg} + CK_TipMsg[(bossWord+myDeBuff+1)%2]);
+				sendMessage(bossSkillID.msg + CK_TipMsg[(bossWord+myDeBuff+1)%2]);
 				return;
 			}
 			sendMessage(bossSkillID.msg);
