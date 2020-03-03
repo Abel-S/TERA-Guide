@@ -5,7 +5,7 @@
         "guiName": "副本提示(Tera-Guide)"
     },
     "author": "ZC",
-    "description": "为TERA的常用副本 提供[技能]辅助提示",
+    "description": "为TERA的常用副本提供[技能]辅助文字提示",
     "servers": ["https://raw.githubusercontent.com/tera-mod/Tera-Guide/master/"],
     "supportUrl": "https://github.com/tera-mod/Tera-Guide/issues",
     "version": "91.04"
