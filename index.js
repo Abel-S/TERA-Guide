@@ -13,7 +13,7 @@ let {DungeonInfo,
 	 AQ_BOSS_1,  AQ_BOSS_2,
 	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3, SI_TipMsg,
 	 CK_BOSS,    CK_TipMsg,
-	 KQ_BOSS
+	 KQ_BOSS,    KQ_TipMsg
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -319,9 +319,14 @@ module.exports = function Tera_Guide(mod) {
 			});
 			UpdateMarkers();
 			
-			if (mod.game.me.is(event.target)) {
-				mod.setTimeout(() => { sendMessage(SI_TipMsg[2], 25); }, 2000);
-			}
+			mod.setTimeout(() => {
+				partyMakers = [];
+				UpdateMarkers();
+			}, 6000);
+			
+			if (mod.game.me.is(event.target)) mod.setTimeout(() => {
+				sendMessage(SI_TipMsg[2], 25);
+			}, 2000);
 		}
 		
 		if (!mod.game.me.is(event.target)) return;
@@ -338,11 +343,6 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sAbnormalityEnd(event) {
 		if (!Enabled || !whichmode) return;
-		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
-		if (event.id==30209101||event.id==30209102) {
-			partyMakers = [];
-			UpdateMarkers();
-		}
 		
 		if (!mod.game.me.is(event.target)) return;
 		// AQ_1王 内外圈-鉴定 紅色詛咒氣息 藍色詛咒氣息
@@ -668,6 +668,10 @@ module.exports = function Tera_Guide(mod) {
 		// 狂气
 		else if (whichmode==3027 && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = KQ_BOSS.find(obj => obj.id==skillid))) return;
+			// 紫红 鉴定预测
+			if ([350, 357].includes(skillid)) {
+				mod.setTimeout(() => { sendMessage(KQ_TipMsg[0], 25); }, 58000);
+			}
 			sendMessage(bossSkillID.msg);
 		} else {
 			
