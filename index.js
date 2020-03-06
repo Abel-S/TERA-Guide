@@ -313,6 +313,7 @@ module.exports = function Tera_Guide(mod) {
 		if (!Enabled || !whichmode) return;
 		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
+mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 			partyMakers.push({
 				color: event.id % 30209101,
 				target: event.target
@@ -322,11 +323,11 @@ module.exports = function Tera_Guide(mod) {
 			mod.setTimeout(() => {
 				partyMakers = [];
 				UpdateMarkers();
-			}, 6000);
+			}, 3500);
 			
-			if (mod.game.me.is(event.target)) mod.setTimeout(() => {
-				sendMessage(SI_TipMsg[2], 25);
-			}, 2000);
+			if (mod.game.me.is(event.target)) {
+				mod.setTimeout(() => { sendMessage(SI_TipMsg[2], 25); }, 2000);
+			}
 		}
 		
 		if (!mod.game.me.is(event.target)) return;
