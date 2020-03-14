@@ -583,7 +583,7 @@ module.exports = function Tera_Guide(mod) {
 		if (whichmode==3023 && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = AQ_BOSS_1.find(obj => obj.id==event.skill.id))) return;
 			// 诅咒
-			if (myDeBuff && [3119, 3220].includes(event.skillid.id)) {
+			if (myDeBuff && [3119, 3220].includes(event.skill.id)) {
 				sendMessage(bossSkillID.msg + bossSkillID.TIP[myDeBuff%30231000]);
 				return;
 			}
