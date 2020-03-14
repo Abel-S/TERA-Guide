@@ -1,7 +1,7 @@
 {
     "files": {
-        "boss.js": "76a9e0a84460df1ac1bc00194500a5c3993b78d8383b6daef46074faf3fff0d7",
-        "index.js": "c37f86f5407d8f21338f1647144241c0ef1281a74584bbc1787894e34fab8281",
+        "boss.js": "ec9d598e82bb224ec6ab994cf54b1b0eaa6ba5a606bc5c7fe7ec601503aaaad5",
+        "index.js": "558bbf925030c41040f123f8035d9cc4b217ada75ebad0084f1ec0075a65e7f9",
         "module.json": "68af9ca3ccf2f65f166f6e5ae28cbba6cb662e54c5b774ee2627d61013fe2978"
     },
     "defs": {
@@ -12,10 +12,7 @@
         "S_CHAT": 3,
         "S_CREATURE_ROTATE": 2,
         "S_DUNGEON_EVENT_MESSAGE": 2,
-        "S_LEAVE_PARTY": 1,
-        "S_LEAVE_PARTY_MEMBER": 2,
         "S_PARTY_MARKER": 1,
-        "S_PARTY_MEMBER_LIST": 7,
         "S_QUEST_BALLOON": 1
     }
 }

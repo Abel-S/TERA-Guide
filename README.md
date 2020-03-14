@@ -33,7 +33,7 @@ RK-9机库 (RK-9 Kennel)
 
 凯尔赛克隐藏地(Corrupted Skynest)
 
-狂气竞技场
+狂气竞技场(Forbidden Arena)
 
 ------
 

@@ -13,7 +13,7 @@ let {DungeonInfo,
 	 AQ_BOSS_1,  AQ_BOSS_2,
 	 SI_BOSS_1,  SI_BOSS_2,  SI_BOSS_3, SI_TipMsg,
 	 CK_BOSS,    CK_TipMsg,
-	 KQ_BOSS,    KQ_TipMsg
+	 FA_BOSS,    FA_TipMsg
 } = require('./boss');
 
 module.exports = function Tera_Guide(mod) {
@@ -22,7 +22,7 @@ module.exports = function Tera_Guide(mod) {
 	// 定义变量
 	let hooks              = [],
 		TipMsg             = "",    // 可变文字
-		partyMembers       = [],    // 队员信息
+		myDeBuff           = null,  // AQ_红/蓝诅咒, CK_业火/寒气
 		partyMakers        = [],    // 队员标记
 		whichzone          = null,  // 登陆地区(zone)
 		whichmode          = null,  // 副本地图(huntingZoneId)
@@ -49,12 +49,9 @@ module.exports = function Tera_Guide(mod) {
 		power              = false, // 充能计数
 		Level              = 0,     // 充能层数
 		levelMsg           = [],    // 充能文字 数组
-		// AQ
-		myColor            = null,  // 红蓝诅咒
 		// SI
-		bossBuff           = 0,     // 紫绿武器
+		bossBuff           = 0,     // 紫/绿武器
 		// CK
-		myDeBuff           = null,  // 业火/寒气
 		bossWord           = null;  // 愤怒/恐惧
 	// 控制命令
 	mod.command.add(["辅助", "guide"], (arg) => {
@@ -77,7 +74,6 @@ module.exports = function Tera_Guide(mod) {
 					mod.command.message("副本地图: " + whichmode);
 					mod.command.message("区域位置: " + whichboss);
 					mod.command.message("bossID: "   + boss_GameID);
-					mod.command.message("partyMembers: " + partyMembers.length);
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -98,19 +94,6 @@ module.exports = function Tera_Guide(mod) {
 			whichmode = null;
 			unload();
 		}
-	});
-	
-	mod.hook('S_PARTY_MEMBER_LIST', 7, (event) => {
-		partyMembers = event.members;
-		// partyMembers = event.members.filter(m => !mod.game.me.is(m.gameId));
-	});
-	
-	mod.hook('S_LEAVE_PARTY_MEMBER', 2, (event) => {
-		partyMembers = partyMembers.filter(m => m.playerId != event.playerId);
-	});
-	
-	mod.hook('S_LEAVE_PARTY', 1, (event) => {
-		partyMembers = [];
 	});
 	
 	function load() {
@@ -144,6 +127,8 @@ module.exports = function Tera_Guide(mod) {
 		TipMsg             = "";
 		// 清除所有定时器
 		mod.clearAllTimeouts();
+		// 清除自身debuff记录
+		myDeBuff           = null;
 		// 清除队员标记
 		partyMakers        = [];
 		UpdateMarkers();
@@ -165,12 +150,9 @@ module.exports = function Tera_Guide(mod) {
 		power              = false;
 		Level              = 0;
 		levelMsg           = [];
-		// AQ_1王
-		myColor            = null;
 		// SI_3王
 		bossBuff           = 0;
 		// CK
-		myDeBuff           = null;
 		bossWord           = null;
 	}
 	
@@ -302,7 +284,7 @@ module.exports = function Tera_Guide(mod) {
 				}
 			}
 		}
-		// 凯尔 鉴定
+		// CK_凯尔 鉴定
 		if ([3026, 3126].includes(whichmode) && whichboss==1000) {
 			// 感受毁灭的愤怒吧-3026004-3126004 感受毁灭的恐惧吧-3026005-3126005
 			bossWord = parseInt(event.message.match(/\d+/ig));
@@ -311,11 +293,10 @@ module.exports = function Tera_Guide(mod) {
 	
 	function sAbnormalityBegin(event) {
 		if (!Enabled || !whichmode) return;
-		// 金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
+		// SI_金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
 		if (event.id==30209101||event.id==30209102) {
-mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 			partyMakers.push({
-				color: event.id % 30209101,
+				color: 0, // 0.红色箭头 1.黄色箭头 2.蓝色箭头
 				target: event.target
 			});
 			UpdateMarkers();
@@ -332,11 +313,10 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 		
 		if (!mod.game.me.is(event.target)) return;
 		// AQ_1王 内外圈-鉴定 紅色詛咒氣息 藍色詛咒氣息
-		if (event.id==30231000||event.id==30231001) {
-			myColor = event.id;
+		if ([30231000, 30231001].includes(event.id)) {
+			myDeBuff = event.id;
 		}
-		
-		// 凯尔       破灭业火 / 破灭寒气
+		// CK_凯尔       破灭业火 / 破灭寒气
 		if ([30260001, 31260001, 30260002, 31260002].includes(event.id)) {
 			myDeBuff = event.id;
 		}
@@ -347,11 +327,10 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 		
 		if (!mod.game.me.is(event.target)) return;
 		// AQ_1王 内外圈-鉴定 紅色詛咒氣息 藍色詛咒氣息
-		if (event.id==30231000||event.id==30231001) {
-			myColor = null;
+		if ([30231000, 30231001].includes(event.id)) {
+			myDeBuff = null;
 		}
-		
-		// 凯尔       破灭业火 / 破灭寒气
+		// CK_凯尔       破灭业火 / 破灭寒气
 		if ([30260001, 31260001, 30260002, 31260002].includes(event.id)) {
 			myDeBuff = null;
 		}
@@ -386,7 +365,7 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 			sendMessage(bossSkillID.msg);
 		}
 		// DW_2王
-		else if (whichmode==466 && event.templateId==46602) {
+		if (whichmode==466 && event.templateId==46602) {
 			if (event.stage!=0 || !(bossSkillID = DW_BOSS_2.find(obj => obj.id==skillid))) return;
 			// 举球 内外圈 (开场 / 30%重新进场)
 			if (skillid==309||skillid==310) {
@@ -401,72 +380,72 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 		}
 		
 		// FI_1王
-		else if ([459, 759].includes(whichmode) && [1001, 1004].includes(event.templateId)) {
+		if ([459, 759].includes(whichmode) && [1001, 1004].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = FI_BOSS_1.find(obj => obj.id==event.skill.id))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// FI_2王
-		else if ([459, 759].includes(whichmode) && [1002, 1005].includes(event.templateId)) {
+		if ([459, 759].includes(whichmode) && [1002, 1005].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = FI_BOSS_2.find(obj => obj.id==event.skill.id))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// FI_3王
-		else if ([459, 759].includes(whichmode) && event.templateId==1003) {
+		if ([459, 759].includes(whichmode) && event.templateId==1003) {
 			if (event.stage!=0 || !(bossSkillID = FI_BOSS_3.find(obj => obj.id==event.skill.id))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// DF_1王
-		else if ([767, 467].includes(whichmode) && event.templateId==46701) {
+		if ([767, 467].includes(whichmode) && event.templateId==46701) {
 			if (event.stage!=0 || !(bossSkillID = DF_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// DF_2王
-		else if ([767, 467].includes(whichmode) && event.templateId==46703) {
+		if ([767, 467].includes(whichmode) && event.templateId==46703) {
 			if (event.stage!=0 || !(bossSkillID = DF_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// DF_3王
-		else if ([767, 467].includes(whichmode) && event.templateId==46704) {
+		if ([767, 467].includes(whichmode) && event.templateId==46704) {
 			if (event.stage!=0 || !(bossSkillID = DF_BOSS_3.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// RM_1王
-		else if ([770, 970].includes(whichmode) && event.templateId==1000) {
+		if ([770, 970].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = RM_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// RM_2王
-		else if ([770, 970].includes(whichmode) && event.templateId==2000) {
+		if ([770, 970].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = RM_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// RM_3王
-		else if ([770, 970].includes(whichmode) && event.templateId==3000) {
+		if ([770, 970].includes(whichmode) && event.templateId==3000) {
 			if (event.stage!=0 || !(bossSkillID = RM_BOSS_3.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// VS_1王
-		else if ([781, 981].includes(whichmode) && event.templateId==1000) {
+		if ([781, 981].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = VS_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// VS_2王
-		else if ([781, 981].includes(whichmode) && event.templateId==2000) {
+		if ([781, 981].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = VS_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// VS_3王
-		else if ([781, 981].includes(whichmode) && event.templateId==3000) {
+		if ([781, 981].includes(whichmode) && event.templateId==3000) {
 			if (event.stage!=0 || !(bossSkillID = VS_BOSS_3.find(obj => obj.id==skillid))) return;
 			if (skillid==103 && !checked) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// RK_1王
-		else if ([735, 935].includes(whichmode) && event.templateId==1000) {
+		if ([735, 935].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = RK_BOSS_1.find(obj => obj.id==skillid))) return;
 			// 全屏轰炸
 			if (skillid==309) {
@@ -476,12 +455,12 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 			sendMessage(bossSkillID.msg);
 		}
 		// RK_2王
-		else if ([735, 935].includes(whichmode) && event.templateId==2000) {
+		if ([735, 935].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = RK_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// RK_3王
-		else if ([735, 935].includes(whichmode) && event.templateId==3000) {
+		if ([735, 935].includes(whichmode) && event.templateId==3000) {
 			if (event.stage!=0 || !(bossSkillID = RK_BOSS_3.find(obj => obj.id==skillid))) return;
 			// 破盾
 			if (skillid==321) {
@@ -491,33 +470,33 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 		}
 		
 		// RR_1王
-		else if ([739, 939].includes(whichmode) && event.templateId==1000) {
+		if ([739, 939].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = RR_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// RR_2王
-		else if ([739, 939].includes(whichmode) && event.templateId==2000) {
+		if ([739, 939].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = RR_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// RR_3王
-		else if ([739, 939].includes(whichmode) && event.templateId==3000) {
+		if ([739, 939].includes(whichmode) && event.templateId==3000) {
 			if (event.stage!=0 || !(bossSkillID = RR_BOSS_3.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// AA_1王
-		else if ([720, 920, 3017].includes(whichmode) && event.templateId==1000) {
+		if ([720, 920, 3017].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = AA_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// AA_2王
-		else if ([720, 920, 3017].includes(whichmode) && event.templateId==2000) {
+		if ([720, 920, 3017].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = AA_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// AA_3王
-		else if ([720, 920, 3017].includes(whichmode) && event.templateId==3000) {
+		if ([720, 920, 3017].includes(whichmode) && event.templateId==3000) {
 			if (event.stage!=0 || !(bossSkillID = AA_BOSS_3.find(obj => obj.id==skillid))) return;
 			// 后砸技能判定
 			if (skillid==104) {
@@ -536,33 +515,33 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 		}
 		
 		// DRC_1王
-		else if ([783, 983, 3018].includes(whichmode) && event.templateId==1000) {
+		if ([783, 983, 3018].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = DRC_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// DRC_2王
-		else if ([783, 983, 3018].includes(whichmode) && event.templateId==2000) {
+		if ([783, 983, 3018].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = DRC_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// DRC_3王
-		else if ([783, 983, 3018].includes(whichmode) && event.templateId==3000) {
+		if ([783, 983, 3018].includes(whichmode) && event.templateId==3000) {
 			if (event.stage!=0 || !(bossSkillID = DRC_BOSS_3.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// GLS_1王
-		else if ([782, 982, 3019].includes(whichmode) && event.templateId==1000) {
+		if ([782, 982, 3019].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = GLS_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// GLS_2王
-		else if ([782, 982, 3019].includes(whichmode) && event.templateId==2000) {
+		if ([782, 982, 3019].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = GLS_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// GLS_3王
-		else if ([782, 982, 3019].includes(whichmode) && event.templateId==3000) {
+		if ([782, 982, 3019].includes(whichmode) && event.templateId==3000) {
 			if (!(bossSkillID = GLS_BOSS_3.find(obj => obj.id==skillid))) return;
 			// 蓄电层数计数系统
 			if (whichmode==982) {
@@ -589,45 +568,45 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 		}
 		
 		// GV_1王
-		else if ([3101, 3201].includes(whichmode) && event.templateId==1000) {
+		if ([3101, 3201].includes(whichmode) && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = GV_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// GV_2王
-		else if ([3101, 3201].includes(whichmode) && event.templateId==2000) {
+		if ([3101, 3201].includes(whichmode) && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = GV_BOSS_2.find(obj => obj.id==skillid))) return;
 			if (whichmode==3101 && skillid==227) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// AQ_1王
-		else if (whichmode==3023 && event.templateId==1000) {
+		if (whichmode==3023 && event.templateId==1000) {
 			if (event.stage!=0 || !(bossSkillID = AQ_BOSS_1.find(obj => obj.id==event.skill.id))) return;
 			// 诅咒
-			if (myColor && (event.skill.id==3119||event.skill.id==3220)) {
-				sendMessage(bossSkillID.msg + bossSkillID.TIP[myColor%30231000]);
+			if (myDeBuff && [3119, 3220].includes(event.skillid.id)) {
+				sendMessage(bossSkillID.msg + bossSkillID.TIP[myDeBuff%30231000]);
 				return;
 			}
 			sendMessage(bossSkillID.msg);
 		}
 		// AQ_2王
-		else if (whichmode==3023 && event.templateId==2000) {
+		if (whichmode==3023 && event.templateId==2000) {
 			if (event.stage!=0 || !(bossSkillID = AQ_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		
 		// SI_1王
-		else if (whichmode==3020 && event.templateId==1900) {
+		if (whichmode==3020 && event.templateId==1900) {
 			if (event.stage!=0 || !(bossSkillID = SI_BOSS_1.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// SI_2王
-		else if (whichmode==3020 && event.templateId==1200) {
+		if (whichmode==3020 && event.templateId==1200) {
 			if (event.stage!=0 || !(bossSkillID = SI_BOSS_2.find(obj => obj.id==skillid))) return;
 			sendMessage(bossSkillID.msg);
 		}
 		// SI_3王
-		else if (whichmode==3020 && event.templateId==2200) {
+		if (whichmode==3020 && event.templateId==2200) {
 			if (!(bossSkillID = SI_BOSS_3.find(obj => obj.id==skillid))) return;
 			// 后擒 -> 转圈 | ↓30% 前砸
 			if (skillid==127) {
@@ -640,43 +619,44 @@ mod.log("id:" + event.id + "target:"+ event.target + "source:" + event.source);
 				}
 			}
 			// 三连击 开始技能
-			if (skillid==121 || skillid==122) {
+			if ([121, 122].includes(skillid)) {
 				bossBuff = skillid;
 				return;
 			}
 			// 三连击 结束技能
-			if (skillid==120 || skillid==123) {		// 126 大前砸 / 134 大转圈
-				sendMessage(SI_TipMsg[(bossBuff+skillid) % 241]);
+			if ([120, 123].includes(skillid)) {
+				sendMessage(SI_TipMsg[(bossBuff+skillid)%241]);
 				return;
 			}
 			sendMessage(bossSkillID.msg);
 		}
-		// 凯尔
-		else if ([3026, 3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
+		
+		// CK_凯尔
+		if ([3026, 3126].includes(whichmode) && [1000, 1001, 1002].includes(event.templateId)) {
 			if (event.stage!=0 || !(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
-			// 内火-外冰
+			// 内火->外冰
 			if ([212, 215].includes(skillid)) {
 				sendMessage(bossSkillID.msg + CK_TipMsg[(bossWord+myDeBuff)%2]);
 				return;
 			}
-			// 内冰-外火
+			// 内冰->外火
 			if ([213, 214].includes(skillid)) {
 				sendMessage(bossSkillID.msg + CK_TipMsg[(bossWord+myDeBuff+1)%2]);
 				return;
 			}
 			sendMessage(bossSkillID.msg);
 		}
-		// 狂气
-		else if (whichmode==3027 && event.templateId==1000) {
-			if (event.stage!=0 || !(bossSkillID = KQ_BOSS.find(obj => obj.id==skillid))) return;
-			// 紫红 鉴定预测
+		
+		// FA_狂气
+		if (whichmode==3027 && event.templateId==1000) {
+			if (event.stage!=0 || !(bossSkillID = FA_BOSS.find(obj => obj.id==skillid))) return;
+			// 紫/红 鉴定预测
 			if ([350, 357].includes(skillid)) {
-				mod.setTimeout(() => { sendMessage(KQ_TipMsg[0], 25); }, 58000);
+				mod.setTimeout(() => { sendMessage(FA_TipMsg[0], 25); }, 58000);
 			}
 			sendMessage(bossSkillID.msg);
-		} else {
-			
 		}
+		
 	}
 	// 发送提示文字
 	function sendMessage(msg, chl) {
