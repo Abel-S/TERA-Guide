@@ -19,7 +19,7 @@ RK-9机库 (RK-9 Kennel)
 
 里安的地下殿堂 (Grotto of Lost Souls)
 
-~~巴哈勒神殿 (Bahaar's Sanctum)~~
+巴哈勒神殿 (Bahaar's Sanctum)
 
 费尔奎娜巢穴 (Gossamer Vault)
 
