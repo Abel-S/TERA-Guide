@@ -640,7 +640,7 @@ module.exports = function Tera_Guide(mod) {
 				mod.setTimeout(() => { sendMessage(FA_TipMsg[0], 25); }, 60000);
 			}
 			if (skillid==401) { // 30% 全屏爆炸
-				mod.setTimeout(() => { sendMessage(bossSkillID.msg); }, 3000);
+				mod.setTimeout(() => { sendMessage(bossSkillID.msg); }, 2000);
 				return;
 			}
 			sendMessage(bossSkillID.msg);
