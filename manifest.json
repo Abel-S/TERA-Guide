@@ -1,8 +1,12 @@
 {
     "files": {
-        "boss.js": "f4152247518ecf8af9a9705d8c608ee44508a1e68321295f674619db1e9e3d67",
-        "index.js": "6303060a04b1776c30ba1ecbf541342ba8ff060b1ee0bd76b5914977c32d9f63",
-        "module.json": "37e4f9ed51edb50fc3f24e0fa262db9bf44c82de58a0b4183c030d4bf39ef53d"
+        "boss-Custom.js": {
+            "overwrite": false,
+            "hash": "d86d5895bc04ebe7e92987810bc2c939994b766451f4d8b5e07189a2cfaebd16"
+        },
+        "boss.js": "c000072aed64dd64e02b39c4fc8c4a758f70795a0f6ba45f3b3e5909969d7deb",
+        "index.js": "12c096b55bd42e2beead41b0a501caae530334765364a539dd915f07d77a3b56",
+        "module.json": "edbfde9a49d20f86e89467e8f214581db49a5ced97d1189982ebbe19398454da"
     },
     "defs": {
         "S_ABNORMALITY_BEGIN": 4,

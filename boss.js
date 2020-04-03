@@ -1,5 +1,6 @@
+// 语言(language): 默认(default) 简体中文(zh-CN)
 module.exports = {
-	// 进入副本提示文
+	// 进入副本提示文(Into Dungeon Tip-Msg)
 	DungeonInfo : [
 		{zone: 9066, string: '进入副本 <font color="#56B4E9">岱魔鲁斯的轮盘</font>'},
 		{zone: 9059, string: '进入副本 <font color="#56B4E9">伯恩斯坦恶灵岛</font> <font color="#E69F00">下级</font>'},
