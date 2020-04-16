@@ -4,8 +4,8 @@
             "overwrite": false,
             "hash": "d86d5895bc04ebe7e92987810bc2c939994b766451f4d8b5e07189a2cfaebd16"
         },
-        "boss.js": "c000072aed64dd64e02b39c4fc8c4a758f70795a0f6ba45f3b3e5909969d7deb",
-        "index.js": "12c096b55bd42e2beead41b0a501caae530334765364a539dd915f07d77a3b56",
+        "boss.js": "3ddd20f59842f198b7c8e477b36ef22af2da6245e7ed274b86f9bf6e221c9f5f",
+        "index.js": "0c4cb6e5a51ed2bfc5ae8cd318a296f2d721f9dfbea52ec17f38c62f214825a1",
         "module.json": "edbfde9a49d20f86e89467e8f214581db49a5ced97d1189982ebbe19398454da"
     },
     "defs": {
