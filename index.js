@@ -626,22 +626,22 @@ module.exports = function Tera_Guide(mod) {
 			if (!(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
 			if (skillid==212) { // 内火(火爪)-内冰
 				SendMessage(CK_TipMsg[(bossWord+0+myDeBuff)%2] + " -> " + CK_TipMsg[(bossWord+1+1)%2]);
-				SendMessage(("内火 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内冰(火爪)"), 25);
+				mod.command.message(("内火 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内冰(火爪)"), 25);
 				return;
 			}
 			if (skillid==213) { // 内冰(冰爪)-
 				SendMessage(CK_TipMsg[(bossWord+1+myDeBuff)%2] + " -> " + CK_TipMsg[(bossWord+0+0)%2]);
-				SendMessage(("内冰 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内火(冰爪)"), 25);
+				mod.command.message(("内冰 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内火(冰爪)"), 25);
 				return;
 			}
 			if (skillid==214) { // 内冰(火爪)
 				SendMessage(CK_TipMsg[(bossWord+1+myDeBuff)%2] + " -> " + CK_TipMsg[(bossWord+0+1)%2]);
-				SendMessage(("内冰 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内火(火爪)"), 25);
+				mod.command.message(("内冰 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内火(火爪)"), 25);
 				return;
 			}
 			if (skillid==215) { // 内火(冰爪)
 				SendMessage(CK_TipMsg[(bossWord+0+myDeBuff)%2] + " -> " + CK_TipMsg[(bossWord+1+0)%2]);
-				SendMessage(("内火 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内冰(冰爪)"), 25);
+				mod.command.message(("内火 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内冰(冰爪)"), 25);
 				return;
 			}
 			SendMessage(bossSkillID.msg);
