@@ -567,7 +567,7 @@ module.exports = {
 		{id: 302, msg: '随机Buff'}// "무적버프_wait_노멀" */
 	],
 	//            0     1
-	CK_TipMsg : ["进", "出"],
+	CK_TipMsg : ["进", "出", "左内-右外", "右内-左外"],
 	// 狂气竞技场 (Forbidden Arena)
 	FA_BOSS : [
 		{id: 108, msg: '一刀(慢)'},    // 101 121 122 連續攻擊 -> 108 一刀兩斷(坦)
