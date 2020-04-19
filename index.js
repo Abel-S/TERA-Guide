@@ -286,7 +286,7 @@ module.exports = function Tera_Guide(mod) {
 		}
 		// CK_凯尔 鉴定
 		if ([3026, 3126].includes(whichmode) && whichboss==1000) {
-			// 感受毁灭的愤怒吧-3026004-3126004 感受毁灭的恐惧吧-3026005-3126005
+			// 感受毁灭的恐惧吧-3026005-3126005 感受毁灭的愤怒吧-3026004-3126004
 			bossWord = parseInt(event.message.match(/\d+/ig));
 		}
 	}
@@ -626,12 +626,12 @@ module.exports = function Tera_Guide(mod) {
 			if (!(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
 			if ([212, 215].includes(skillid)) { // 内火(火爪)
 				mod.command.message("内火 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内冰");
-				SendMessage((myDeBuff?CK_TipMsg[(0+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[bossWord%2+2]);
+				SendMessage((myDeBuff?CK_TipMsg[(0+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[(1+bossWord)%2+2]);
 				return;
 			}
 			if ([213, 214].includes(skillid)) { // 内冰(冰爪)
 				mod.command.message("内冰 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内火");
-				SendMessage((myDeBuff?CK_TipMsg[(1+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[bossWord%2+2]);
+				SendMessage((myDeBuff?CK_TipMsg[(1+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[(0+bossWord)%2+2]);
 				return;
 			}
 			SendMessage(bossSkillID.msg);
