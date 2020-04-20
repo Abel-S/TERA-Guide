@@ -19,16 +19,18 @@ module.exports = function Tera_Guide(mod) {
 		FA_BOSS,    FA_TipMsg
 	} = require((mod.region.toUpperCase()=='TW')?'./boss':'./boss-Custom');
 	
-	let Enabled            =  true, // 总开关
+	let Enabled            = true,  // 总开关
 		SendToStream       = false; // true 关闭队长通知, 并将消息发送到聊天[代理]频道
 	// 定义变量
 	let hooks              = [],
 		myDeBuff           = null,  // AQ_红/蓝诅咒, CK_业火/寒气
+		
 		partyMakers        = [],    // 队员标记
-		whichzone          = null,  // 登陆地区(zone)
+		
 		whichmode          = null,  // 副本地图(huntingZoneId)
+		
 		whichboss          = null,  // 区域位置(templateId)
-		bossGameID         = null,  // BOSS gameId
+		boss_ID            = null,  // BOSS gameId
 		boss_HP            = 0,     // BOSS 血量%
 		skillid            = 0,     // BOSS 攻击技能编号
 		// DW
@@ -71,10 +73,9 @@ module.exports = function Tera_Guide(mod) {
 				case "状态":
 					mod.command.message("模块开关: " + Enabled);
 					mod.command.message("主播模式: " + SendToStream);
-					mod.command.message("登陆地区: " + whichzone);
 					mod.command.message("副本地图: " + whichmode);
 					mod.command.message("区域位置: " + whichboss);
-					mod.command.message("bossID: "   + bossGameID);
+					mod.command.message("bossID: "   + boss_ID);
 					break;
 				default :
 					mod.command.message("无效的参数!");
@@ -84,7 +85,6 @@ module.exports = function Tera_Guide(mod) {
 	});
 	// 切换场景
 	mod.game.me.on('change_zone', (zone, quick) => {
-		whichzone = zone;
 		whichmode = zone % 9000;
 		
 		if (mod.game.me.inDungeon && DungeonInfo.find(obj => obj.zone == zone)) {
@@ -134,7 +134,9 @@ module.exports = function Tera_Guide(mod) {
 		UpdateMarkers();
 		// 清除BOSS信息
 		whichboss          = null;
-		bossGameID         = null;
+		boss_ID            = null;
+		boss_HP            = 0;
+		skillid            = 0;
 		// DW
 		circleCount        = 0;
 		ballColor          = 0;
@@ -146,6 +148,10 @@ module.exports = function Tera_Guide(mod) {
 		FirstMsg           = "X";
 		SecondMsg          = "X";
 		switchMsg          = false;
+		// AA
+		lastTwoUpDate      = 0;
+		lastRotationDate   = 0;
+		rotationDelay      = 0;
 		// GLS_3王
 		power              = false;
 		level              = 0;
@@ -157,17 +163,17 @@ module.exports = function Tera_Guide(mod) {
 	}
 	
 	function sBossGageInfo(event) {
-		if (!whichboss || whichboss != event.templateId) whichboss = event.templateId;
-		if (!bossGameID || bossGameID != event.id) bossGameID = event.id;
+		if (!whichboss || (whichboss!=event.templateId)) whichboss = event.templateId;
+		if (!boss_ID || (boss_ID!=event.id)) boss_ID = event.id;
 		
-		boss_HP = (Number(event.curHp) / Number(event.maxHp));
-		if (boss_HP <= 0 || boss_HP == 1) reset();
+		boss_HP = Number(event.curHp) / Number(event.maxHp);
+		if ((boss_HP<=0) || (boss_HP==1)) reset();
 	}
 	
 	function sCreatureRotate(event) {
 		if (!Enabled || !whichmode) return;
 		// AA_3王 后砸
-		if (lastTwoUpDate && bossGameID==event.gameId) {
+		if (lastTwoUpDate && boss_ID==event.gameId) {
 			lastRotationDate = Date.now();
 			rotationDelay = event.time;
 		}
@@ -294,7 +300,7 @@ module.exports = function Tera_Guide(mod) {
 	function sAbnormalityBegin(event) {
 		if (!Enabled || !whichmode) return;
 		// BS_火神
-		if (event.id==90442304 && bossGameID==event.target) {
+		if (event.id==90442304 && boss_ID==event.target) {
 			SendMessage(BS_TipMsg[1], 25);
 		}
 		// SI_金鳞船 亡靈閃電的襲擊 / 海洋魔女的氣息
@@ -345,11 +351,11 @@ module.exports = function Tera_Guide(mod) {
 		if (!Enabled || !whichmode) return;
 		
 		// BS_火神_王座
-		if (whichmode== 444 && event.templateId==2500 && event.stage==0 && event.skill.id==1305) {
+		if (whichmode==444 && event.templateId==2500 && event.stage==0 && event.skill.id==1305) {
 			SendMessage(BS_TipMsg[2], 25);
 		}
 		
-		if (whichboss != event.templateId) return;
+		if (boss_ID != event.gameId) return;
 		skillid = event.skill.id % 1000;     // 愤怒简化 取1000余数运算
 		
 		var bossSkillID = null;
