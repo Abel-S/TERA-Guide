@@ -351,13 +351,12 @@ module.exports = function Tera_Guide(mod) {
 		if (!Enabled || !whichmode) return;
 		
 		// BS_火神_王座
-		if (whichmode==444 && event.templateId==2500 && event.stage==0 && event.skill.id==1305) {
+		if (whichmode== 444 && event.templateId==2500 && event.stage==0 && event.skill.id==1305) {
 			SendMessage(BS_TipMsg[2], 25);
 		}
 		
 		if (boss_ID != event.gameId) return;
-		skillid = event.skill.id % 1000;     // 愤怒简化 取1000余数运算
-		
+		skillid = event.skill.id % 1000; // 愤怒简化 取1000余数运算
 		var bossSkillID = null;
 		// DW_1王
 		if (whichmode== 466 && event.templateId==46601 && event.stage==0) {
@@ -632,12 +631,12 @@ module.exports = function Tera_Guide(mod) {
 			if (!(bossSkillID = CK_BOSS.find(obj => obj.id==skillid))) return;
 			if ([212, 215].includes(skillid)) { // 内火(火爪)
 				mod.command.message("内火 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内冰");
-				SendMessage((myDeBuff?CK_TipMsg[(0+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[(1+bossWord)%2+2]);
+				SendMessage((myDeBuff?CK_TipMsg[(0+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[(0+bossWord)%2+2]);
 				return;
 			}
 			if ([213, 214].includes(skillid)) { // 内冰(冰爪)
 				mod.command.message("内冰 |" + ((bossWord%2)?"恐惧(相同)":"愤怒(不同)") + "| 内火");
-				SendMessage((myDeBuff?CK_TipMsg[(1+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[(0+bossWord)%2+2]);
+				SendMessage((myDeBuff?CK_TipMsg[(1+bossWord+myDeBuff)%2]:"X") + "->" + CK_TipMsg[(1+bossWord)%2+2]);
 				return;
 			}
 			SendMessage(bossSkillID.msg);
