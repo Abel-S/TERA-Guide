@@ -2,7 +2,7 @@
     "name": "Tera-Guide",
     "options": {
         "niceName": "Tera-Guide",
-        "guiName": "副本提示(Tera-Guide)"
+        "guiName": "Tera-Guide(副本提示)"
     },
     "author": "ZC",
     "description": "为TERA的常用副本提供[技能]辅助-文字提示",

@@ -2,7 +2,7 @@
     "files": {
         "boss.js": "9a9b063be28cbc5da82c2c5e419d7c6cb1206f4a2e3f32e2dfc4bf702c2a758b",
         "index.js": "fbe52d414648b9bb3f3f19a926bded3c49f7579655468bda46ec2d34baca28fd",
-        "module.json": "87d63cd57398f222502417839f5bd825607887c42e5fc2a996bb7b8e0d111e60"
+        "module.json": "b35cfb146695237d6e23be0afdf8168354bb494f06ce4e4b2dc7a3d479d7a2d3"
     },
     "defs": {
         "S_ABNORMALITY_BEGIN": 4,
