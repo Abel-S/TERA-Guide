@@ -48,3 +48,9 @@ Proxy(/8) Usage (proxy command) | description
 --- | ---
 guide | enabled / disabled
 guide stream(st) | Send To Stream
+
+------
+
+# 为其他地区(TW)提供一个[自定义(翻译)提示文]文件: boss-Custom.js
+
+# 请按照[boss.js]中格式自行修改便可

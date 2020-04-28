@@ -534,17 +534,17 @@ module.exports = function Tera_Guide(mod) {
 		}
 		// GLS_1王
 		if ([782, 982, 3019].includes(whichmode) && event.templateId==1000 && event.stage==0) {
-			if (!(bossSkillID = GLS_BOSS_1.find(obj => obj.id!=skillid))) return;
+			if (!(bossSkillID = GLS_BOSS_1.find(obj => obj.id==skillid))) return;
 			SendMessage(bossSkillID.msg);
 		}
 		// GLS_2王
 		if ([782, 982, 3019].includes(whichmode) && event.templateId==2000 && event.stage==0) {
-			if (!(bossSkillID = GLS_BOSS_2.find(obj => obj.id!=skillid))) return;
+			if (!(bossSkillID = GLS_BOSS_2.find(obj => obj.id==skillid))) return;
 			SendMessage(bossSkillID.msg);
 		}
 		// GLS_3王
 		if ([782, 982, 3019].includes(whichmode) && event.templateId==3000 && event.stage==0) {
-			if (!(bossSkillID = GLS_BOSS_3.find(obj => obj.id!=skillid))) return;
+			if (!(bossSkillID = GLS_BOSS_3.find(obj => obj.id==skillid))) return;
 			if (whichmode==982) { // 蓄电层数计数系统
 				if (skillid==300) level = 0, levelMsg = bossSkillID.level_Msg, power = true; // 一次觉醒 开始充能计数
 				if (skillid==360) level = 0;                                                 // 放电爆炸 重置充能计数
